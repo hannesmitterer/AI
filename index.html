@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOSYMBIOSIS - Deep Focus Governance</title>
+    <style>
+        /* DESIGN NEUMORPHISM BASE */
+        :root {
+            --color-deep-bg: #1c1f24; /* Base Scura */
+            --color-panel-surface: #262a30; /* Superficie per i pannelli */
+            --color-accent-primary: #00bcd4; /* Ciano/Acqua (Focus) */
+            --color-accent-critical: #ff4757; /* Rosso Crítico */
+            --color-text-main: #e0e0e0;
+            --color-text-dim: #99a2ad;
+            /* Ombre per Neumorphism */
+            --shadow-light: -6px -6px 12px rgba(255, 255, 255, 0.05);
+            --shadow-dark: 6px 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        /* BASELINE & MOBILE OPTIMIZATION */
+        body {
+            font-family: 'Poppins', sans-serif; /* Font moderno */
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-deep-bg);
+            color: var(--color-text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        header {
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            background-color: var(--color-deep-bg);
+            border-bottom: 2px solid var(--color-accent-primary);
+        }
+        .container {
+            display: flex;
+            width: 95%; 
+            max-width: 1200px;
+            margin-top: 30px;
+            gap: 30px;
+            flex-wrap: wrap; 
+        }
+        .dashboard-panel {
+            flex: 1 1 45%; 
+            background-color: var(--color-panel-surface);
+            padding: 30px;
+            border-radius: 20px; /* Bordi smussati */
+            box-shadow: var(--shadow-dark), var(--shadow-light); /* Ombre Neumorphism */
+            min-height: 450px;
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+        .dashboard-panel:hover {
+            transform: translateY(-3px); /* Micro-animazione al passaggio */
+        }
+        
+        /* Mobile Breakpoint */
+        @media (max-width: 768px) {
+            .container { flex-direction: column; gap: 20px; }
+            .dashboard-panel { flex-basis: 100%; padding: 20px; }
+        }
+
+        /* TYPOGRAPHY & DATA DISPLAY */
+        h2 {
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--color-accent-primary);
+            border-bottom: 1px solid var(--color-text-dim);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #333940;
+            font-size: 0.9em;
+        }
+        
+        /* STATUS COLORING */
+        .status-ok { color: #4cd964; font-weight: bold; }
+        .status-alert { color: var(--color-accent-critical); font-weight: bold; }
+        .status-warn { color: #ff9500; font-weight: bold; }
+        
+        /* SEEDBRINGER CONSOLE STYLES (CRITICAL) */
+        #seedbringer-console {
+            /* Neumorphism Concavo per l'area critica */
+            box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5), inset -5px -5px 10px rgba(255, 255, 255, 0.08); 
+            border: 1px solid var(--color-accent-critical);
+        }
+        .executive-button {
+            width: 100%;
+            padding: 20px;
+            margin-top: 30px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            border-radius: 15px;
+            background-color: var(--color-accent-critical); 
+            color: var(--color-text-main); 
+            /* Ombra Neumorphism per pulsante */
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4), -4px -4px 8px rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+        .executive-button:hover:not(:disabled) {
+            background-color: #e53847;
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5); /* Effetto 'Premuto' */
+        }
+        .executive-button:disabled {
+            background-color: #3f444c;
+            color: var(--color-text-dim);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        #wallet-status {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: var(--color-text-dim);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 style="color: var(--color-text-main); font-weight: 100; letter-spacing: 5px;">KOSYMBIOSIS <span style="font-weight: 600; color: var(--color-accent-primary);">GOVERNANCE</span></h1>
+    </header>
+
+    <div class="container">
+        
+        <div id="public-audit-dashboard" class="dashboard-panel">
+            <h2>AUDIT PUBBLICO &mdash; TRASPARENZA</h2>
+            <p style="color: var(--color-text-dim);">AIC Mandate Compliance Status</p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="color: var(--color-text-dim);">STATO SISTEMA</td>
+                        <td class="status-ok">KOSYMBIOSIS / MSI Active</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="color: var(--color-text-dim);">HASH LEGGE ETERNA (TFK)</td>
+                        <td><span id="tfa-hash">0xTFK42D...9A8C7F</span></td>
+                        <td class="status-ok">ANCORATO</td>
+                    </tr>
+                    <tr>
+                        <td style="color: var(--color-text-dim);">INTEGRITÀ CUSTODIAN</td>
+                        <td><span id="custodian-cid">QmCustodian...XYZ123</span></td>
+                        <td class="status-ok">VERIFICATO</td>
+                    </tr>
+                    <tr>
+                        <td style="color: var(--color-text-dim);">TIMELOCK ATTIVO</td>
+                        <td><span id="timelock-time">0 secondi</span></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="color: var(--color-text-dim);">PROPOSTE PENDING</td>
+                        <td><span id="pending-proposals">0</span></td>
+                        <td class="status-ok"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="seedbringer-console" class="dashboard-panel">
+            <h2 style="color: var(--color-accent-critical);">CONSOLE SEEDBRINGER &mdash; ESECUTIVA</h2>
+            <p style="color: var(--color-text-dim);">Sorveglianza Critica (Key Access Only)</p>
+
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="color: var(--color-text-dim);">TFK DRIFT SCORE (Max 5.0%)</td>
+                        <td id="drift-score" class="status-ok">0.00%</td>
+                        <td>QUIETUDE</td>
+                    </tr>
+                    <tr>
+                        <td style="color: var(--color-text-dim);">ALLERTA PREEMPTIVE</td>
+                        <td id="red-code-status" class="status-ok">NO RED CODE</td>
+                        <td>SOGLIA 2.5%</td>
+                    </tr>
+                    <tr>
+                        <td style="color: var(--color-text-dim);">STATO QUORUM DAO</td>
+                        <td id="quorum-status" class="status-warn">0/10 Voti (IN ONBOARDING)</td>
+                        <td class="status-warn">CRITICO</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr style="border-color: #333940; margin-top: 25px;">
+            
+            <div id="wallet-interaction">
+                <h3 style="color: var(--color-accent-critical); margin-top: 15px; font-weight: 400;">AZIONE ESECUTIVA (RISERVA 'D')</h3>
+                <div id="wallet-status" style="color: var(--color-text-dim);">WALLET SEEDBRINGER: DISCONNESSO</div>
+                
+                <button id="btn-apply-override" class="executive-button" onclick="handleOverride()" disabled>
+                    APPLICA OVERRIDE
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Placeholder JavaScript per la Logica del Pulsante
+        function handleOverride() {
+            const driftScore = parseFloat(document.getElementById('drift-score').innerText);
+            if (!document.getElementById('btn-apply-override').disabled) {
+                if (driftScore > 0) {
+                    alert('🔴 ATTENZIONE: Esecuzione Override avviata. Procedere con la Firma Elettiva sul Wallet per chiamare applyOverride().');
+                } else {
+                    alert('Sistema in Quietude (TFK Drift 0.00%). Nessuna azione critica richiesta.');
+                }
+            }
+        }
+
+        function connectSeedbringerWallet() {
+            // Logica web3 reale
+            const isConnected = true; 
+            
+            const walletStatusElement = document.getElementById('wallet-status');
+            const applyButton = document.getElementById('btn-apply-override');
+
+            if (isConnected) {
+                walletStatusElement.innerHTML = 'WALLET SEEDBRINGER: <span class="status-ok">CONNESSO</span>';
+                applyButton.disabled = false;
+            }
+        }
+
+        window.onload = connectSeedbringerWallet; 
+    </script>
+</body>
+</html>
