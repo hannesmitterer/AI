@@ -23,7 +23,7 @@ KOSYMBIOSIS is a deep focus governance system that combines blockchain technolog
 
 ## 📦 Core Asset: euystacio.core.v2.bin
 
-This binary file synthesizes strategic decisions into operational parameters that are immutable at runtime.
+This binary file synthesizes strategic decisions into operational parameters that are read-only at runtime.
 
 ### Binary Structure and Essential Data
 
@@ -39,7 +39,7 @@ This binary file synthesizes strategic decisions into operational parameters tha
 | 0x1E-0x1F | ECD PROTOCOL ID | 51 45 | Quick-Ethical Protocol (QE) |
 
 ### Binary Content Representation
-```
+```hex
 4555595354414349 02000000 00004040 514d543653315a37 FF00 0088 0101 5145
 ```
 

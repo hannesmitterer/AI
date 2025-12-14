@@ -87,7 +87,7 @@ jobs:
           ## Node Synchronization
           
           All K-SYNC Daemon nodes should update their configuration to reference:
-          \`\`\`
+          \`\`\`text
           CID: $IPFS_HASH
           \`\`\`
           
