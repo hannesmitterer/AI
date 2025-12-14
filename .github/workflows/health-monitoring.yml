@@ -45,9 +45,19 @@ jobs:
             WORKFLOW_COUNT=$(find "$WORKFLOW_DIR" -name "*.yml" -o -name "*.yaml" | wc -l)
             echo "Found $WORKFLOW_COUNT workflow files"
             
-            for workflow in "$WORKFLOW_DIR"/*.yml "$WORKFLOW_DIR"/*.yaml 2>/dev/null; do
-              [ -f "$workflow" ] && echo "✓ $(basename $workflow)"
-            done
+            # Check for .yml files
+            if compgen -G "$WORKFLOW_DIR/*.yml" > /dev/null; then
+              for workflow in "$WORKFLOW_DIR"/*.yml; do
+                echo "✓ $(basename $workflow)"
+              done
+            fi
+            
+            # Check for .yaml files
+            if compgen -G "$WORKFLOW_DIR/*.yaml" > /dev/null; then
+              for workflow in "$WORKFLOW_DIR"/*.yaml; do
+                echo "✓ $(basename $workflow)"
+              done
+            fi
           else
             echo "✗ Workflow directory not found"
             exit 1

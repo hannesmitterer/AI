@@ -39,9 +39,17 @@ jobs:
           ipfs add -r . > ipfs_output.txt || true
           cat ipfs_output.txt
           
-          # Extract the root hash (last line typically)
-          ROOT_HASH=$(cat ipfs_output.txt | tail -1 | awk '{print $2}')
-          echo "Root IPFS Hash: $ROOT_HASH"
+          # Extract the root hash (last line typically contains "added <hash> .")
+          ROOT_HASH=$(grep "added .* \.$" ipfs_output.txt | tail -1 | awk '{print $2}')
+          
+          # Verify hash was extracted
+          if [ -z "$ROOT_HASH" ]; then
+            echo "Warning: Could not extract IPFS hash from output"
+            ROOT_HASH="unknown"
+          else
+            echo "Root IPFS Hash: $ROOT_HASH"
+          fi
+          
           echo "IPFS_HASH=$ROOT_HASH" >> $GITHUB_ENV
 
       - name: Create IPFS deployment record
