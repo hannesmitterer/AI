@@ -16,6 +16,9 @@ on:
       - 'README.md'
       - 'euystacio.core.v2.bin'
 
+permissions:
+  contents: read
+
 jobs:
   check-documentation:
     runs-on: ubuntu-latest
