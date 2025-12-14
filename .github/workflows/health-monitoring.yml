@@ -6,6 +6,9 @@ on:
     - cron: '0 */6 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   health-check:
     name: System Health Check
