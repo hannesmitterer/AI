@@ -18,6 +18,8 @@ jobs:
       - name: Setup IPFS CLI
         run: |
           wget https://dist.ipfs.tech/kubo/v0.24.0/kubo_v0.24.0_linux-amd64.tar.gz
+          # Verify checksum
+          echo "5fb94f15010fb3fcbffb8a3fc78ad3bb5b00f0c1c87035447f6b0fce9f7f2065  kubo_v0.24.0_linux-amd64.tar.gz" | sha256sum -c
           tar -xvzf kubo_v0.24.0_linux-amd64.tar.gz
           cd kubo
           sudo bash install.sh
@@ -31,6 +33,8 @@ jobs:
       - name: Upload to IPFS (Local Node)
         id: ipfs-local
         run: |
+          # Start daemon with cleanup trap
+          trap 'pkill -9 ipfs' EXIT
           ipfs daemon --offline &
           sleep 5
           

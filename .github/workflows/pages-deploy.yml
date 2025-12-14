@@ -31,13 +31,21 @@ jobs:
         run: |
           mkdir -p _site
           
-          # Copy web assets
-          cp index.html _site/
-          cp README.md _site/
-          cp LICENSE _site/
+          # Copy web assets if they exist
+          if [ -f index.html ]; then
+            cp index.html _site/
+          fi
+          if [ -f README.md ]; then
+            cp README.md _site/
+          fi
+          if [ -f LICENSE ]; then
+            cp LICENSE _site/
+          fi
           
-          # Copy binary assets
-          cp *.bin _site/ 2>/dev/null || true
+          # Copy binary assets if they exist
+          if ls *.bin 1> /dev/null 2>&1; then
+            cp *.bin _site/
+          fi
           
           # Generate manifest
           cat > _site/manifest.json << EOF

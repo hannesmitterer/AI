@@ -33,7 +33,19 @@ jobs:
       - name: Create Release Archive
         run: |
           mkdir -p release-assets
-          cp -r *.bin *.html *.md LICENSE release-assets/ 2>/dev/null || true
+          # Copy files if they exist
+          if ls *.bin 1> /dev/null 2>&1; then
+            cp *.bin release-assets/
+          fi
+          if ls *.html 1> /dev/null 2>&1; then
+            cp *.html release-assets/
+          fi
+          if ls *.md 1> /dev/null 2>&1; then
+            cp *.md release-assets/
+          fi
+          if [ -f LICENSE ]; then
+            cp LICENSE release-assets/
+          fi
           cp checksums.txt release-assets/
           tar -czf release-$(date +%Y%m%d-%H%M%S).tar.gz release-assets/
           

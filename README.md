@@ -107,9 +107,9 @@ All workflows are triggered automatically:
 ### Access Points
 
 Once deployed, the system is accessible via:
-- **GitHub Pages**: `https://<username>.github.io/AI/`
+- **GitHub Pages**: `https://hannesmitterer.github.io/AI/`
 - **IPFS Gateways**: Multiple URLs in IPFS_MANIFEST.md
-- **Status Dashboard**: `https://<username>.github.io/AI/status.html`
+- **Status Dashboard**: `https://hannesmitterer.github.io/AI/status.html`
 - **Raw Assets**: Direct repository access
 
 ### Security & Trust

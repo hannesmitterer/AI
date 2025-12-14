@@ -33,7 +33,7 @@ jobs:
             if [ -f "$file" ]; then
               BINARY_COUNT=$((BINARY_COUNT + 1))
               HASH=$(sha256sum "$file" | cut -d' ' -f1)
-              SIZE=$(stat -f%z "$file" 2>/dev/null || stat -c%s "$file")
+              SIZE=$(wc -c < "$file")
               
               echo "### $file" >> integrity-report.md
               echo "- **SHA256**: \`$HASH\`" >> integrity-report.md
