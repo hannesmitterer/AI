@@ -78,10 +78,11 @@ jobs:
       - name: Generate health report
         run: |
           mkdir -p reports
-          cat > reports/health-report.md << 'EOF'
+          TIMESTAMP=$(date -u)
+          cat > reports/health-report.md << EOF
           # System Health Report
           
-          **Generated:** $(date -u)
+          **Generated:** $TIMESTAMP
           **Repository:** hannesmitterer/AI
           
           ## Status: OPERATIONAL ✓
