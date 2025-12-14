@@ -69,7 +69,7 @@ jobs:
           BINARY="euystacio.core.v2.bin"
           
           if [ -f "$BINARY" ]; then
-            SIZE=$(stat -f%z "$BINARY" 2>/dev/null || stat -c%s "$BINARY")
+            SIZE=$(wc -c < "$BINARY" | tr -d ' ')
             HASH=$(sha256sum "$BINARY" | awk '{print $1}')
             
             echo "✓ Binary exists"

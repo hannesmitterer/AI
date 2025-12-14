@@ -30,7 +30,7 @@ jobs:
           echo "Validating euystacio.core.v2.bin..."
           if [ -f euystacio.core.v2.bin ]; then
             echo "✓ Binary asset exists"
-            file_size=$(stat -f%z euystacio.core.v2.bin 2>/dev/null || stat -c%s euystacio.core.v2.bin)
+            file_size=$(wc -c < euystacio.core.v2.bin | tr -d ' ')
             echo "  Size: $file_size bytes"
           else
             echo "✗ Binary asset missing"
