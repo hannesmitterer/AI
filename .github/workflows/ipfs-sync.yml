@@ -8,6 +8,9 @@ on:
       - 'euystacio.core.v2.bin'
   workflow_dispatch:
 
+permissions:
+  contents: write  # Required for committing and pushing IPFS manifest
+
 jobs:
   ipfs-upload:
     runs-on: ubuntu-latest
