@@ -1,0 +1,118 @@
+name: Landing Page Verification
+
+on:
+  push:
+    branches:
+      - main
+      - 'copilot/**'
+    paths:
+      - 'index.html'
+      - '.github/workflows/landing-page-verification.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'index.html'
+
+jobs:
+  verify-landing-page:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Validate HTML structure
+        run: |
+          echo "Validating HTML syntax..."
+          # Check if index.html exists
+          if [ ! -f index.html ]; then
+            echo "Error: index.html not found!"
+            exit 1
+          fi
+          
+          # Basic HTML validation checks
+          if ! grep -q "<!DOCTYPE html>" index.html; then
+            echo "Error: Missing DOCTYPE declaration"
+            exit 1
+          fi
+          
+          if ! grep -q "<html" index.html; then
+            echo "Error: Missing html tag"
+            exit 1
+          fi
+          
+          if ! grep -q "<head>" index.html; then
+            echo "Error: Missing head tag"
+            exit 1
+          fi
+          
+          if ! grep -q "<body>" index.html; then
+            echo "Error: Missing body tag"
+            exit 1
+          fi
+          
+          echo "✓ HTML structure validation passed"
+          
+      - name: Check required KOSYMBIOSIS elements
+        run: |
+          echo "Checking for required KOSYMBIOSIS elements..."
+          
+          # Check for critical dashboard elements
+          if ! grep -q "KOSYMBIOSIS" index.html; then
+            echo "Error: Missing KOSYMBIOSIS branding"
+            exit 1
+          fi
+          
+          if ! grep -q "public-audit-dashboard" index.html; then
+            echo "Error: Missing public audit dashboard"
+            exit 1
+          fi
+          
+          if ! grep -q "seedbringer-console" index.html; then
+            echo "Error: Missing Seedbringer console"
+            exit 1
+          fi
+          
+          echo "✓ KOSYMBIOSIS elements validation passed"
+          
+      - name: Verify JavaScript functionality
+        run: |
+          echo "Checking JavaScript code..."
+          
+          # Check for required functions
+          if ! grep -q "handleOverride" index.html; then
+            echo "Error: Missing handleOverride function"
+            exit 1
+          fi
+          
+          if ! grep -q "connectSeedbringerWallet" index.html; then
+            echo "Error: Missing connectSeedbringerWallet function"
+            exit 1
+          fi
+          
+          echo "✓ JavaScript validation passed"
+          
+      - name: Check for style consistency
+        run: |
+          echo "Checking CSS and styling..."
+          
+          # Verify CSS variables are defined
+          if ! grep -q ":root" index.html; then
+            echo "Error: Missing CSS root variables"
+            exit 1
+          fi
+          
+          if ! grep -q "color-deep-bg" index.html; then
+            echo "Error: Missing theme color variables"
+            exit 1
+          fi
+          
+          echo "✓ Style consistency validation passed"
+          
+      - name: Summary
+        run: |
+          echo "========================================="
+          echo "Landing Page Verification Complete ✓"
+          echo "========================================="
+          echo "All checks passed successfully!"

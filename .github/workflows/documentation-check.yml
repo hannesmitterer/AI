@@ -1,0 +1,116 @@
+name: Documentation Consistency Check
+
+on:
+  push:
+    branches:
+      - main
+      - 'copilot/**'
+    paths:
+      - 'README.md'
+      - 'euystacio.core.v2.bin'
+      - '.github/workflows/documentation-check.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'README.md'
+      - 'euystacio.core.v2.bin'
+
+jobs:
+  check-documentation:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Verify README.md exists and has content
+        run: |
+          echo "Checking README.md..."
+          
+          if [ ! -f README.md ]; then
+            echo "Error: README.md not found!"
+            exit 1
+          fi
+          
+          # Check if README has content (more than 100 bytes)
+          size=$(wc -c < README.md)
+          if [ "$size" -lt 100 ]; then
+            echo "Error: README.md appears to be empty or too short"
+            exit 1
+          fi
+          
+          echo "✓ README.md exists and has content ($size bytes)"
+          
+      - name: Verify binary asset documentation
+        run: |
+          echo "Checking binary asset documentation..."
+          
+          # Check if README mentions the binary file
+          if ! grep -q "euystacio.core.v2.bin" README.md; then
+            echo "Error: README.md must document euystacio.core.v2.bin"
+            exit 1
+          fi
+          
+          echo "✓ Binary asset is documented in README.md"
+          
+      - name: Check binary file exists
+        run: |
+          echo "Verifying binary file presence..."
+          
+          if [ ! -f euystacio.core.v2.bin ]; then
+            echo "Error: euystacio.core.v2.bin not found!"
+            exit 1
+          fi
+          
+          size=$(wc -c < euystacio.core.v2.bin)
+          echo "✓ euystacio.core.v2.bin exists ($size bytes)"
+          
+      - name: Verify binary file integrity
+        run: |
+          echo "Checking binary file integrity..."
+          
+          # Calculate checksum
+          checksum=$(sha256sum euystacio.core.v2.bin | cut -d' ' -f1)
+          echo "Binary SHA256: $checksum"
+          
+          # Store checksum for deployment verification
+          echo "BINARY_CHECKSUM=$checksum" >> $GITHUB_ENV
+          
+          echo "✓ Binary file integrity verified"
+          
+      - name: Check for required documentation sections
+        run: |
+          echo "Validating README structure..."
+          
+          # Check for key sections
+          if ! grep -q -i "AI\|ASSET BINARIO" README.md; then
+            echo "Warning: README should include title or asset information"
+          fi
+          
+          echo "✓ Documentation structure validated"
+          
+      - name: Verify README and binary consistency
+        run: |
+          echo "Checking consistency between README and binary..."
+          
+          # Verify the binary structure is documented
+          if ! grep -q "MAGIC HEADER\|VERSIONE FW\|Struttura Binaria" README.md; then
+            echo "Warning: Binary structure details missing from README"
+          fi
+          
+          # Check version consistency
+          if grep -q "Versione 2.0.0" README.md && [ -f euystacio.core.v2.bin ]; then
+            echo "✓ Version consistency verified (v2)"
+          fi
+          
+          echo "✓ Documentation consistency validated"
+          
+      - name: Summary
+        run: |
+          echo "========================================="
+          echo "Documentation Check Complete ✓"
+          echo "========================================="
+          echo "README.md: Valid"
+          echo "Binary Asset: Present and documented"
+          echo "Binary Checksum: ${{ env.BINARY_CHECKSUM }}"

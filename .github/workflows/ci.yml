@@ -1,0 +1,105 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+      - 'copilot/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci-checks:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Repository structure check
+        run: |
+          echo "Verifying repository structure..."
+          
+          required_files=(
+            "index.html"
+            "README.md"
+            "euystacio.core.v2.bin"
+            "LICENSE"
+          )
+          
+          for file in "${required_files[@]}"; do
+            if [ -f "$file" ]; then
+              echo "✓ $file exists"
+            else
+              echo "⚠ Warning: $file not found"
+            fi
+          done
+          
+      - name: Validate all HTML files
+        run: |
+          echo "Validating HTML files..."
+          
+          html_files=$(find . -name "*.html" -type f | grep -v node_modules || true)
+          
+          if [ -z "$html_files" ]; then
+            echo "No HTML files found"
+            exit 0
+          fi
+          
+          for file in $html_files; do
+            echo "Checking $file..."
+            
+            if ! grep -q "<!DOCTYPE" "$file"; then
+              echo "Warning: $file missing DOCTYPE"
+            fi
+            
+            if ! grep -q "<html" "$file"; then
+              echo "Error: $file missing html tag"
+              exit 1
+            fi
+          done
+          
+          echo "✓ HTML validation complete"
+          
+      - name: Check for security issues
+        run: |
+          echo "Checking for common security issues..."
+          
+          # Check for exposed credentials or keys
+          if grep -r -i "password\s*=\|api_key\s*=\|secret\s*=" . --include="*.html" --include="*.js" --include="*.md" 2>/dev/null | grep -v ".git"; then
+            echo "Warning: Potential exposed credentials found"
+          fi
+          
+          # Check for inline script security
+          if grep -r "eval(" . --include="*.html" --include="*.js" 2>/dev/null | grep -v ".git"; then
+            echo "Warning: Use of eval() detected - potential security risk"
+          fi
+          
+          echo "✓ Security check complete"
+          
+      - name: File size check
+        run: |
+          echo "Checking file sizes..."
+          
+          # Check if binary file is reasonable size (warn if > 10MB)
+          if [ -f euystacio.core.v2.bin ]; then
+            size=$(wc -c < euystacio.core.v2.bin)
+            size_mb=$((size / 1024 / 1024))
+            
+            if [ "$size" -gt 10485760 ]; then
+              echo "⚠ Warning: Binary file is ${size_mb}MB (consider optimization)"
+            else
+              echo "✓ Binary file size: $size bytes"
+            fi
+          fi
+          
+      - name: Generate CI report
+        run: |
+          echo "========================================="
+          echo "CI Checks Complete ✓"
+          echo "========================================="
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Triggered by: ${{ github.event_name }}"
