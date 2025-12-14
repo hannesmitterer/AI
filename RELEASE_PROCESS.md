@@ -2,7 +2,9 @@
 
 ## Overview
 
-This document describes the release process for the KOSYMBIOSIS Phase II binary configuration deployment.
+This document describes the release process for the KOSYMBIOSIS Phase II binary configuration specification.
+
+**Note**: The `euystacio.core.v2.bin` file is a text-based specification document that describes the binary format used by K-SYNC Daemon nodes. It is not itself a compiled binary, but rather documentation of the binary structure.
 
 ## Version Scheme
 
@@ -19,7 +21,7 @@ Current version is stored in the `VERSION` file.
 ### Prerequisites
 
 1. Ensure all changes are committed and pushed to the main branch
-2. Verify the binary file `euystacio.core.v2.bin` is present and correct
+2. Verify the specification file `euystacio.core.v2.bin` is present and accurate
 3. Update the `VERSION` file if not already done
 4. Ensure README.md is up to date with the latest information
 
@@ -37,18 +39,18 @@ git push origin v2.0.0
 
 Once the tag is pushed, the GitHub Actions workflow (`.github/workflows/release.yml`) will automatically:
 
-- Verify the binary file exists
+- Verify the specification file exists
 - Extract version information from the tag
-- Validate the binary's magic header
+- Display specification content preview
 - Generate release notes
 - Create a GitHub Release with:
-  - `euystacio.core.v2.bin` as a downloadable asset
+  - `euystacio.core.v2.bin` specification document as a downloadable asset
   - `index.html` governance dashboard
   - Comprehensive release notes
 
 #### 3. GitHub Pages Deployment
 
-The `.github/workflows/pages.yml` workflow automatically deploys to GitHub Pages on every push to main, making the binary accessible at:
+The `.github/workflows/pages.yml` workflow automatically deploys to GitHub Pages on every push to main, making the specification accessible at:
 
 ```
 https://hannesmitterer.github.io/AI/euystacio.core.v2.bin
@@ -69,64 +71,68 @@ If you need to create a release manually:
 ### Release Notes Template
 
 ```markdown
-## KOSYMBIOSIS Phase II Configuration Release
+## KOSYMBIOSIS Phase II Configuration Specification Release
 
-This release includes the `euystacio.core.v2.bin` core configuration file for Phase II deployment.
+This release includes the `euystacio.core.v2.bin` binary format specification document for Phase II deployment.
 
-### Binary Metadata
+### Binary Format Specification
 
 - **Version**: X.Y.Z
-- **MAGIC HEADER**: `45 55 59 53 54 41 43 49` (EUYSTACI)
+- **MAGIC HEADER Pattern**: `45 55 59 53 54 41 43 49` (EUYSTACI)
 - **Firmware Version**: 2.0.0 (Phase II)
 - **TFK Mint Target**: 4.0
 - **Min Consensus**: 88%
 - **WÄCHTER Mode**: IANUS (Active/Vigilant)
 - **Protocol**: Quick-Ethical (QE)
 
-### Download and Verification
+### Understanding This Document
 
-Download the binary configuration file from the assets below.
+The `euystacio.core.v2.bin` file is a text-based specification that documents the binary format.
+Download and view to understand the structure used by K-SYNC Daemon nodes.
 
 ### Distribution Channels
 
 - **GitHub Release**: Download from this release's assets
 - **GitHub Pages**: `https://hannesmitterer.github.io/AI/euystacio.core.v2.bin`
-- **IPFS**: Pinned via CID referenced in binary
+- **IPFS**: Compiled binary data (following this spec) distributed via IPFS
 
 ### Integration
 
-K-SYNC Daemon nodes will automatically fetch and validate this configuration.
-See the [README](https://github.com/hannesmitterer/AI#readme) for detailed usage instructions.
+K-SYNC Daemon nodes use this specification to implement their binary configuration format.
+See the [README](https://github.com/hannesmitterer/AI#readme) for detailed integration instructions.
 ```
 
 ## Post-Release Tasks
 
-1. **Verify GitHub Pages**: Check that the binary is accessible via the GitHub Pages URL
-2. **IPFS Pinning**: Ensure the binary is pinned to IPFS (if applicable)
-3. **Node Communication**: Notify K-SYNC Daemon operators of the new release
-4. **DAO Notification**: Inform DAO participants of the consensus requirement changes
-5. **Monitor Deployment**: Track node adoption through the governance dashboard
+1. **Verify GitHub Pages**: Check that the specification is accessible via the GitHub Pages URL
+2. **IPFS Implementation**: Ensure compiled binaries (following this spec) are pinned to IPFS
+3. **Node Communication**: Notify K-SYNC Daemon developers of the specification update
+4. **DAO Notification**: Inform DAO participants of the consensus requirement specifications
+5. **Monitor Implementation**: Track node adoption through the governance dashboard
 
 ## IPFS Distribution
 
-For decentralized distribution:
+For decentralized distribution of compiled binary configurations:
 
-1. **Upload to IPFS**:
+1. **Compile Binary from Specification**:
+   Follow the byte layout defined in `euystacio.core.v2.bin` to generate the actual binary data
+
+2. **Upload to IPFS**:
    ```bash
-   ipfs add euystacio.core.v2.bin
+   ipfs add <compiled-binary-file>
    ```
 
-2. **Pin the file**:
+3. **Pin the file**:
    ```bash
    ipfs pin add <CID>
    ```
 
-3. **Update documentation** with the CID in README.md
+4. **Update node configurations** with the CID
 
-4. **Verify availability**:
+5. **Verify availability**:
    ```bash
    ipfs cat <CID> > downloaded.bin
-   diff euystacio.core.v2.bin downloaded.bin
+   # Verify binary structure matches specification
    ```
 
 ## Rollback Process
@@ -161,9 +167,9 @@ If a release needs to be rolled back:
 
 ### Binary Verification Issues
 
-- Ensure the MAGIC HEADER is intact
-- Verify file hasn't been corrupted during transfer
-- Check file size matches expected value (1522 bytes for v2.0.0)
+- The `euystacio.core.v2.bin` file is a text-based specification document
+- To verify: use `cat` or a text editor to view the content
+- The document describes the binary format; actual binary files follow this specification
 
 ## Contact
 

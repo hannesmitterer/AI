@@ -8,16 +8,18 @@ This repository contains the operational configuration for the **KOSYMBIOSIS** g
 
 ### File Role and Purpose
 
-The `euystacio.core.v2.bin` file serves as the **core configuration artifact** for Phase II of the KOSYMBIOSIS project. This file:
+The `euystacio.core.v2.bin` file serves as the **core configuration specification** for Phase II of the KOSYMBIOSIS project. This file:
 
-- **Encodes Strategic Parameters**: Converts high-level governance decisions into concrete operational parameters
-- **Ensures Consistency**: Provides a single source of truth for all K-SYNC Daemon nodes
-- **Guarantees Immutability**: Configuration parameters are fixed at distribution time and cannot be altered at runtime
-- **Enables Verification**: Contains cryptographic headers and checksums for integrity validation
+- **Documents Strategic Parameters**: Describes the binary format that encodes high-level governance decisions into concrete operational parameters
+- **Ensures Consistency**: Provides a specification for the configuration format used by K-SYNC Daemon nodes
+- **Defines Immutable Structure**: Documents the configuration parameters that are fixed at distribution time and cannot be altered at runtime
+- **Enables Verification**: Specifies the binary structure including cryptographic headers and validation fields
 
-### Binary Structure and Metadata
+**Note**: This file is a text-based specification document that describes the binary configuration format. For actual binary distribution, K-SYNC Daemon nodes generate or receive the compiled binary based on this specification.
 
-The configuration file follows a structured binary format with the following fields:
+### Binary Structure and Metadata Specification
+
+The configuration file documents a structured binary format with the following fields:
 
 | Byte Range | Field Name | Binary Value | Operational Meaning |
 |------------|------------|--------------|---------------------|
@@ -40,63 +42,62 @@ The configuration file follows a structured binary format with the following fie
 
 ### For End Users
 
-1. **Download the Binary**: The configuration file is available directly from this repository
+1. **Download the Configuration Specification**: The configuration file is available directly from this repository
    ```bash
    wget https://raw.githubusercontent.com/hannesmitterer/AI/main/euystacio.core.v2.bin
    ```
 
-2. **Verify Integrity**: Check the file's MAGIC HEADER to ensure it's a valid EUYSTACI configuration
+2. **View the Specification**: The file contains human-readable documentation of the binary structure
    ```bash
-   hexdump -C euystacio.core.v2.bin | head -n 1
-   # Should show: 45 55 59 53 54 41 43 49 (EUYSTACI)
+   cat euystacio.core.v2.bin
    ```
 
-3. **View Configuration**: The file contains human-readable documentation of its binary structure
+3. **Understand the Binary Format**: Review the byte range specifications to understand how configuration data should be encoded in the actual binary format used by nodes
 
 ### For System Integrators
 
 1. **K-SYNC Daemon Integration**: 
-   - K-SYNC Daemons automatically fetch the configuration from IPFS
-   - The CID RADICE FW field (0x10-0x17) points to the authoritative IPFS document
-   - Nodes validate the configuration using the MAGIC HEADER before applying
+   - K-SYNC Daemons use this specification to understand the binary configuration format
+   - The binary configuration data is fetched from IPFS as referenced in the CID RADICE FW field
+   - Nodes validate received binary data using the MAGIC HEADER pattern (bytes 0x00-0x07: `45 55 59 53 54 41 43 49`)
 
-2. **Version Checking**:
-   - Read bytes 0x08-0x0B to determine firmware version
-   - Ensure compatibility with your node's supported version range
-   - Phase II requires version 2.0.0 or higher
+2. **Binary Implementation**:
+   - When generating binary configuration data, follow the byte layout specified in this document
+   - Read bytes 0x08-0x0B to encode/decode firmware version
+   - Ensure compatibility with Phase II specification (version 2.0.0 or higher)
 
 3. **Consensus Validation**:
-   - Extract MIN CONSENSO % (bytes 0x1A-0x1B): 88% required for Phase II
-   - Configure your DAO voting threshold accordingly
+   - Extract MIN CONSENSO % from bytes 0x1A-0x1B: value `00 88` represents 88% required for Phase II
+   - Configure your DAO voting threshold to match this specification
 
 ## Distribution and Availability
 
 ### GitHub Repository
 - **Direct Access**: Available in this repository at [`euystacio.core.v2.bin`](./euystacio.core.v2.bin)
-- **Releases**: Tagged releases include the binary as a downloadable artifact
+- **Releases**: Tagged releases include the specification document as a downloadable artifact
 - **Current Version**: v2.0.0 (Phase II)
 
 ### GitHub Pages
-The configuration is accessible via GitHub Pages at:
+The configuration specification is accessible via GitHub Pages at:
 ```
 https://hannesmitterer.github.io/AI/euystacio.core.v2.bin
 ```
 
 ### IPFS Distribution
-For maximum decentralization and immutability:
-- The binary is pinned to IPFS for permanent availability
-- IPFS CID is embedded in the binary's CID RADICE FW field
-- Nodes can fetch directly from IPFS using the embedded CID
-- **Note**: IPFS distribution ensures the configuration survives even if GitHub becomes unavailable
+For decentralized binary configuration distribution:
+- Compiled binary configurations (following this specification) are pinned to IPFS
+- The IPFS CID reference is embedded in the actual binary's CID RADICE FW field
+- K-SYNC Daemon nodes fetch the compiled binary directly from IPFS using the embedded CID
+- **Note**: This document serves as the specification; the actual binary data for node operation is distributed via IPFS
 
 ## Deployment Status
 
 ### Phase II Milestone Checklist
 
-✅ **Binary Asset Created**: `euystacio.core.v2.bin` generated with Phase II parameters  
-✅ **IPFS Pinning**: Configuration uploaded and pinned to IPFS network  
-✅ **Repository Published**: Binary committed to version control  
-🔄 **Node Distribution**: K-SYNC Daemons being updated with new configuration  
+✅ **Configuration Specification Created**: `euystacio.core.v2.bin` documents Phase II binary format  
+✅ **IPFS Integration Specified**: Binary data distribution via IPFS network documented  
+✅ **Repository Published**: Specification committed to version control  
+🔄 **Node Implementation**: K-SYNC Daemons implementing binary format based on this spec  
 🔄 **Consensus Activation**: 88% threshold being communicated to DAO participants  
 
 ### Version History

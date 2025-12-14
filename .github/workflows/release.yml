@@ -23,7 +23,7 @@ jobs:
             echo "Error: euystacio.core.v2.bin not found"
             exit 1
           fi
-          echo "Binary file verified"
+          echo "Configuration specification file verified"
       
       - name: Extract version from tag
         id: version
@@ -32,54 +32,55 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Version: $VERSION"
       
-      - name: Verify binary magic header
+      - name: Verify specification content
         run: |
-          HEADER=$(hexdump -n 8 -e '8/1 "%02x " "\n"' euystacio.core.v2.bin | head -n 1 || echo "")
-          echo "Binary header: $HEADER"
-          # Note: The file is actually text-based, so we're just documenting it
+          echo "Configuration specification content:"
+          head -5 euystacio.core.v2.bin
+          echo "Specification file is text-based documentation of binary format"
       
       - name: Create Release Notes
         id: release_notes
         run: |
           cat > release_notes.md << 'EOF'
-          ## KOSYMBIOSIS Phase II Configuration Release
+          ## KOSYMBIOSIS Phase II Configuration Specification Release
           
-          This release includes the `euystacio.core.v2.bin` core configuration file for Phase II deployment.
+          This release includes the `euystacio.core.v2.bin` configuration specification document for Phase II deployment.
           
-          ### Binary Metadata
+          ### Binary Format Specification
           
           - **Version**: ${{ steps.version.outputs.version }}
-          - **MAGIC HEADER**: `45 55 59 53 54 41 43 49` (EUYSTACI)
-          - **Firmware Version**: 2.0.0 (Phase II)
+          - **MAGIC HEADER Pattern**: `45 55 59 53 54 41 43 49` (EUYSTACI)
+          - **Firmware Version Spec**: 2.0.0 (Phase II)
           - **TFK Mint Target**: 4.0
           - **Min Consensus**: 88%
           - **WÄCHTER Mode**: IANUS (Active/Vigilant)
           - **Protocol**: Quick-Ethical (QE)
           
-          ### Download and Verification
+          ### Understanding This Document
           
-          Download the binary configuration file from the assets below.
+          The `euystacio.core.v2.bin` file is a **text-based specification** that documents the binary format used by K-SYNC Daemon nodes. It describes the byte layout and values that should be present in the actual compiled binary configuration.
           
-          **Verify integrity**:
+          **To use this specification**:
           ```bash
-          # Check that the file starts with EUYSTACI identifier
-          hexdump -C euystacio.core.v2.bin | head -n 1
+          # Download and view the specification
+          wget https://raw.githubusercontent.com/hannesmitterer/AI/main/euystacio.core.v2.bin
+          cat euystacio.core.v2.bin
           ```
           
           ### Distribution Channels
           
           - **GitHub Release**: Download from this release's assets
           - **GitHub Pages**: `https://hannesmitterer.github.io/AI/euystacio.core.v2.bin`
-          - **IPFS**: Pinned via CID referenced in binary (QmT6S1Z7...)
+          - **IPFS**: Compiled binary data (following this spec) is distributed via IPFS
           
           ### Integration
           
-          K-SYNC Daemon nodes will automatically fetch and validate this configuration.
-          See the [README](https://github.com/hannesmitterer/AI#readme) for detailed usage instructions.
+          K-SYNC Daemon nodes use this specification to implement and validate their binary configuration format.
+          See the [README](https://github.com/hannesmitterer/AI#readme) for detailed integration instructions.
           
           ### What's Included
           
-          - `euystacio.core.v2.bin` - Core configuration file
+          - `euystacio.core.v2.bin` - Binary format specification document
           - Interactive governance dashboard (`index.html`)
           - Complete documentation in README
           EOF
