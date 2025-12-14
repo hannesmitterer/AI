@@ -37,7 +37,16 @@ jobs:
       - name: Start IPFS Daemon
         run: |
           ipfs daemon &
-          sleep 5
+          # Wait for daemon to be ready with retry mechanism
+          for i in {1..30}; do
+            if ipfs id > /dev/null 2>&1; then
+              echo "IPFS daemon is ready"
+              break
+            fi
+            echo "Waiting for IPFS daemon... ($i/30)"
+            sleep 1
+          done
+          ipfs id
           
       - name: Upload Binary to IPFS
         id: ipfs_upload
@@ -97,11 +106,12 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add IPFS_MANIFEST.md
-          git diff --staged --quiet || git commit -m "Update IPFS manifest with latest CID: ${{ steps.ipfs_upload.outputs.ipfs_hash }}"
+          IPFS_CID="${{ steps.ipfs_upload.outputs.ipfs_hash }}"
+          git diff --staged --quiet || git commit -m "Update IPFS manifest with latest CID: ${IPFS_CID}"
           
       - name: Push Changes
         if: github.ref == 'refs/heads/main'
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}

@@ -47,8 +47,10 @@ This binary file synthesizes strategic decisions into operational parameters tha
 
 ### GitHub Pages Deployment
 
-The project is automatically deployed to GitHub Pages on every push to the main branch. The live interface is accessible at:
-- **URL**: `https://hannesmitterer.github.io/AI/` (when enabled)
+The project is automatically deployed to GitHub Pages on every push to the main branch. After enabling GitHub Pages in repository settings, the live interface will be accessible at:
+- **URL**: `https://hannesmitterer.github.io/AI/`
+
+To enable GitHub Pages: Go to repository Settings → Pages → Source: GitHub Actions
 
 The deployment workflow (`deploy-pages.yml`) ensures that:
 - The latest version is always available globally
