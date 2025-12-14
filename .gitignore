@@ -34,7 +34,6 @@ env/
 logs/
 
 # OS files
-.DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
