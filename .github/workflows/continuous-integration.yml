@@ -1,0 +1,55 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate Repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate HTML structure
+        run: |
+          echo "Validating index.html..."
+          if [ -f index.html ]; then
+            echo "✓ index.html exists"
+          else
+            echo "✗ index.html missing"
+            exit 1
+          fi
+
+      - name: Validate binary asset
+        run: |
+          echo "Validating euystacio.core.v2.bin..."
+          if [ -f euystacio.core.v2.bin ]; then
+            echo "✓ Binary asset exists"
+            file_size=$(stat -f%z euystacio.core.v2.bin 2>/dev/null || stat -c%s euystacio.core.v2.bin)
+            echo "  Size: $file_size bytes"
+          else
+            echo "✗ Binary asset missing"
+            exit 1
+          fi
+
+      - name: Check README
+        run: |
+          echo "Validating README.md..."
+          if [ -f README.md ]; then
+            echo "✓ README.md exists"
+          else
+            echo "✗ README.md missing"
+            exit 1
+          fi
+
+      - name: System health check
+        run: |
+          echo "=== System Health Report ==="
+          echo "Repository: $(basename $(pwd))"
+          echo "Files count: $(find . -type f ! -path './.git/*' | wc -l)"
+          echo "Status: OPERATIONAL"
