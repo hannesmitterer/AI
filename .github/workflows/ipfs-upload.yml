@@ -10,6 +10,9 @@ on:
 jobs:
   ipfs-upload:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write  # For potential issue creation on failures
     
     steps:
       - name: Checkout repository
