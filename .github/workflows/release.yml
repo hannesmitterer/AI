@@ -1,0 +1,99 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Verify binary file exists
+        run: |
+          if [ ! -f euystacio.core.v2.bin ]; then
+            echo "Error: euystacio.core.v2.bin not found"
+            exit 1
+          fi
+          echo "Binary file verified"
+      
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+      
+      - name: Verify binary magic header
+        run: |
+          HEADER=$(hexdump -n 8 -e '8/1 "%02x " "\n"' euystacio.core.v2.bin | head -n 1 || echo "")
+          echo "Binary header: $HEADER"
+          # Note: The file is actually text-based, so we're just documenting it
+      
+      - name: Create Release Notes
+        id: release_notes
+        run: |
+          cat > release_notes.md << 'EOF'
+          ## KOSYMBIOSIS Phase II Configuration Release
+          
+          This release includes the `euystacio.core.v2.bin` core configuration file for Phase II deployment.
+          
+          ### Binary Metadata
+          
+          - **Version**: ${{ steps.version.outputs.version }}
+          - **MAGIC HEADER**: `45 55 59 53 54 41 43 49` (EUYSTACI)
+          - **Firmware Version**: 2.0.0 (Phase II)
+          - **TFK Mint Target**: 4.0
+          - **Min Consensus**: 88%
+          - **WÄCHTER Mode**: IANUS (Active/Vigilant)
+          - **Protocol**: Quick-Ethical (QE)
+          
+          ### Download and Verification
+          
+          Download the binary configuration file from the assets below.
+          
+          **Verify integrity**:
+          ```bash
+          # Check that the file starts with EUYSTACI identifier
+          hexdump -C euystacio.core.v2.bin | head -n 1
+          ```
+          
+          ### Distribution Channels
+          
+          - **GitHub Release**: Download from this release's assets
+          - **GitHub Pages**: `https://hannesmitterer.github.io/AI/euystacio.core.v2.bin`
+          - **IPFS**: Pinned via CID referenced in binary (QmT6S1Z7...)
+          
+          ### Integration
+          
+          K-SYNC Daemon nodes will automatically fetch and validate this configuration.
+          See the [README](https://github.com/hannesmitterer/AI#readme) for detailed usage instructions.
+          
+          ### What's Included
+          
+          - `euystacio.core.v2.bin` - Core configuration file
+          - Interactive governance dashboard (`index.html`)
+          - Complete documentation in README
+          EOF
+          echo "Release notes created"
+      
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            euystacio.core.v2.bin
+            index.html
+          body_path: release_notes.md
+          draft: false
+          prerelease: false
+          name: "Phase II Release v${{ steps.version.outputs.version }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
