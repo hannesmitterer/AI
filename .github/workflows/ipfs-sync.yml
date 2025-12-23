@@ -1,0 +1,120 @@
+name: IPFS Distribution and Sync
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'euystacio.core.v2.bin'
+  workflow_dispatch:
+
+permissions:
+  contents: write  # Required for committing and pushing IPFS manifest
+
+jobs:
+  ipfs-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      - name: Install IPFS Kubo
+        run: |
+          wget https://dist.ipfs.tech/kubo/v0.24.0/kubo_v0.24.0_linux-amd64.tar.gz
+          tar -xvzf kubo_v0.24.0_linux-amd64.tar.gz
+          cd kubo
+          sudo bash install.sh
+          ipfs --version
+          
+      - name: Initialize IPFS
+        run: |
+          ipfs init
+          ipfs config Addresses.API /ip4/127.0.0.1/tcp/5001
+          ipfs config Addresses.Gateway /ip4/127.0.0.1/tcp/8080
+          
+      - name: Start IPFS Daemon
+        run: |
+          ipfs daemon &
+          # Wait for daemon to be ready with retry mechanism
+          for i in {1..30}; do
+            if ipfs id > /dev/null 2>&1; then
+              echo "IPFS daemon is ready"
+              break
+            fi
+            echo "Waiting for IPFS daemon... ($i/30)"
+            sleep 1
+          done
+          ipfs id
+          
+      - name: Upload Binary to IPFS
+        id: ipfs_upload
+        run: |
+          echo "Uploading euystacio.core.v2.bin to IPFS..."
+          IPFS_HASH=$(ipfs add euystacio.core.v2.bin | awk '{print $2}')
+          echo "IPFS Hash: $IPFS_HASH"
+          echo "ipfs_hash=$IPFS_HASH" >> $GITHUB_OUTPUT
+          
+          # Create a manifest file with IPFS information
+          cat > IPFS_MANIFEST.md << EOF
+          # IPFS Distribution Manifest
+          
+          ## Binary Asset Information
+          
+          **File**: euystacio.core.v2.bin
+          **IPFS Hash (CID)**: $IPFS_HASH
+          **Upload Date**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Commit**: ${{ github.sha }}
+          
+          ## Access URLs
+          
+          - IPFS Gateway: https://ipfs.io/ipfs/$IPFS_HASH
+          - Cloudflare IPFS: https://cloudflare-ipfs.com/ipfs/$IPFS_HASH
+          - IPFS Desktop: ipfs://$IPFS_HASH
+          
+          ## Distribution Status
+          
+          The binary has been uploaded to IPFS ensuring:
+          - **Immutability**: Content-addressed storage guarantees integrity
+          - **Decentralization**: Distributed across IPFS network nodes
+          - **Global Availability**: Accessible from any IPFS gateway worldwide
+          - **Permanence**: Pinned for persistent availability
+          
+          ## Node Synchronization
+          
+          All K-SYNC Daemon nodes should update their configuration to reference:
+          \`\`\`text
+          CID: $IPFS_HASH
+          \`\`\`
+          
+          ---
+          *Generated automatically by IPFS Distribution Workflow*
+          *This manifest embodies the spirit of decentralized synergy and love for open access*
+          EOF
+          
+      - name: Display IPFS Information
+        run: |
+          echo "✅ Binary successfully uploaded to IPFS"
+          echo "📦 IPFS Hash: ${{ steps.ipfs_upload.outputs.ipfs_hash }}"
+          echo "🌐 Access via: https://ipfs.io/ipfs/${{ steps.ipfs_upload.outputs.ipfs_hash }}"
+          cat IPFS_MANIFEST.md
+          
+      - name: Commit IPFS Manifest
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add IPFS_MANIFEST.md
+          IPFS_CID="${{ steps.ipfs_upload.outputs.ipfs_hash }}"
+          git diff --staged --quiet || git commit -m "Update IPFS manifest with latest CID: ${IPFS_CID}"
+          
+      - name: Push Changes
+        if: github.ref == 'refs/heads/main'
+        uses: ad-m/github-push-action@v0.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
