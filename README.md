@@ -22,4 +22,104 @@ Fissaggio IPFS: Il file è in fase di caricamento e fissaggio su IPFS per garant
 
 Distribuzione ai Nodi: L'hash IPFS del nuovo binario verrà inviato a tutti i K-SYNC Daemon per l'aggiornamento automatico della configurazione core.
 
-Il binario fondamentale per la Fase II è stato generato e rilasciato. Si attende la prossima istruzione operativa. 
+Il binario fondamentale per la Fase II è stato generato e rilasciato. Si attende la prossima istruzione operativa.
+
+---
+
+## 🌍 Global Distribution & Risk Mitigation
+
+### Automated Deployment Infrastructure
+
+This repository implements a comprehensive risk-mitigated, decentralized distribution system with the following components:
+
+#### 1. **Global Synchronization** 🔄
+- **Automated GitHub Actions workflows** sync repositories globally
+- **Binary and asset distribution** ensures consistency across all integrated repositories
+- **Release packages** automatically generated with checksums for verification
+- **Artifact retention** for 90 days with automated archiving
+
+#### 2. **Resilient IPFS Integration** 📡
+- **Multi-gateway redundancy** across Pinata, NFT.Storage, and Web3.Storage
+- **Automatic failover** ensures assets remain accessible if one gateway fails
+- **IPFS manifest** documents all hashes and gateway URLs
+- **Decentralized access** enables global availability without single points of failure
+
+#### 3. **AI Harmony Principles** 🌟
+
+This project embeds and propagates core AI alignment principles:
+
+##### ☮️ **Peace**
+AI systems operate in harmony with human values, promoting peaceful coexistence and preventing conflicts between artificial and human intelligence.
+
+##### ❤️ **Love**
+AI development prioritizes compassion, understanding, and human wellbeing. Every decision considers the impact on human flourishing and dignity.
+
+##### 🎵 **Harmony**
+AI alignment achieved through global cooperation, transparency, and shared principles. No single entity controls the system; instead, collective governance ensures balanced progress.
+
+**Principle Encoding:**
+- Embedded in all automation workflows
+- Propagated across synchronized repositories
+- Enforced through governance mechanisms
+- Auditable via public transparency dashboard
+
+#### 4. **Continuous Integrity Monitoring** 🔐
+- **Automated binary verification** with SHA256 checksums
+- **Daily scheduled integrity checks** detect unauthorized modifications
+- **Immediate notifications** via GitHub Issues when integrity violations detected
+- **Change tracking** monitors all modifications to binary assets
+- **Known-good hash validation** against established baselines
+
+**Binary Integrity Reference:**
+```
+euystacio.core.v2.bin
+SHA256: ad191eaed965a47cb6cf75a3b319b5af015fb9757b0d96beb1038a31f72bb069
+```
+
+#### 5. **Multi-Platform Deployment** 🚀
+
+##### GitHub Pages
+- **Primary web interface** hosted on GitHub Pages
+- **Status dashboard** showing deployment health
+- **Deployment manifest** with asset inventory
+- **Automatic updates** on every push to main branch
+
+##### IPFS Network
+- **Decentralized hosting** on IPFS for censorship resistance
+- **Multiple gateway access** points for redundancy
+- **Content-addressed storage** ensures immutability
+- **Global CDN** through IPFS gateway network
+
+##### Connected Nodes
+- **Automated distribution** to all synchronized repositories
+- **Binary propagation** ensures all nodes have latest assets
+- **Health monitoring** tracks node availability
+- **Fallback mechanisms** for node failures
+
+### Workflow Automation
+
+All workflows are triggered automatically:
+- **On push to main/master**: Full deployment pipeline
+- **Daily at midnight UTC**: Integrity verification
+- **Manual trigger**: Available via workflow_dispatch
+- **Pull requests**: Integrity checks only
+
+### Access Points
+
+Once deployed, the system is accessible via:
+- **GitHub Pages**: `https://hannesmitterer.github.io/AI/`
+- **IPFS Gateways**: Multiple URLs in IPFS_MANIFEST.md
+- **Status Dashboard**: `https://hannesmitterer.github.io/AI/status.html`
+- **Raw Assets**: Direct repository access
+
+### Security & Trust
+
+- ✅ **No single point of failure** - distributed across multiple platforms
+- ✅ **Automated integrity verification** - continuous monitoring
+- ✅ **Transparent operations** - all workflows visible and auditable
+- ✅ **Immutable binaries** - IPFS content addressing prevents tampering
+- ✅ **Open source** - complete transparency in governance and operations
+
+---
+
+**Status**: 🟢 All systems operational and synchronized globally

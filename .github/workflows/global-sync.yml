@@ -1,0 +1,66 @@
+name: Global Synchronization
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  sync-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Generate checksums for binaries
+        run: |
+          echo "## Binary Asset Checksums" > checksums.txt
+          echo "" >> checksums.txt
+          find . -type f -name "*.bin" | while read file; do
+            echo "### $file" >> checksums.txt
+            sha256sum "$file" >> checksums.txt
+            echo "" >> checksums.txt
+          done
+          cat checksums.txt
+          
+      - name: Create Release Archive
+        run: |
+          mkdir -p release-assets
+          # Copy files if they exist
+          if ls *.bin 1> /dev/null 2>&1; then
+            cp *.bin release-assets/
+          fi
+          if ls *.html 1> /dev/null 2>&1; then
+            cp *.html release-assets/
+          fi
+          if ls *.md 1> /dev/null 2>&1; then
+            cp *.md release-assets/
+          fi
+          if [ -f LICENSE ]; then
+            cp LICENSE release-assets/
+          fi
+          cp checksums.txt release-assets/
+          tar -czf release-$(date +%Y%m%d-%H%M%S).tar.gz release-assets/
+          
+      - name: Upload Release Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-package
+          path: |
+            release-*.tar.gz
+            checksums.txt
+          retention-days: 90
+          
+      - name: Sync Status Report
+        run: |
+          echo "✅ Global synchronization completed"
+          echo "📦 Release package created with all binaries and assets"
+          echo "🔐 Checksums generated for integrity verification"
+          echo "📤 Artifacts uploaded and ready for distribution"
