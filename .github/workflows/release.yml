@@ -1,0 +1,100 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Verify binary file exists
+        run: |
+          if [ ! -f euystacio.core.v2.bin ]; then
+            echo "Error: euystacio.core.v2.bin not found"
+            exit 1
+          fi
+          echo "Configuration specification file verified"
+      
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+      
+      - name: Verify specification content
+        run: |
+          echo "Configuration specification content:"
+          head -5 euystacio.core.v2.bin
+          echo "Specification file is text-based documentation of binary format"
+      
+      - name: Create Release Notes
+        id: release_notes
+        run: |
+          cat > release_notes.md << 'EOF'
+          ## KOSYMBIOSIS Phase II Configuration Specification Release
+          
+          This release includes the `euystacio.core.v2.bin` configuration specification document for Phase II deployment.
+          
+          ### Binary Format Specification
+          
+          - **Version**: ${{ steps.version.outputs.version }}
+          - **MAGIC HEADER Pattern**: `45 55 59 53 54 41 43 49` (EUYSTACI)
+          - **Firmware Version Spec**: 2.0.0 (Phase II)
+          - **TFK Mint Target**: 4.0
+          - **Min Consensus**: 88%
+          - **WÄCHTER Mode**: IANUS (Active/Vigilant)
+          - **Protocol**: Quick-Ethical (QE)
+          
+          ### Understanding This Document
+          
+          The `euystacio.core.v2.bin` file is a **text-based specification** that documents the binary format used by K-SYNC Daemon nodes. It describes the byte layout and values that should be present in the actual compiled binary configuration.
+          
+          **To use this specification**:
+          ```bash
+          # Download and view the specification
+          wget https://raw.githubusercontent.com/hannesmitterer/AI/main/euystacio.core.v2.bin
+          cat euystacio.core.v2.bin
+          ```
+          
+          ### Distribution Channels
+          
+          - **GitHub Release**: Download from this release's assets
+          - **GitHub Pages**: `https://hannesmitterer.github.io/AI/euystacio.core.v2.bin`
+          - **IPFS**: Compiled binary data (following this spec) is distributed via IPFS
+          
+          ### Integration
+          
+          K-SYNC Daemon nodes use this specification to implement and validate their binary configuration format.
+          See the [README](https://github.com/hannesmitterer/AI#readme) for detailed integration instructions.
+          
+          ### What's Included
+          
+          - `euystacio.core.v2.bin` - Binary format specification document
+          - Interactive governance dashboard (`index.html`)
+          - Complete documentation in README
+          EOF
+          echo "Release notes created"
+      
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            euystacio.core.v2.bin
+            index.html
+          body_path: release_notes.md
+          draft: false
+          prerelease: false
+          name: "Phase II Release v${{ steps.version.outputs.version }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
