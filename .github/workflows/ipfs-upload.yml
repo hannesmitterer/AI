@@ -47,25 +47,30 @@ jobs:
         run: |
           ipfs init
           
-      - name: Upload to IPFS (Local Node)
-        id: ipfs-local
+      - name: Upload to IPFS and Generate Documentation
+        id: ipfs-operations
         run: |
+          # Function to wait for IPFS daemon readiness
+          wait_for_ipfs() {
+            for i in {1..30}; do
+              if ipfs id > /dev/null 2>&1; then
+                echo "IPFS daemon is ready."
+                return 0
+              fi
+              if [ "$i" -eq 30 ]; then
+                echo "IPFS daemon did not become ready in time." >&2
+                return 1
+              fi
+              sleep 1
+            done
+          }
+          
           # Start daemon with cleanup trap
           trap 'pkill -9 ipfs' EXIT
           ipfs daemon --offline &
           
-          # Wait for IPFS daemon to be ready instead of using a fixed sleep
-          for i in {1..30}; do
-            if ipfs id > /dev/null 2>&1; then
-              echo "IPFS daemon is ready."
-              break
-            fi
-            if [ "$i" -eq 30 ]; then
-              echo "IPFS daemon did not become ready in time." >&2
-              exit 1
-            fi
-            sleep 1
-          done
+          # Wait for daemon to be ready
+          wait_for_ipfs || exit 1
           
           # Add binary files
           for file in *.bin; do
@@ -88,26 +93,7 @@ jobs:
           echo "IPFS Hash for entire repository: $REPO_HASH"
           echo "repo_hash=$REPO_HASH" >> $GITHUB_OUTPUT
           
-      - name: Generate IPFS Documentation
-        id: generate-manifest
-        run: |
-          # Start daemon with cleanup trap
-          trap 'pkill -9 ipfs' EXIT
-          ipfs daemon --offline &
-          
-          # Wait for IPFS daemon to be ready
-          for i in {1..30}; do
-            if ipfs id > /dev/null 2>&1; then
-              echo "IPFS daemon is ready."
-              break
-            fi
-            if [ "$i" -eq 30 ]; then
-              echo "IPFS daemon did not become ready in time." >&2
-              exit 1
-            fi
-            sleep 1
-          done
-          
+          # Generate IPFS Documentation
           cat > IPFS_MANIFEST.md << 'EOF'
           # IPFS Distribution Manifest
           
