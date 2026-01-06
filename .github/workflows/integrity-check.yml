@@ -82,12 +82,18 @@ jobs:
           
           # Get list of changed binary files in this commit
           if [ "${{ github.event_name }}" = "push" ]; then
-            CHANGED_BINS=$(git diff --name-only HEAD~1 HEAD | grep "\.bin$" || true)
+            COMMIT_COUNT=$(git rev-list --count HEAD)
+            if [ "$COMMIT_COUNT" -gt 1 ]; then
+              CHANGED_BINARIES=$(git diff --name-only HEAD~1 HEAD | grep "\.bin$" || true)
+            else
+              # For the first commit, compare the commit against the empty tree
+              CHANGED_BINARIES=$(git diff-tree --no-commit-id --name-only -r HEAD | grep "\.bin$" || true)
+            fi
             
-            if [ -n "$CHANGED_BINS" ]; then
+            if [ -n "$CHANGED_BINARIES" ]; then
               echo "⚠️  **Binary files modified in this commit:**" >> integrity-report.md
               echo "\`\`\`" >> integrity-report.md
-              echo "$CHANGED_BINS" >> integrity-report.md
+              echo "$CHANGED_BINARIES" >> integrity-report.md
               echo "\`\`\`" >> integrity-report.md
             else
               echo "✅ No binary files modified in this commit" >> integrity-report.md

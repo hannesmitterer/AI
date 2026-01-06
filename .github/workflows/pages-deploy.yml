@@ -58,17 +58,20 @@ jobs:
             "assets": [
           EOF
           
-          # List all files
+          # List all files except manifest.json itself
           FIRST=true
           for file in _site/*; do
             if [ -f "$file" ]; then
               FILENAME=$(basename "$file")
-              if [ "$FIRST" = true ]; then
-                FIRST=false
-              else
-                echo "," >> _site/manifest.json
+              # Skip manifest.json to avoid including it in its own list
+              if [ "$FILENAME" != "manifest.json" ]; then
+                if [ "$FIRST" = true ]; then
+                  FIRST=false
+                else
+                  echo "," >> _site/manifest.json
+                fi
+                echo "      \"$FILENAME\"" >> _site/manifest.json
               fi
-              echo "      \"$FILENAME\"" >> _site/manifest.json
             fi
           done
           

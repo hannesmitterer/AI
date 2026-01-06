@@ -91,10 +91,10 @@ SHA256: ad191eaed965a47cb6cf75a3b319b5af015fb9757b0d96beb1038a31f72bb069
 - **Global CDN** through IPFS gateway network
 
 ##### Connected Nodes
-- **Automated distribution** to all synchronized repositories
-- **Binary propagation** ensures all nodes have latest assets
-- **Health monitoring** tracks node availability
-- **Fallback mechanisms** for node failures
+- **Local asset packaging** with checksums for distribution
+- **Artifact storage** with 90-day retention for historical tracking
+- **Manual distribution** capabilities to synchronized repositories
+- **Extensible framework** for multi-repository synchronization
 
 ### Workflow Automation
 
@@ -107,9 +107,9 @@ All workflows are triggered automatically:
 ### Access Points
 
 Once deployed, the system is accessible via:
-- **GitHub Pages**: `https://hannesmitterer.github.io/AI/`
-- **IPFS Gateways**: Multiple URLs in IPFS_MANIFEST.md
-- **Status Dashboard**: `https://hannesmitterer.github.io/AI/status.html`
+- **GitHub Pages**: `https://<github-username>.github.io/AI/` (replace `<github-username>` with the repository owner)
+- **IPFS Gateways**: Multiple URLs in IPFS_MANIFEST.md (generated after workflow runs)
+- **Status Dashboard**: `https://<github-username>.github.io/AI/status.html` (update to match your deployment)
 - **Raw Assets**: Direct repository access
 
 ### Security & Trust

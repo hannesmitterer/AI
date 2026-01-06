@@ -47,7 +47,7 @@ jobs:
             cp LICENSE release-assets/
           fi
           cp checksums.txt release-assets/
-          tar -czf release-$(date +%Y%m%d-%H%M%S).tar.gz release-assets/
+          tar -czf release-$(date -u +%Y%m%d-%H%M%S).tar.gz release-assets/
           
       - name: Upload Release Artifacts
         uses: actions/upload-artifact@v4
