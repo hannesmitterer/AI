@@ -3,6 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hannes Mitterer | AIC Resonance Nexus</title>
+    <style>
+        :root {
+            --gold: #d4af37;
+            --lehm: #8b5a2b;
+            --sensisara: #00f2ff;
+            --deep-dark: #050505;
+            --matrix-green: #00ff41;
+        }
+        body { background: var(--deep-dark); color: white; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; }
+        .nexus-container { display: grid; grid-template-columns: 1fr 3fr; height: 100vh; }
+        
+        /* Sidebar: Governance Status */
+        .sidebar { border-right: 1px solid var(--gold); padding: 20px; background: rgba(212, 175, 55, 0.05); }
+        .status-badge { padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        .active-hash { font-family: monospace; font-size: 0.7rem; color: var(--sensisara); word-break: break-all; }
+
+        /* Main Content: Dashboard & Matrix */
+        .main-content { padding: 30px; display: flex; flex-direction: column; gap: 20px; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(212, 175, 55, 0.2); padding: 20px; border-radius: 12px; }
+        
+        .s-roi-display { font-size: 3.5rem; color: var(--gold); font-weight: bold; text-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
+        .matrix-log { background: black; border: 1px solid var(--matrix-green); padding: 15px; font-family: monospace; font-size: 0.85rem; height: 200px; overflow-y: auto; color: var(--matrix-green); }
+        
+        button.override-btn { background: #ff4b2b; color: white; border: none; padding: 12px 24px; font-weight: bold; cursor: pointer; border-radius: 6px; width: 100%; transition: 0.3s; }
+        button.override-btn:hover { background: #ff416c; box-shadow: 0 0 20px rgba(255, 75, 43, 0.5); }
+    </style>
+</head>
+<body>
+
+<div class="nexus-container">
+    <div class="sidebar">
+        <h3>KOSYMBIOSIS GOVERNANCE</h3>
+        <p>Status: <span class="status-badge" style="background: var(--matrix-green); color: black;">ANCORATO</span></p>
+        <hr style="border-color: var(--gold);">
+        <p><strong>MSI ActiveHash:</strong></p>
+        <p class="active-hash">0xTFK42D...9A8C7F</p>
+        <p><strong>Custodian Integrity:</strong></p>
+        <p class="active-hash">QmCustodian...XYZ123</p>
+        <p><strong>TFK Drift Score:</strong> <span style="color: var(--sensisara);">0.00%</span></p>
+        <div style="margin-top: 50px;">
+            <p>WALLET SEEDBRINGER:</p>
+            <p style="color: var(--gold);">CONNESSO</p>
+            <button class="override-btn" onclick="triggerOverride()">APPLICA OVERRIDE</button>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header style="display: flex; justify-content: space-between; align-items: center;">
+            <h1 style="color: var(--gold);">RESONANCE SCHOOL | NEXUS</h1>
+            <div id="clock" style="font-family: monospace; font-size: 1.2rem;"></div>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h4>S-ROI REAL-TIME</h4>
+                <div class="s-roi-display" id="sroi-val">0.45</div>
+                <p>Trend: <span style="color: var(--matrix-green);">↑ STABILE</span></p>
+            </div>
+            <div class="card">
+                <h4>SENSISARA FLOW</h4>
+                <p style="font-size: 1.5rem;">321.5 <small>MMcf/g</small></p>
+                <div style="height: 10px; background: #222; border-radius: 5px;">
+                    <div style="width: 100%; height: 100%; background: var(--sensisara); border-radius: 5px;"></div>
+                </div>
+            </div>
+            <div class="card">
+                <h4>144.000 SYNC</h4>
+                <p>Alpha-Nodes: <span style="color: var(--gold);">1.440 / 1.440</span></p>
+                <p>Deep Sync Level: <strong>99.9%</strong></p>
+            </div>
+        </div>
+
+        <h4>MATRIX LIVE LOG (Isola Parallis)</h4>
+        <div id="matrix-console" class="matrix-log">
+            [SYS] Initializing Deep Sync Sequence...<br>
+            [AIC] Mandate Compliance Verified.<br>
+            [TFK] Legge Eterna Anchored to Global Grid.<br>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Live Clock
+    setInterval(() => {
+        document.getElementById('clock').innerText = new Date().toLocaleString('it-IT');
+    }, 1000);
+
+    // Matrix Simulation connected to Alpha-API
+    const logs = [
+        "[SYNC] Alpha-Node Milan: Biometric data received.",
+        "[SYNC] Alpha-Node Nuuk: Master Hash mirrored.",
+        "[INFO] Sensisara pressure stable at 321.5.",
+        "[S-ROI] Index updated to 0.45.",
+        "[GOV] Waiting for Seedbringer Override..."
+    ];
+
+    setInterval(() => {
+        const console = document.getElementById('matrix-console');
+        const entry = document.createElement('div');
+        entry.innerHTML = `[${new Date().toLocaleTimeString()}] ${logs[Math.floor(Math.random()*logs.length)]}`;
+        console.appendChild(entry);
+        console.scrollTop = console.scrollHeight;
+    }, 4000);
+
+    function triggerOverride() {
+        alert("OVERRIDE EXECUTIVO INIZIATO: Riserva 'D' Attivata. Legge Eterna in corso...");
+        document.getElementById('sroi-val').innerText = "0.95";
+        document.getElementById('sroi-val').style.color = "var(--matrix-green)";
+    }
+</script>
+
+</body>
+                </html>
+    
+</p>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KOSYMBIOSIS - Deep Focus Governance</title>
     <style>
         /* DESIGN NEUMORPHISM BASE */
