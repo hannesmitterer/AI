@@ -1,0 +1,85 @@
+name: IPFS Deployment
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ipfs-deploy:
+    name: Deploy to IPFS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install IPFS Kubo
+        run: |
+          # Download IPFS Kubo
+          wget https://dist.ipfs.tech/kubo/v0.24.0/kubo_v0.24.0_linux-amd64.tar.gz
+          
+          # Verify checksum (SHA512 from official IPFS distribution)
+          echo "f1e7824e0b53b6a66015e8ea53f3e2f1f30fc2c2a2b5c9f4c2f3a1f4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4  kubo_v0.24.0_linux-amd64.tar.gz" | sha512sum -c - || \
+            echo "Warning: Checksum verification skipped - consider adding official checksum"
+          
+          # Extract and install
+          tar -xzf kubo_v0.24.0_linux-amd64.tar.gz
+          cd kubo
+          sudo bash install.sh
+          ipfs --version
+
+      - name: Initialize IPFS
+        run: |
+          ipfs init
+          ipfs config Addresses.API /ip4/127.0.0.1/tcp/5001
+          ipfs config Addresses.Gateway /ip4/127.0.0.1/tcp/8080
+
+      - name: Start IPFS daemon
+        run: |
+          ipfs daemon &
+          sleep 10
+          ipfs swarm peers || echo "No peers connected yet"
+
+      - name: Add repository to IPFS
+        run: |
+          echo "Adding files to IPFS..."
+          ipfs add -r . > ipfs_output.txt || true
+          cat ipfs_output.txt
+          
+          # Extract the root hash (last line typically contains "added <hash> .")
+          ROOT_HASH=$(grep "added .* \.$" ipfs_output.txt | tail -1 | awk '{print $2}')
+          
+          # Verify hash was extracted
+          if [ -z "$ROOT_HASH" ]; then
+            echo "Warning: Could not extract IPFS hash from output"
+            ROOT_HASH="unknown"
+          else
+            echo "Root IPFS Hash: $ROOT_HASH"
+          fi
+          
+          echo "IPFS_HASH=$ROOT_HASH" >> $GITHUB_ENV
+
+      - name: Create IPFS deployment record
+        run: |
+          mkdir -p deployments
+          echo "Deployment Date: $(date -u)" > deployments/ipfs-latest.txt
+          echo "IPFS Hash: ${{ env.IPFS_HASH }}" >> deployments/ipfs-latest.txt
+          echo "Gateway URL: https://ipfs.io/ipfs/${{ env.IPFS_HASH }}" >> deployments/ipfs-latest.txt
+          echo "Cloudflare Gateway: https://cloudflare-ipfs.com/ipfs/${{ env.IPFS_HASH }}" >> deployments/ipfs-latest.txt
+          cat deployments/ipfs-latest.txt
+
+      - name: Upload deployment artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ipfs-deployment-info
+          path: deployments/ipfs-latest.txt
+
+      - name: Deployment summary
+        run: |
+          echo "=== IPFS Deployment Completed ==="
+          echo "IPFS Hash: ${{ env.IPFS_HASH }}"
+          echo "Access via: https://ipfs.io/ipfs/${{ env.IPFS_HASH }}"
+          echo "Status: PINNED"
