@@ -21,12 +21,9 @@ import hashlib
 import json
 import os
 import base64
-import time
 from datetime import datetime, timezone
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import ed25519
-from cryptography.hazmat.backends import default_backend
 
 
 class PACTProtocol:
@@ -406,7 +403,7 @@ def main():
     results = pact.execute_pact(conversation_log, final_report)
     
     # Save results to file
-    output_file = "/home/runner/work/AI/AI/pact_execution_results.json"
+    output_file = "pact_execution_results.json"
     with open(output_file, 'w') as f:
         json.dump(results, f, indent=2)
     
