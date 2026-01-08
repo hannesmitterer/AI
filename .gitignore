@@ -25,3 +25,7 @@ node_modules/
 # Build artifacts (if added in future)
 dist/
 build/
+
+# PACT execution results (contains cryptographic keys)
+pact_execution_results.json
+nexus_anchoring_manifest.json

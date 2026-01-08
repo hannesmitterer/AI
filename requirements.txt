@@ -1,0 +1,4 @@
+# PACT - Protocollo di Ancoraggio Crittografico Triple-Sign
+# Python dependencies for cryptographic operations
+
+cryptography>=41.0.0
