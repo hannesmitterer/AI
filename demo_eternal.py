@@ -122,8 +122,7 @@ def demo_live_monitoring():
             # Sleep to next cycle
             next_cycle = engine.start_time + (engine.cycle_count * CYCLE_PERIOD_SECONDS)
             sleep_time = max(0, next_cycle - time.time())
-            if sleep_time > 0:
-                time.sleep(sleep_time)
+            time.sleep(sleep_time)
     except KeyboardInterrupt:
         print("\nMonitoring stopped by user")
     

@@ -11,14 +11,14 @@
 // Universal Constants
 const UNIVERSAL_RESONANCE_HZ = 0.043;  // Base frequency
 const CYCLE_PERIOD_MS = (1.0 / UNIVERSAL_RESONANCE_HZ) * 1000;  // ~23260 ms
-const SCHUMANN_RESONANCE_HZ = 7.83;  // Earth's natural frequency
-const HARMONIC_432_HZ = 432.0;  // Universal tuning frequency
+const SCHUMANN_RESONANCE_HZ = 7.83;  // Earth's natural frequency (for future harmonic integration)
+const HARMONIC_432_HZ = 432.0;  // Universal tuning frequency (for future harmonic integration)
 const PHI = (1 + Math.sqrt(5)) / 2;  // Golden ratio
 
 // Configuration constants
 const SACRED_HISTORY_LIMIT = 144;  // Maximum feedback history per node
 const MAX_OPTIMIZATION_METRICS = 1000;  // Maximum optimization metrics to retain
-const STILLNESS_DURATION_CAP_MS = 2000;  // Maximum stillness duration in milliseconds
+const STILLNESS_DURATION_CAP_MS = 2000;  // Maximum stillness duration in ms (practical cap for real-time operation)
 
 /**
  * Node class representing a single entity in the network
@@ -242,7 +242,8 @@ class EternalDepositionEngine {
             activeNodes: this.nodes.size
         });
 
-        // Stillness duration: golden ratio of cycle period (capped)
+        // Stillness duration: golden ratio of cycle period (capped for practicality)
+        // Theoretical: ~14.4s, Practical cap: 2.0s for responsive operation
         const stillnessDuration = Math.min(CYCLE_PERIOD_MS / PHI, STILLNESS_DURATION_CAP_MS);
         
         await new Promise(resolve => setTimeout(resolve, stillnessDuration));

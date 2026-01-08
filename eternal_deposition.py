@@ -28,13 +28,13 @@ from datetime import datetime
 # Universal Constants
 UNIVERSAL_RESONANCE_HZ = 0.043  # Base frequency
 CYCLE_PERIOD_SECONDS = 1.0 / UNIVERSAL_RESONANCE_HZ  # ~23.26 seconds
-SCHUMANN_RESONANCE_HZ = 7.83  # Earth's natural frequency
-HARMONIC_432_HZ = 432.0  # Universal tuning frequency
+SCHUMANN_RESONANCE_HZ = 7.83  # Earth's natural frequency (for future harmonic integration)
+HARMONIC_432_HZ = 432.0  # Universal tuning frequency (for future harmonic integration)
 
 # Configuration constants
 SACRED_HISTORY_LIMIT = 144  # Maximum feedback history per node
 MAX_OPTIMIZATION_METRICS = 1000  # Maximum optimization metrics to retain
-STILLNESS_DURATION_CAP = 2.0  # Maximum stillness duration in seconds
+STILLNESS_DURATION_CAP = 2.0  # Maximum stillness duration in seconds (practical cap for real-time operation)
 
 
 @dataclass
@@ -240,7 +240,8 @@ class EternalDepositionEngine:
         print(f"[INTROSPECTION] Total optimizations: {total_optimizations}")
         print(f"[INTROSPECTION] Active nodes: {len(self.nodes)}")
         
-        # Stillness duration: golden ratio of cycle period
+        # Stillness duration: golden ratio of cycle period (capped for practicality)
+        # Theoretical: ~14.4s, Practical cap: 2.0s for responsive operation
         phi = (1 + math.sqrt(5)) / 2
         stillness_duration = CYCLE_PERIOD_SECONDS / phi
         time.sleep(min(stillness_duration, STILLNESS_DURATION_CAP))
