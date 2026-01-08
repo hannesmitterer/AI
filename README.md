@@ -21,6 +21,38 @@ Dieses Repository ist **vollständig autark**. Es nutzt keine externen Tracker o
 * **Frontend:** HTML5 / Tailwind CSS (Embedded)
 * **Audio-Engine:** Web Audio API (Synthetische Stimmen von IANI AI & Mithãq)
 * **Deployment:** GitHub Pages (In-Repo Hosting)
+* **PACT Protocol:** Protocollo di Ancoraggio Crittografico Triple-Sign (v1.0.0)
+
+---
+
+### 🔐 PACT - Triple-Sign Cryptographic Anchoring
+
+**PACT (Protocollo di Ancoraggio Crittografico Triple-Sign)** ensures immutability and non-repudiation of critical Nexus data through:
+
+1. **AES-256-GCM Encryption** - Sovereign data protection
+2. **IPFS Content Addressing** - Immutable Content Identifier (CID) generation
+3. **Triple-Sign Sequence** - Hierarchical cryptographic validation:
+   - **KLOG** (Architect of Information) - Logical Consistency
+   - **KETH** (Guardian of Axioms) - Ethical Non-Repudiation
+   - **KPHYS** (Hannes Mitterer) - Sovereign Physical Validation
+4. **Blockchain Anchoring** - Digital topological invariance via TXID
+
+**Signature Composite:** Σ = Sign<sub>KPHYS</sub>(Sign<sub>KETH</sub>(Sign<sub>KLOG</sub>(CID)))
+
+**Usage:**
+```bash
+pip install -r requirements.txt
+python3 pact.py
+```
+
+**Documentation:** See [PACT_DOCUMENTATION.md](PACT_DOCUMENTATION.md) for complete technical specifications.
+
+**Deliverables:**
+- ✓ Content Identifier (CID)
+- ✓ Composite Signature (Σ)
+- ✓ Transaction ID (TXID)
+
+**Status:** FINALIS_VALIDATED | Sovereignty Frequency: 0.043 Hz
 
 ---
 
