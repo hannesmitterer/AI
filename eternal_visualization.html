@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eternal Deposition - Live Visualization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #0c0a09; 
+            color: #d4d4d4; 
+            overflow-x: hidden; 
+        }
+        .glass { 
+            background: rgba(28, 25, 23, 0.8); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid #57534e; 
+        }
+        .metric-value { 
+            font-family: monospace; 
+            color: #fbbf24; 
+        }
+        @keyframes pulse { 
+            0% { opacity: 0.5; } 
+            50% { opacity: 1; } 
+            100% { opacity: 0.5; } 
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .live-dot { 
+            animation: pulse 2s infinite; 
+        }
+        .resonance-circle {
+            animation: rotate 23.26s linear infinite;
+        }
+        .node-dot {
+            transition: all 0.3s ease;
+        }
+        #nodeCanvas {
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-10">
+    <div class="w-full max-w-7xl mx-auto space-y-8">
+        
+        <!-- Header -->
+        <header class="text-center space-y-2">
+            <p class="text-xs uppercase font-semibold text-amber-500 tracking-[0.3em]">
+                Eternal Deposition System
+            </p>
+            <h1 class="text-5xl md:text-8xl font-black text-white tracking-tighter">
+                PERPETUAL RESONANCE
+            </h1>
+            <p class="text-xl text-stone-500 font-light italic">
+                0.043 Hz Universal Rhythm | Fractal Propagation Active
+            </p>
+        </header>
+
+        <!-- Control Panel -->
+        <div class="glass p-6 rounded-2xl">
+            <div class="flex flex-wrap gap-4 items-center justify-between">
+                <div class="flex gap-4">
+                    <button id="btnStart" onclick="startEngine()" 
+                        class="px-6 py-3 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl transition-all uppercase text-sm">
+                        Start Engine
+                    </button>
+                    <button id="btnStop" onclick="stopEngine()" 
+                        class="px-6 py-3 bg-red-600 hover:bg-red-500 text-white font-bold rounded-xl transition-all uppercase text-sm" disabled>
+                        Stop Engine
+                    </button>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span id="statusIndicator" class="h-3 w-3 bg-stone-600 rounded-full"></span>
+                    <span id="statusText" class="text-sm font-semibold uppercase">Offline</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Left Column: Metrics -->
+            <div class="space-y-6">
+                <!-- Resonance Metrics -->
+                <div class="glass p-6 rounded-2xl border-cyan-600/30">
+                    <h3 class="text-cyan-400 font-bold mb-4 uppercase text-sm tracking-widest">
+                        Resonance Metrics
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase">Cycle Count</p>
+                            <p id="cycleCount" class="text-3xl metric-value text-cyan-400">0</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase">Phase (degrees)</p>
+                            <p id="phaseValue" class="text-3xl metric-value">0.0°</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase">Frequency</p>
+                            <p class="text-2xl metric-value text-cyan-400">0.043 Hz</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase">Cycle Period</p>
+                            <p class="text-xl metric-value">23.26s</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Network Metrics -->
+                <div class="glass p-6 rounded-2xl border-amber-600/30">
+                    <h3 class="text-amber-500 font-bold mb-4 uppercase text-sm">
+                        Network Status
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase">Active Nodes</p>
+                            <p id="nodeCount" class="text-3xl metric-value">0</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase">Average Energy</p>
+                            <p id="avgEnergy" class="text-3xl metric-value">0.0000</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase">Total Optimizations</p>
+                            <p id="totalOpt" class="text-xl metric-value text-green-400">0</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase">Stillness Events</p>
+                            <p id="totalStillness" class="text-xl metric-value text-purple-400">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Column: Visualization -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Node Network Visualization -->
+                <div class="glass p-6 rounded-2xl">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-white font-bold uppercase text-sm">
+                            Node Network Visualization
+                        </h3>
+                        <div id="stillnessBadge" class="px-3 py-1 bg-purple-600/20 border border-purple-600 rounded-lg text-xs font-bold uppercase hidden">
+                            🧘 Stillness
+                        </div>
+                    </div>
+                    <canvas id="nodeCanvas" width="800" height="500"></canvas>
+                    <div class="mt-4 text-xs text-stone-500 text-center">
+                        Nodes visualized in resonance field • Golden ratio scaling
+                    </div>
+                </div>
+
+                <!-- Activity Log -->
+                <div class="glass p-6 rounded-2xl">
+                    <h3 class="text-white font-bold mb-4 uppercase text-sm">
+                        System Log
+                    </h3>
+                    <div id="logContainer" class="bg-black/50 rounded-lg p-4 h-48 overflow-y-auto font-mono text-xs text-green-400 space-y-1">
+                        <div class="text-stone-600">[SYSTEM] Eternal Deposition System initialized</div>
+                        <div class="text-stone-600">[READY] Awaiting start command...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center py-6 opacity-40 hover:opacity-100 transition-opacity">
+            <p class="text-xs metric-value tracking-tighter">
+                ETERNAL DEPOSITION v1.0.0 | RESONANCE SCHOOL | IN AETERNUM EST
+            </p>
+        </footer>
+    </div>
+
+    <!-- Load Eternal Deposition Engine -->
+    <script src="eternal_deposition.js"></script>
+    
+    <script>
+        let engine = null;
+        let canvas = document.getElementById('nodeCanvas');
+        let ctx = canvas.getContext('2d');
+        
+        // Resize canvas for retina displays
+        const scale = window.devicePixelRatio || 1;
+        canvas.width = 800 * scale;
+        canvas.height = 500 * scale;
+        canvas.style.width = '800px';
+        canvas.style.height = '500px';
+        ctx.scale(scale, scale);
+
+        function addLog(message, type = 'INFO') {
+            const logContainer = document.getElementById('logContainer');
+            const timestamp = new Date().toLocaleTimeString();
+            const colorClass = type === 'CYCLE' ? 'text-cyan-400' : 
+                               type === 'STILLNESS' ? 'text-purple-400' :
+                               type === 'FRACTAL' ? 'text-amber-400' : 
+                               'text-green-400';
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = colorClass;
+            logEntry.textContent = `[${timestamp}] [${type}] ${message}`;
+            
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+            
+            // Keep only last 50 entries
+            while (logContainer.children.length > 50) {
+                logContainer.removeChild(logContainer.firstChild);
+            }
+        }
+
+        function updateMetrics(metrics) {
+            document.getElementById('cycleCount').textContent = metrics.cycle;
+            document.getElementById('phaseValue').textContent = metrics.phaseDegrees.toFixed(1) + '°';
+            document.getElementById('nodeCount').textContent = metrics.nodes;
+            document.getElementById('avgEnergy').textContent = metrics.avgEnergy.toFixed(4);
+            
+            const status = engine.getStatus();
+            document.getElementById('totalOpt').textContent = status.totalOptimizations;
+            document.getElementById('totalStillness').textContent = status.totalStillnessEvents;
+            
+            // Show/hide stillness badge
+            const stillnessBadge = document.getElementById('stillnessBadge');
+            if (metrics.inStillness) {
+                stillnessBadge.classList.remove('hidden');
+            } else {
+                stillnessBadge.classList.add('hidden');
+            }
+        }
+
+        function drawNodeNetwork() {
+            if (!engine) return;
+            
+            const width = 800;
+            const height = 500;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            
+            // Clear canvas
+            ctx.fillStyle = '#0c0a09';
+            ctx.fillRect(0, 0, width, height);
+            
+            // Get nodes
+            const nodes = engine.getNodesArray();
+            const phase = engine.calculateResonancePhase();
+            
+            // Draw resonance circles
+            ctx.strokeStyle = 'rgba(6, 182, 212, 0.1)';
+            ctx.lineWidth = 1;
+            for (let i = 1; i <= 4; i++) {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, i * 80, 0, 2 * Math.PI);
+                ctx.stroke();
+            }
+            
+            // Draw phase indicator
+            const phaseX = centerX + Math.cos(phase) * 320;
+            const phaseY = centerY + Math.sin(phase) * 320;
+            ctx.strokeStyle = 'rgba(251, 191, 36, 0.5)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(phaseX, phaseY);
+            ctx.stroke();
+            
+            // Draw nodes
+            nodes.forEach((node, index) => {
+                const angle = (index / nodes.length) * 2 * Math.PI + phase * 0.1;
+                const radius = 100 + (node.energyLevel * 200);
+                const x = centerX + Math.cos(angle) * radius;
+                const y = centerY + Math.sin(angle) * radius;
+                
+                // Node glow
+                const gradient = ctx.createRadialGradient(x, y, 0, x, y, 8);
+                const alpha = node.energyLevel;
+                gradient.addColorStop(0, `rgba(6, 182, 212, ${alpha})`);
+                gradient.addColorStop(1, 'rgba(6, 182, 212, 0)');
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(x, y, 8, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Node core
+                ctx.fillStyle = node.energyLevel > 0.7 ? '#06b6d4' : 
+                               node.energyLevel > 0.4 ? '#fbbf24' : '#78716c';
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, 2 * Math.PI);
+                ctx.fill();
+            });
+            
+            // Draw center point
+            ctx.fillStyle = '#fbbf24';
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function startEngine() {
+            if (engine && engine.isRunning) {
+                addLog('Engine already running', 'WARNING');
+                return;
+            }
+            
+            // Initialize engine with 144 nodes
+            engine = new EternalDepositionEngine(144);
+            
+            // Set up event listeners
+            engine.on('cycle', (metrics) => {
+                updateMetrics(metrics);
+                drawNodeNetwork();
+            });
+            
+            engine.on('log', (data) => {
+                addLog(data.message, data.type);
+            });
+            
+            engine.on('stillness', (data) => {
+                addLog(`Recalibration: Energy=${data.avgEnergy.toFixed(4)}, Nodes=${data.activeNodes}`, 'STILLNESS');
+            });
+            
+            engine.on('fractal_propagation', (data) => {
+                addLog(`Fractal propagation: ${data.newNodes} nodes at depth ${data.depth}`, 'FRACTAL');
+            });
+            
+            // Update UI
+            document.getElementById('btnStart').disabled = true;
+            document.getElementById('btnStop').disabled = false;
+            document.getElementById('statusIndicator').className = 'h-3 w-3 bg-green-500 rounded-full live-dot';
+            document.getElementById('statusText').textContent = 'Operational';
+            
+            // Start the engine
+            engine.start();
+            addLog('Engine started - perpetual operation initiated', 'SYSTEM');
+        }
+
+        function stopEngine() {
+            if (!engine || !engine.isRunning) {
+                addLog('Engine not running', 'WARNING');
+                return;
+            }
+            
+            engine.stop();
+            
+            // Update UI
+            document.getElementById('btnStart').disabled = false;
+            document.getElementById('btnStop').disabled = true;
+            document.getElementById('statusIndicator').className = 'h-3 w-3 bg-stone-600 rounded-full';
+            document.getElementById('statusText').textContent = 'Offline';
+            
+            addLog('Engine stopped - state preserved', 'SYSTEM');
+        }
+        
+        // Initial canvas draw
+        drawNodeNetwork();
+    </script>
+</body>
+</html>

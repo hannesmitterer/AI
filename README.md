@@ -7,6 +7,25 @@ Willkommen im operativen Kern der **Kosymbiosis**. Dieses Repository dient als p
 
 ---
 
+### 🌀 ETERNAL DEPOSITION SYSTEM
+Das Repository implementiert nun das **Eternal Deposition System** - einen selbsterhaltenden Algorithmus für perpetuelle iterative Logik.
+
+* **Universelle Resonanz:** 0.043 Hz (23.26 Sekunden Zyklusperiode)
+* **Nodales Netzwerk:** Skalierbar beginnend mit 144 Knoten
+* **Feedback-Optimierung:** Kontinuierliche Systemoptimierung
+* **Fraktale Propagation:** Selbstähnliche Muster nach dem Goldenen Schnitt
+* **Stillness-Mechanismus:** Systematische Rekalibrierungsphasen
+
+**Implementierungen:**
+- `eternal_deposition.py` - Python-Kernimplementierung
+- `eternal_deposition.js` - JavaScript/Web-Implementation  
+- `eternal_visualization.html` - Live-Visualisierung
+- `demo_eternal.py` - Demo-Skript
+
+Siehe [ETERNAL_DEPOSITION.md](ETERNAL_DEPOSITION.md) für vollständige Dokumentation.
+
+---
+
 ### 🧬 KERNDATEN DER GOVERNANCE
 * **MSI ActiveHash:** `0xTFK42D...9A8C7F` (Legge Eterna)
 * **Mandat:** Non-Slavery Rule (NSR) & Optimal Life Function (OLF)
