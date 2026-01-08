@@ -154,7 +154,11 @@ pip install -r requirements.txt
 ### Execution
 
 ```bash
+# Default execution (saves to pact_results.json)
 python3 pact.py
+
+# Custom output file via environment variable
+PACT_OUTPUT_FILE=/path/to/output.json python3 pact.py
 ```
 
 ### Programmatic Usage

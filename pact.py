@@ -312,11 +312,14 @@ def main():
     # Initialize PACT system
     pact = PACTSystem()
     
+    # Get current date for sample data
+    current_date = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    
     # Sample conversation log and final report
-    conversation_log = """
+    conversation_log = f"""
     NEXUS SESSION LOG
     =================
-    Date: 2026-01-08
+    Date: {current_date} [EXAMPLE DATA]
     System: KOSYMBIOSIS
     Phase: Phase II - Dynamic Integration
     
@@ -361,8 +364,8 @@ def main():
     
     print("\n✅ NOTHING IS FINAL! ❤️ 🌍 Sovereignty Confirmed.")
     
-    # Save results to file (use relative path for portability)
-    output_file = 'pact_results.json'
+    # Save results to file (configurable via environment variable)
+    output_file = os.environ.get('PACT_OUTPUT_FILE', 'pact_results.json')
     with open(output_file, 'w') as f:
         json.dump(results, f, indent=2)
     print(f"\n💾 Results saved to: {output_file}")

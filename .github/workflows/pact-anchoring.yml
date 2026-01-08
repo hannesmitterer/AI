@@ -83,10 +83,11 @@ jobs:
       - name: Generate PACT report
         run: |
           echo "Generating PACT execution report..."
-          cat > pact_execution_report.md << 'EOF'
+          REPORT_DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          cat > pact_execution_report.md << EOF
           # PACT Execution Report
           
-          **Date**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Date**: $REPORT_DATE
           **Protocol**: Protocollo di Ancoraggio Crittografico Triple-Sign
           **Version**: 1.0.0
           
