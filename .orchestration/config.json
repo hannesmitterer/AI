@@ -77,5 +77,55 @@
       "scalability",
       "resilience"
     ]
+  },
+  "pact": {
+    "enabled": true,
+    "version": "1.0.0",
+    "protocol": "Protocollo di Ancoraggio Crittografico Triple-Sign",
+    "description": "Cryptographic anchoring system for immutability and non-repudiation",
+    "components": {
+      "encryption": {
+        "algorithm": "AES-256-GCM",
+        "key_size": 256,
+        "nonce_size": 96
+      },
+      "signatures": {
+        "algorithm": "RSA-PSS",
+        "key_size": 2048,
+        "hash": "SHA-256",
+        "hierarchy": [
+          {
+            "role": "KLOG",
+            "name": "Architect of Information",
+            "purpose": "Logical Consistency"
+          },
+          {
+            "role": "KETH",
+            "name": "Guardian of Axioms",
+            "purpose": "Ethical Non-Repudiation"
+          },
+          {
+            "role": "KPHYS",
+            "name": "Physical Validator (Hannes Mitterer)",
+            "purpose": "Sovereign Physical Validation"
+          }
+        ]
+      },
+      "content_addressing": {
+        "system": "IPFS",
+        "hash_function": "SHA-256",
+        "format": "CIDv1"
+      },
+      "blockchain_anchoring": {
+        "enabled": true,
+        "hash_function": "SHA-256"
+      }
+    },
+    "state": {
+      "sovereignty_freq": "0.043 Hz",
+      "s_roi_target": 0.5000,
+      "mhc_status": "FINALIS_VALIDATED",
+      "kosymbiosis_state": "Stable"
+    }
   }
 }
