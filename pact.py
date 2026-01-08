@@ -20,7 +20,6 @@ from datetime import datetime, timezone
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
-from cryptography.hazmat.primitives import serialization
 import base64
 
 
@@ -299,8 +298,9 @@ class PACTSystem:
             'txid': txid,
             'state_report': state_report,
             'encrypted_data_size': len(encrypted_data),
-            'nonce': base64.b64encode(nonce).decode('utf-8'),
-            'aes_key': base64.b64encode(self.aes_key).decode('utf-8')
+            'nonce': base64.b64encode(nonce).decode('utf-8')
+            # Note: AES key is intentionally NOT included for security
+            # The key must be managed separately through secure key management
         }
         
         return results

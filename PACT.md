@@ -181,14 +181,17 @@ signature = results['signature_composite']['Σ']
 ## Security Considerations
 
 ### Key Management
-- Private keys are generated per session
-- Keys should be stored securely in production
-- Consider using HSM (Hardware Security Module) for production keys
+- **AES Encryption Keys**: Never logged or stored with encrypted data. Must be managed separately using secure key management systems.
+- **RSA Private Keys**: Generated per session in current implementation. For production:
+  - Store securely using HSM (Hardware Security Module)
+  - Implement proper key rotation policies
+  - Use separate key storage (e.g., Azure Key Vault, AWS KMS)
+- **Nonce Storage**: The nonce is included in results for decryption purposes, which is secure as GCM requires both key AND nonce
 
 ### Entropy
 - System random number generator used for key generation
 - GCM nonces must be unique per encryption operation
-- Use cryptographically secure random sources
+- Use cryptographically secure random sources (Python's `os.urandom()`)
 
 ### Verification
 - Composite signature can be verified by reconstructing the signature chain
