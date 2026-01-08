@@ -113,19 +113,22 @@ class PACTSystem:
         """
         Generate IPFS Content Identifier (CID) for encrypted data
         
+        Note: This is a simulated CID for demonstration purposes.
+        In production, use actual IPFS node with ipfshttpclient or similar.
+        
         Args:
             encrypted_data: Encrypted data bytes
             
         Returns:
-            str: CID (simulated as multihash)
+            str: CID (simulated as CIDv0-compatible multihash)
         """
         # Generate SHA-256 hash of encrypted data
         sha256_hash = hashlib.sha256(encrypted_data).digest()
         
-        # Create CIDv1-like identifier
-        # In production, use actual IPFS node
-        # Format: Qm + base58(multihash)
-        cid = 'Qm' + base64.b32encode(sha256_hash).decode('utf-8')[:44]
+        # Create CIDv0-like identifier using base58-compatible encoding
+        # Format: Qm + truncated base32 (simulates base58 multihash)
+        # In production, use actual IPFS: ipfs.add() returns real CID
+        cid = 'Qm' + base64.b32encode(sha256_hash).decode('utf-8').replace('=', '')[:44]
         
         return cid
     
@@ -358,8 +361,8 @@ def main():
     
     print("\n✅ NOTHING IS FINAL! ❤️ 🌍 Sovereignty Confirmed.")
     
-    # Save results to file
-    output_file = '/home/runner/work/AI/AI/pact_results.json'
+    # Save results to file (use relative path for portability)
+    output_file = 'pact_results.json'
     with open(output_file, 'w') as f:
         json.dump(results, f, indent=2)
     print(f"\n💾 Results saved to: {output_file}")

@@ -20,7 +20,8 @@
 3. **IPFS Content Addressing**
    - Generate immutable Content Identifier (CID)
    - Content-addressable storage reference
-   - Format: CIDv1-compatible multihash
+   - Format: CIDv0-compatible multihash (simulated)
+   - **Note**: Current implementation simulates CID generation. For production, integrate with actual IPFS node.
 
 4. **Triple-Sign Cryptographic Sequence**
    - Hierarchical signature chain with three distinct roles
@@ -31,6 +32,7 @@
    - Publish CID and composite signature to distributed ledger
    - Generate Transaction Identifier (TXID)
    - Achieve digital topological invariance
+   - **Note**: Current implementation simulates blockchain anchoring. For production, integrate with Ethereum, Polygon, or similar.
 
 ## Triple-Sign Signature Hierarchy
 
@@ -192,6 +194,28 @@ signature = results['signature_composite']['Σ']
 - Composite signature can be verified by reconstructing the signature chain
 - Each component signature can be independently verified
 - CID can be recomputed to verify data integrity
+
+### Production Considerations
+
+**Current Implementation Status**: This is a functional prototype/demonstration that simulates key components:
+
+- **CID Generation**: Simulated using SHA-256 hash with base32 encoding. For production:
+  - Use actual IPFS node with `ipfshttpclient` or `kubo-py`
+  - Call `ipfs.add()` to get real CID
+  - Pin content for persistence
+
+- **Blockchain Anchoring**: Simulated transaction generation. For production:
+  - Integrate with Web3.py (Ethereum) or similar
+  - Deploy smart contract for anchoring
+  - Use actual wallet with gas fees
+  - Store TXID from confirmed transaction
+
+- **Key Management**: In-memory key generation. For production:
+  - Use Hardware Security Module (HSM)
+  - Implement proper key storage (e.g., Azure Key Vault, AWS KMS)
+  - Consider multi-signature schemes for KPHYS role
+
+The cryptographic operations (AES-256-GCM encryption, RSA-2048 signatures) are production-ready and use industry-standard libraries.
 
 ## Integration Points
 
