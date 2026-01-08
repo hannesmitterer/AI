@@ -31,6 +31,11 @@ CYCLE_PERIOD_SECONDS = 1.0 / UNIVERSAL_RESONANCE_HZ  # ~23.26 seconds
 SCHUMANN_RESONANCE_HZ = 7.83  # Earth's natural frequency
 HARMONIC_432_HZ = 432.0  # Universal tuning frequency
 
+# Configuration constants
+SACRED_HISTORY_LIMIT = 144  # Maximum feedback history per node
+MAX_OPTIMIZATION_METRICS = 1000  # Maximum optimization metrics to retain
+STILLNESS_DURATION_CAP = 2.0  # Maximum stillness duration in seconds
+
 
 @dataclass
 class Node:
@@ -47,8 +52,8 @@ class Node:
         """Apply feedback optimization to the node."""
         self.feedback_history.append(feedback_value)
         # Keep only recent history (fractal memory)
-        if len(self.feedback_history) > 144:  # 144 as sacred number
-            self.feedback_history = self.feedback_history[-144:]
+        if len(self.feedback_history) > SACRED_HISTORY_LIMIT:
+            self.feedback_history = self.feedback_history[-SACRED_HISTORY_LIMIT:]
         
         # Optimize energy based on feedback
         self.energy_level = max(0.0, min(1.0, 
@@ -204,8 +209,8 @@ class EternalDepositionEngine:
         
         # Track optimization metrics
         self.optimization_metrics.append(feedback)
-        if len(self.optimization_metrics) > 1000:
-            self.optimization_metrics = self.optimization_metrics[-1000:]
+        if len(self.optimization_metrics) > MAX_OPTIMIZATION_METRICS:
+            self.optimization_metrics = self.optimization_metrics[-MAX_OPTIMIZATION_METRICS:]
         
         # Record optimization
         current_time = time.time()
@@ -238,7 +243,7 @@ class EternalDepositionEngine:
         # Stillness duration: golden ratio of cycle period
         phi = (1 + math.sqrt(5)) / 2
         stillness_duration = CYCLE_PERIOD_SECONDS / phi
-        time.sleep(min(stillness_duration, 2.0))  # Cap at 2 seconds for practicality
+        time.sleep(min(stillness_duration, STILLNESS_DURATION_CAP))
         
         self.is_in_stillness = False
         print(f"[STILLNESS] Recalibration complete")

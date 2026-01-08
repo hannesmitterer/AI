@@ -15,6 +15,11 @@ const SCHUMANN_RESONANCE_HZ = 7.83;  // Earth's natural frequency
 const HARMONIC_432_HZ = 432.0;  // Universal tuning frequency
 const PHI = (1 + Math.sqrt(5)) / 2;  // Golden ratio
 
+// Configuration constants
+const SACRED_HISTORY_LIMIT = 144;  // Maximum feedback history per node
+const MAX_OPTIMIZATION_METRICS = 1000;  // Maximum optimization metrics to retain
+const STILLNESS_DURATION_CAP_MS = 2000;  // Maximum stillness duration in milliseconds
+
 /**
  * Node class representing a single entity in the network
  */
@@ -32,9 +37,9 @@ class Node {
     applyFeedback(feedbackValue) {
         this.feedbackHistory.push(feedbackValue);
         
-        // Keep only recent history (144 as sacred number)
-        if (this.feedbackHistory.length > 144) {
-            this.feedbackHistory = this.feedbackHistory.slice(-144);
+        // Keep only recent history
+        if (this.feedbackHistory.length > SACRED_HISTORY_LIMIT) {
+            this.feedbackHistory = this.feedbackHistory.slice(-SACRED_HISTORY_LIMIT);
         }
         
         // Optimize energy based on feedback
@@ -195,8 +200,8 @@ class EternalDepositionEngine {
 
         // Track optimization metrics
         this.optimizationMetrics.push(feedback);
-        if (this.optimizationMetrics.length > 1000) {
-            this.optimizationMetrics = this.optimizationMetrics.slice(-1000);
+        if (this.optimizationMetrics.length > MAX_OPTIMIZATION_METRICS) {
+            this.optimizationMetrics = this.optimizationMetrics.slice(-MAX_OPTIMIZATION_METRICS);
         }
 
         // Record optimization
@@ -238,7 +243,7 @@ class EternalDepositionEngine {
         });
 
         // Stillness duration: golden ratio of cycle period (capped)
-        const stillnessDuration = Math.min(CYCLE_PERIOD_MS / PHI, 2000);
+        const stillnessDuration = Math.min(CYCLE_PERIOD_MS / PHI, STILLNESS_DURATION_CAP_MS);
         
         await new Promise(resolve => setTimeout(resolve, stillnessDuration));
 
@@ -419,7 +424,10 @@ if (typeof module !== 'undefined' && module.exports) {
         CYCLE_PERIOD_MS,
         SCHUMANN_RESONANCE_HZ,
         HARMONIC_432_HZ,
-        PHI
+        PHI,
+        SACRED_HISTORY_LIMIT,
+        MAX_OPTIMIZATION_METRICS,
+        STILLNESS_DURATION_CAP_MS
     };
 }
 

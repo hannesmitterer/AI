@@ -4,8 +4,8 @@ Eternal Deposition Demo Script
 Demonstrates the self-sustaining algorithm in action
 """
 
-from eternal_deposition import EternalDepositionEngine
 import time
+from eternal_deposition import EternalDepositionEngine, CYCLE_PERIOD_SECONDS
 
 def demo_basic_operation():
     """Demonstrate basic operation with limited cycles."""
@@ -120,7 +120,7 @@ def demo_live_monitoring():
             monitor_callback(metrics)
             
             # Sleep to next cycle
-            next_cycle = engine.start_time + (engine.cycle_count * engine.CYCLE_PERIOD_SECONDS)
+            next_cycle = engine.start_time + (engine.cycle_count * CYCLE_PERIOD_SECONDS)
             sleep_time = max(0, next_cycle - time.time())
             if sleep_time > 0:
                 time.sleep(sleep_time)
