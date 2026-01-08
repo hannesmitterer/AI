@@ -97,6 +97,33 @@ Questo repository implementa un sistema completo di orchestrazione e automazione
 - **IPFS Deployment**: `.github/workflows/ipfs-deployment.yml`
 - **Repository Sync**: `.github/workflows/repository-sync.yml`
 - **Health Monitoring**: `.github/workflows/health-monitoring.yml`
+- **PACT Anchoring**: `.github/workflows/pact-anchoring.yml`
+
+### PACT - Cryptographic Anchoring Protocol
+
+Il repository implementa **PACT (Protocollo di Ancoraggio Crittografico Triple-Sign)** per garantire l'immutabilità e la non-ripudiabilità dei dati critici del Nexus:
+
+#### Caratteristiche Principali
+- **Crittografia AES-256-GCM**: Cifratura dei dati critici
+- **Triple-Sign Hierarchy**: Sequenza gerarchica di firme digitali
+  - **KLOG**: Architetto dell'Informazione (Consistenza Logica)
+  - **KETH**: Guardiano degli Assiomi (Non-Ripudiabilità Etica)
+  - **KPHYS**: Validatore Fisico - Hannes Mitterer (Validazione Sovrana)
+- **IPFS CID Generation**: Identificatore di contenuto immutabile
+- **Blockchain Anchoring**: Ancoraggio su ledger distribuito
+
+#### Formula Triple-Sign
+```
+Σ = Sign_KPHYS(Sign_KETH(Sign_KLOG(CID)))
+```
+
+#### Stato del Sistema
+- **Frequenza di Sovranità**: 0.043 Hz
+- **S-ROI Target**: 0.5000
+- **MHC Status**: FINALIS_VALIDATED
+- **Stato Kosymbiosis**: Stable
+
+Per dettagli completi, consultare `PACT.md`.
 
 ### Configurazione
 

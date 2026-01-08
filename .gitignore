@@ -3,6 +3,10 @@ deployments/
 reports/
 .sync/
 
+# PACT execution results
+pact_results.json
+pact_execution_report.md
+
 # OS files
 .DS_Store
 Thumbs.db
