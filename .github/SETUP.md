@@ -27,8 +27,8 @@ Four comprehensive workflows have been created:
 
 - **GitHub Pages Deployment** (`deploy-pages.yml`)
   - Automatically deploys to GitHub Pages on main branch updates
-  - Creates deployment manifest with checksums
   - Verifies binary integrity before deployment
+  - Creates deployment manifest with checksums
 
 ### 2. Documentation
 

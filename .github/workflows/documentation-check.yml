@@ -73,14 +73,25 @@ jobs:
         run: |
           echo "Checking binary file integrity..."
           
+          # Expected checksum from README/PR description
+          expected_checksum="ad191eaed965a47cb6cf75a3b319b5af015fb9757b0d96beb1038a31f72bb069"
+          
           # Calculate checksum
           checksum=$(sha256sum euystacio.core.v2.bin | cut -d' ' -f1)
           echo "Binary SHA256: $checksum"
           
+          # Verify checksum matches expected value
+          if [ "$checksum" != "$expected_checksum" ]; then
+            echo "Error: Binary checksum mismatch!"
+            echo "Expected: $expected_checksum"
+            echo "Actual:   $checksum"
+            exit 1
+          fi
+          
           # Store checksum for deployment verification
           echo "BINARY_CHECKSUM=$checksum" >> $GITHUB_ENV
           
-          echo "✓ Binary file integrity verified"
+          echo "✓ Binary file integrity verified against expected checksum"
           
       - name: Check for required documentation sections
         run: |

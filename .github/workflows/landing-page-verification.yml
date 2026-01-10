@@ -107,7 +107,7 @@ jobs:
           fi
           
           if ! grep -q "color-deep-bg" index.html; then
-            echo "Error: Missing theme color variables"
+            echo "Error: Missing CSS variable: color-deep-bg"
             exit 1
           fi
           
