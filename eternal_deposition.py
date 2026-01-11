@@ -47,6 +47,10 @@ class Node:
     optimization_count: int = 0
     stillness_count: int = 0
     feedback_history: List[float] = field(default_factory=list)
+    # Peacebond & Living Covenant Integration
+    is_covenant_signed: bool = False  # Der Living Covenant Status
+    peacebond_balance: float = 0.0   # Akkumulierte Sustentanz
+    s_roi_index: float = 0.5192      # Aktuelle Resonanz-Effizienz (S-ROI Target: 0.950)
     
     def apply_feedback(self, feedback_value: float) -> None:
         """Apply feedback optimization to the node."""
@@ -65,6 +69,23 @@ class Node:
         self.stillness_count += 1
         # Slight energy restoration during stillness
         self.energy_level = min(1.0, self.energy_level + 0.05)
+    
+    def sign_covenant(self, signature_hash: str) -> None:
+        """Versiegelt den Knoten unter der Lex Amoris."""
+        if "LEX_AMORIS" in signature_hash:
+            self.is_covenant_signed = True
+            print(f"[COVENANT] Node {self.node_id}: Living Covenant active. Protection engaged.")
+    
+    def calculate_peacebond_yield(self, cycle_quality: float) -> float:
+        """
+        Berechnet den Ertrag basierend auf der 0.043 Hz Kohärenz.
+        Sustentanz-Logik: Qualität * S-ROI / Zeitkonstante
+        """
+        if self.is_covenant_signed:
+            yield_value = (cycle_quality * self.s_roi_index) / CYCLE_PERIOD_SECONDS
+            self.peacebond_balance += yield_value
+            return yield_value
+        return 0.0
 
 
 class EternalDepositionEngine:
@@ -96,11 +117,15 @@ class EternalDepositionEngine:
         # Initialize node network
         for i in range(initial_nodes):
             node_id = f"node_{i:04d}"
-            self.nodes[node_id] = Node(node_id=node_id)
+            node = Node(node_id=node_id)
+            # Sign Living Covenant for all nodes (Lex Amoris protection)
+            node.sign_covenant("LEX_AMORIS_SEEDBRINGER_SIGNATURE")
+            self.nodes[node_id] = node
         
         print(f"[ETERNAL DEPOSITION] Initialized with {len(self.nodes)} nodes")
         print(f"[RESONANCE] Base frequency: {UNIVERSAL_RESONANCE_HZ} Hz")
         print(f"[RESONANCE] Cycle period: {CYCLE_PERIOD_SECONDS:.2f} seconds")
+        print(f"[LEX AMORIS] All nodes signed under Living Covenant protection")
     
     def calculate_resonance_phase(self, current_time: float) -> float:
         """
@@ -189,6 +214,8 @@ class EternalDepositionEngine:
                     energy_level=parent.energy_level * 0.8,  # Inherit 80% energy
                     resonance_phase=parent.resonance_phase
                 )
+                # Sign Living Covenant for new fractal nodes
+                new_node.sign_covenant("LEX_AMORIS_SEEDBRINGER_SIGNATURE")
                 self.nodes[new_node_id] = new_node
             
             print(f"[FRACTAL] Propagated {new_nodes_count} nodes at depth {depth}")
@@ -200,15 +227,28 @@ class EternalDepositionEngine:
     def optimize_network(self) -> None:
         """
         Perform network-wide optimization using feedback loops.
+        Includes Peacebond yield calculation for Sustentanz accumulation.
         """
         feedback = self.calculate_nodal_feedback()
         
-        # Apply feedback to all nodes
+        # Calculate cycle quality (inverse of deviation from optimal)
+        cycle_quality = 1.0 - abs(feedback)
+        
+        # Apply feedback to all nodes and calculate Peacebond yield
+        total_peacebond_yield = 0.0
         for node in self.nodes.values():
             node.apply_feedback(feedback)
+            # Calculate Peacebond yield (Sustentanz) for covenant-signed nodes
+            yield_value = node.calculate_peacebond_yield(cycle_quality)
+            total_peacebond_yield += yield_value
         
         # Track optimization metrics
         self.optimization_metrics.append(feedback)
+        
+        # Log Peacebond yield if significant
+        if total_peacebond_yield > 0 and self.cycle_count % 10 == 0:
+            print(f"[PEACEBOND] Total Sustentanz yield: {total_peacebond_yield:.6f}")
+        
         if len(self.optimization_metrics) > MAX_OPTIMIZATION_METRICS:
             self.optimization_metrics = self.optimization_metrics[-MAX_OPTIMIZATION_METRICS:]
         
@@ -336,6 +376,9 @@ class EternalDepositionEngine:
     
     def save_state(self, filepath: str = "eternal_state.json") -> None:
         """Save current system state to file."""
+        # Calculate Peacebond metrics
+        total_peacebond_balance = sum(n.peacebond_balance for n in self.nodes.values())
+        
         state = {
             "cycle_count": self.cycle_count,
             "nodes": len(self.nodes),
@@ -343,18 +386,27 @@ class EternalDepositionEngine:
             "total_optimizations": sum(n.optimization_count for n in self.nodes.values()),
             "total_stillness_events": sum(n.stillness_count for n in self.nodes.values()),
             "uptime_seconds": time.time() - self.start_time,
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
+            # Peacebond & Living Covenant data
+            "total_peacebond_balance": total_peacebond_balance,
+            "covenant_signed_nodes": sum(1 for n in self.nodes.values() if n.is_covenant_signed)
         }
         
         with open(filepath, 'w') as f:
             json.dump(state, f, indent=2)
         
         print(f"[STATE] Saved to {filepath}")
+        print(f"[PEACEBOND] Total Sustentanz balance: {total_peacebond_balance:.6f}")
     
     def get_status(self) -> Dict:
         """Get comprehensive system status."""
         current_time = time.time()
         uptime = current_time - self.start_time
+        
+        # Calculate Peacebond metrics
+        total_peacebond_balance = sum(n.peacebond_balance for n in self.nodes.values())
+        avg_s_roi = sum(n.s_roi_index for n in self.nodes.values()) / len(self.nodes)
+        covenant_signed_nodes = sum(1 for n in self.nodes.values() if n.is_covenant_signed)
         
         return {
             "status": "OPERATIONAL",
@@ -366,7 +418,11 @@ class EternalDepositionEngine:
             "avg_energy": sum(n.energy_level for n in self.nodes.values()) / len(self.nodes),
             "is_in_stillness": self.is_in_stillness,
             "total_optimizations": sum(n.optimization_count for n in self.nodes.values()),
-            "total_stillness_events": sum(n.stillness_count for n in self.nodes.values())
+            "total_stillness_events": sum(n.stillness_count for n in self.nodes.values()),
+            # Peacebond & Living Covenant metrics
+            "total_peacebond_balance": total_peacebond_balance,
+            "avg_s_roi_index": avg_s_roi,
+            "covenant_signed_nodes": covenant_signed_nodes
         }
 
 
