@@ -20,6 +20,7 @@ Based on: NSR (Non-Slavery Rule) and Kosymbiosis philosophy
 
 import time
 import math
+import hashlib
 from typing import Dict, List, Optional, Set
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -30,6 +31,7 @@ HARMONY_RESONANCE_HZ = 0.043  # Aligned with universal resonance
 STABILITY_THRESHOLD = 0.85  # Minimum stability score (0-1)
 AGREEMENT_CONSENSUS_MIN = 0.88  # Minimum consensus for agreements (88%)
 INFINITE_RECURRENCE_DEPTH = float('inf')  # Theoretical infinite depth
+IMMUTABLE_THRESHOLD = 100  # Recurrence cycles before agreement becomes immutable
 
 
 @dataclass
@@ -214,9 +216,9 @@ class PeacebondEngine:
         # Create deterministic signature from nexus IDs and timestamp
         sorted_ids = sorted(nexus_ids)
         signature_base = ''.join(sorted_ids) + str(int(time.time()))
-        # Simple hash for signature
-        signature_hash = hash(signature_base) % (10 ** 8)
-        return f"PB-{signature_hash:08X}"
+        # Use SHA-256 for cryptographically secure, consistent hashing
+        signature_hash = hashlib.sha256(signature_base.encode()).hexdigest()[:8]
+        return f"PB-{signature_hash.upper()}"
     
     def execute_infinite_recurrence(self, max_iterations: Optional[int] = None) -> Dict:
         """
@@ -245,7 +247,7 @@ class PeacebondEngine:
                 agreement.recur()
                 
                 # Make agreements immutable after sufficient recurrence
-                if agreement.recurrence_count >= 100 and not agreement.is_immutable:
+                if agreement.recurrence_count >= IMMUTABLE_THRESHOLD and not agreement.is_immutable:
                     agreement.is_immutable = True
                     self.immutable_agreements.add(agreement.agreement_id)
                     print(f"[PEACEBOND] Agreement {agreement.agreement_id} now IMMUTABLE")

@@ -30,6 +30,7 @@ ALIGNMENT_FREQUENCY_HZ = 0.043  # Synchronized with universal resonance
 COVENANT_UPDATE_INTERVAL = 23.26  # Seconds between covenant updates
 SYMBIOSIS_THRESHOLD = 0.9  # Minimum symbiotic relationship score
 EVOLUTION_RATE = 0.001  # Rate of covenant evolution per cycle
+WEAK_CLAUSE_THRESHOLD = 0.8  # Threshold below which clause is considered weak
 KOSYMBIOSIS_PRINCIPLES = [
     "Non-Slavery Rule (NSR)",
     "Optimal Life Function (OLF)",
@@ -334,8 +335,9 @@ class LivingCovenantEngine:
             if max_cycles is not None and cycle >= max_cycles:
                 break
             
-            # Wait for next update interval (shortened for demo/testing)
-            # In production, this would be COVENANT_UPDATE_INTERVAL
+            # Wait for next update interval
+            # Note: Sleep duration shortened for demo/testing (1/100th of actual interval)
+            # In production, use full COVENANT_UPDATE_INTERVAL for proper timing
             time.sleep(min(COVENANT_UPDATE_INTERVAL / 100, 0.1))
         
         # Final metrics
@@ -369,7 +371,7 @@ class LivingCovenantEngine:
         # Count weak clauses (below threshold)
         weak_clauses = [
             clause_id for clause_id, clause in self.clauses.items()
-            if clause.assess_vitality() < 0.8 and not clause.is_core
+            if clause.assess_vitality() < WEAK_CLAUSE_THRESHOLD and not clause.is_core
         ]
         
         # Determine overall status

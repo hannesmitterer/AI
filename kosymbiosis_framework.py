@@ -22,6 +22,10 @@ from peacebond import PeacebondEngine
 from living_covenant import LivingCovenantEngine
 
 
+# Framework Constants
+MIN_HEALTH_FOR_COHERENCE = 0.01  # Minimum health value to prevent division by zero in coherence calculation
+
+
 class KosymbiosisFramework:
     """
     Unified Kosymbiosis Framework integrating all three core layers.
@@ -186,7 +190,12 @@ class KosymbiosisFramework:
         
         # Harmonic mean provides balanced coherence measure
         # All layers must be healthy for high coherence
-        coherence = 3 / (1/max(ed_health, 0.01) + 1/max(pb_health, 0.01) + 1/max(lc_health, 0.01))
+        # Use MIN_HEALTH_FOR_COHERENCE to prevent division by zero
+        coherence = 3 / (
+            1/max(ed_health, MIN_HEALTH_FOR_COHERENCE) + 
+            1/max(pb_health, MIN_HEALTH_FOR_COHERENCE) + 
+            1/max(lc_health, MIN_HEALTH_FOR_COHERENCE)
+        )
         
         return coherence
     
