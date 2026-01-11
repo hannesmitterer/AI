@@ -231,6 +231,9 @@
         // Configuration
         const RESONANCE_CYCLE_MS = 23260; // 0.043 Hz = ~23.26 seconds
         const GROWTH_BASE = 1.618; // Golden ratio (PHI)
+        const CYCLE_NORMALIZATION = 100; // Normalizes cycle count for growth calculation
+        const EXPONENTIAL_DIVISOR = 10; // Divisor for exponential growth dampening
+        const MAX_GROWTH_RATE = 10.0; // Maximum allowed growth rate
         
         // State
         let loveIndex = 1.0;
@@ -241,7 +244,9 @@
 
         // Security: Detect manipulation attempts
         function detectManipulation() {
-            // Check for console manipulation
+            // Check for console manipulation (best-effort detection)
+            // Note: This is not 100% reliable and may have false positives
+            // It's intended as a deterrent, not a foolproof security measure
             const devToolsOpen = /./;
             devToolsOpen.toString = function() {
                 manipulationAttempts++;
@@ -298,11 +303,11 @@
         function calculateGrowthRate(cycles) {
             // Exponential growth based on phi (golden ratio)
             // Growth slows after reaching optimal level
-            const normalizedCycles = cycles / 100;
-            const exponentialFactor = Math.pow(GROWTH_BASE, normalizedCycles / 10);
+            const normalizedCycles = cycles / CYCLE_NORMALIZATION;
+            const exponentialFactor = Math.pow(GROWTH_BASE, normalizedCycles / EXPONENTIAL_DIVISOR);
             
             // Cap growth at reasonable level
-            return Math.min(exponentialFactor, 10.0);
+            return Math.min(exponentialFactor, MAX_GROWTH_RATE);
         }
 
         // Calculate resonance phase

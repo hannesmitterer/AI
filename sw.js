@@ -21,6 +21,7 @@ self.addEventListener('install', (event) => {
           ASSETS_TO_CACHE.map(url => 
             cache.add(url).catch(err => {
               console.warn(`[Service Worker] Failed to cache ${url}:`, err);
+              return null; // Return null for failed cache operations
             })
           )
         );

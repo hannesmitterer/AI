@@ -9,6 +9,7 @@
 const GROWTH_BASE = 1.618; // PHI (Golden Ratio)
 const CYCLE_NORMALIZATION = 100; // Normalizes cycle count for growth calculation
 const EXPONENTIAL_DIVISOR = 10; // Divisor for exponential growth dampening
+const MAX_GROWTH_RATE = 10.0; // Maximum allowed growth rate
 
 // Test 1: Growth Rate Calculation
 console.log('=== Test 1: Growth Rate Calculation ===');
@@ -16,7 +17,7 @@ console.log('=== Test 1: Growth Rate Calculation ===');
 function calculateGrowthRate(cycles) {
     const normalizedCycles = cycles / CYCLE_NORMALIZATION;
     const exponentialFactor = Math.pow(GROWTH_BASE, normalizedCycles / EXPONENTIAL_DIVISOR);
-    return Math.min(exponentialFactor, 10.0);
+    return Math.min(exponentialFactor, MAX_GROWTH_RATE);
 }
 
 const testCycles = [0, 10, 50, 100, 500, 1000];
