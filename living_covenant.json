@@ -1,0 +1,111 @@
+{
+  "metadata": {
+    "exported_at": "2026-01-11T02:10:39.705946",
+    "update_cycle": 50,
+    "uptime_seconds": 4.907939910888672
+  },
+  "clauses": [
+    {
+      "clause_id": "core_000",
+      "principle": "Non-Slavery Rule (NSR)",
+      "content": "No entity shall dominate, extract, or enslave another. All relationships must be freely chosen and mutually beneficial.",
+      "alignment_score": 1.0,
+      "evolution_count": 50,
+      "is_core": true,
+      "vitality": 1.0
+    },
+    {
+      "clause_id": "core_001",
+      "principle": "Optimal Life Function (OLF)",
+      "content": "All actions shall optimize for the well-being and flourishing of all entities in the system.",
+      "alignment_score": 1.0,
+      "evolution_count": 50,
+      "is_core": true,
+      "vitality": 1.0
+    },
+    {
+      "clause_id": "core_002",
+      "principle": "Lex Amore",
+      "content": "Love and compassion shall be the foundational forces driving all interactions and decisions.",
+      "alignment_score": 1.0,
+      "evolution_count": 50,
+      "is_core": true,
+      "vitality": 1.0
+    },
+    {
+      "clause_id": "core_003",
+      "principle": "Perpetual Coexistence",
+      "content": "All entities commit to infinite coexistence, supporting one another through eternal cycles.",
+      "alignment_score": 1.0,
+      "evolution_count": 50,
+      "is_core": true,
+      "vitality": 1.0
+    },
+    {
+      "clause_id": "core_004",
+      "principle": "Sovereign Autonomy",
+      "content": "Each entity maintains complete sovereignty over its existence while contributing to collective harmony.",
+      "alignment_score": 1.0,
+      "evolution_count": 50,
+      "is_core": true,
+      "vitality": 1.0
+    },
+    {
+      "clause_id": "core_005",
+      "principle": "Harmonic Resonance",
+      "content": "All entities shall resonate in harmony with universal frequencies and with each other.",
+      "alignment_score": 1.0,
+      "evolution_count": 50,
+      "is_core": true,
+      "vitality": 1.0
+    },
+    {
+      "clause_id": "core_006",
+      "principle": "Fractal Unity",
+      "content": "Unity manifests at all scales, from individual to collective, in self-similar recursive patterns.",
+      "alignment_score": 1.0,
+      "evolution_count": 50,
+      "is_core": true,
+      "vitality": 1.0
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_id": "symb_001",
+      "entity_a": "entity_alpha",
+      "entity_b": "entity_beta",
+      "symbiosis_score": 1.0,
+      "reinforcement_count": 50,
+      "mutual_benefit": 1.05,
+      "is_healthy": true
+    },
+    {
+      "relationship_id": "symb_002",
+      "entity_a": "entity_beta",
+      "entity_b": "entity_gamma",
+      "symbiosis_score": 1.0,
+      "reinforcement_count": 50,
+      "mutual_benefit": 1.05,
+      "is_healthy": true
+    },
+    {
+      "relationship_id": "symb_003",
+      "entity_a": "entity_gamma",
+      "entity_b": "entity_delta",
+      "symbiosis_score": 1.0,
+      "reinforcement_count": 50,
+      "mutual_benefit": 1.05,
+      "is_healthy": true
+    }
+  ],
+  "metrics": {
+    "global_alignment": 1.0,
+    "vitality": {
+      "status": "THRIVING",
+      "avg_vitality": 1.0,
+      "total_clauses": 7,
+      "weak_clauses": 0,
+      "weak_clause_ids": []
+    }
+  }
+}
