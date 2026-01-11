@@ -256,17 +256,20 @@
             document.addEventListener('contextmenu', (e) => {
                 e.preventDefault();
                 manipulationAttempts++;
-                if (manipulationAttempts > 2) {
+                if (manipulationAttempts > 3) {
                     showManipulationWarning();
                 }
             });
 
             // Detect key combinations
             document.addEventListener('keydown', (e) => {
-                if (e.ctrlKey && (e.shiftKey || e.key === 'u' || e.key === 's')) {
+                // Detect Ctrl+Shift+I, Ctrl+U, Ctrl+S
+                if ((e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                    (e.ctrlKey && e.key === 'u') || 
+                    (e.ctrlKey && e.key === 's')) {
                     e.preventDefault();
                     manipulationAttempts++;
-                    if (manipulationAttempts > 2) {
+                    if (manipulationAttempts > 3) {
                         showManipulationWarning();
                     }
                 }

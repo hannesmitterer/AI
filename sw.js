@@ -75,8 +75,8 @@ self.addEventListener('fetch', (event) => {
           })
           .catch((error) => {
             console.warn('[Service Worker] Fetch failed:', error);
-            // Return a custom offline page or error response if needed
-            return new Response('Offline - Lex Amoris requires network connection', {
+            // Return a custom offline page or error response
+            return new Response('Some features may be limited while offline. Cached content is still available.', {
               status: 503,
               statusText: 'Service Unavailable',
               headers: new Headers({

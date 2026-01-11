@@ -5,13 +5,17 @@
  * Tests core JavaScript functionality without browser
  */
 
+// Constants
+const GROWTH_BASE = 1.618; // PHI (Golden Ratio)
+const CYCLE_NORMALIZATION = 100; // Normalizes cycle count for growth calculation
+const EXPONENTIAL_DIVISOR = 10; // Divisor for exponential growth dampening
+
 // Test 1: Growth Rate Calculation
 console.log('=== Test 1: Growth Rate Calculation ===');
-const GROWTH_BASE = 1.618; // PHI
 
 function calculateGrowthRate(cycles) {
-    const normalizedCycles = cycles / 100;
-    const exponentialFactor = Math.pow(GROWTH_BASE, normalizedCycles / 10);
+    const normalizedCycles = cycles / CYCLE_NORMALIZATION;
+    const exponentialFactor = Math.pow(GROWTH_BASE, normalizedCycles / EXPONENTIAL_DIVISOR);
     return Math.min(exponentialFactor, 10.0);
 }
 
