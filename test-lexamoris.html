@@ -180,7 +180,7 @@
 
         resonanceTests.addTest('Verify animation timing (23.26s)', async () => {
             const iframe = document.createElement('iframe');
-            iframe.src = '/lexamoris.html';
+            iframe.src = 'lexamoris.html';
             iframe.style.display = 'none';
             document.body.appendChild(iframe);
             
@@ -201,7 +201,7 @@
 
         resonanceTests.addTest('Verify resonance frequency (0.043 Hz)', async () => {
             const iframe = document.createElement('iframe');
-            iframe.src = '/lexamoris.html';
+            iframe.src = 'lexamoris.html';
             iframe.style.display = 'none';
             document.body.appendChild(iframe);
             
@@ -225,7 +225,7 @@
 
         growthTests.addTest('Verify ExponentialGrowth class exists', async () => {
             const iframe = document.createElement('iframe');
-            iframe.src = '/lexamoris.html';
+            iframe.src = 'lexamoris.html';
             iframe.style.display = 'none';
             document.body.appendChild(iframe);
             
@@ -242,7 +242,7 @@
 
         growthTests.addTest('Test growthRate function precision', async () => {
             const iframe = document.createElement('iframe');
-            iframe.src = '/lexamoris.html';
+            iframe.src = 'lexamoris.html';
             iframe.style.display = 'none';
             document.body.appendChild(iframe);
             
@@ -271,7 +271,7 @@
 
         growthTests.addTest('Test overflow protection', async () => {
             const iframe = document.createElement('iframe');
-            iframe.src = '/lexamoris.html';
+            iframe.src = 'lexamoris.html';
             iframe.style.display = 'none';
             document.body.appendChild(iframe);
             
@@ -295,7 +295,7 @@
 
         growthTests.addTest('Test invalid input handling', async () => {
             const iframe = document.createElement('iframe');
-            iframe.src = '/lexamoris.html';
+            iframe.src = 'lexamoris.html';
             iframe.style.display = 'none';
             document.body.appendChild(iframe);
             
@@ -328,7 +328,7 @@
 
         shieldTests.addTest('Verify RedShieldProtection class exists', async () => {
             const iframe = document.createElement('iframe');
-            iframe.src = '/lexamoris.html';
+            iframe.src = 'lexamoris.html';
             iframe.style.display = 'none';
             document.body.appendChild(iframe);
             
@@ -345,7 +345,7 @@
 
         shieldTests.addTest('Test blur event listener', async () => {
             const iframe = document.createElement('iframe');
-            iframe.src = '/lexamoris.html';
+            iframe.src = 'lexamoris.html';
             iframe.style.display = 'none';
             document.body.appendChild(iframe);
             
@@ -372,7 +372,7 @@
 
         shieldTests.addTest('Test context menu prevention', async () => {
             const iframe = document.createElement('iframe');
-            iframe.src = '/lexamoris.html';
+            iframe.src = 'lexamoris.html';
             iframe.style.display = 'none';
             document.body.appendChild(iframe);
             
@@ -405,7 +405,7 @@
 
         manifestTests.addTest('Fetch and parse manifest.json', async () => {
             try {
-                const response = await fetch('/manifest.json');
+                const response = await fetch('manifest.json');
                 const manifest = await response.json();
                 
                 return {
@@ -422,7 +422,7 @@
         });
 
         manifestTests.addTest('Verify standalone display mode', async () => {
-            const response = await fetch('/manifest.json');
+            const response = await fetch('manifest.json');
             const manifest = await response.json();
             
             return {
@@ -433,7 +433,7 @@
         });
 
         manifestTests.addTest('Verify shortcuts configuration', async () => {
-            const response = await fetch('/manifest.json');
+            const response = await fetch('manifest.json');
             const manifest = await response.json();
             
             const hasShortcuts = Array.isArray(manifest.shortcuts) && manifest.shortcuts.length > 0;
@@ -447,7 +447,7 @@
         });
 
         manifestTests.addTest('Verify theme and background colors', async () => {
-            const response = await fetch('/manifest.json');
+            const response = await fetch('manifest.json');
             const manifest = await response.json();
             
             const hasTheme = manifest.theme_color === '#d4af37';
@@ -461,7 +461,7 @@
         });
 
         manifestTests.addTest('Verify icons with maskable support', async () => {
-            const response = await fetch('/manifest.json');
+            const response = await fetch('manifest.json');
             const manifest = await response.json();
             
             const hasMaskable = manifest.icons.some(icon => 
@@ -476,7 +476,7 @@
         });
 
         manifestTests.addTest('Verify start_url and scope', async () => {
-            const response = await fetch('/manifest.json');
+            const response = await fetch('manifest.json');
             const manifest = await response.json();
             
             const validStartUrl = manifest.start_url === '/';
@@ -490,7 +490,7 @@
         });
 
         manifestTests.addTest('Verify German language setting', async () => {
-            const response = await fetch('/manifest.json');
+            const response = await fetch('manifest.json');
             const manifest = await response.json();
             
             return {
@@ -504,7 +504,7 @@
         const w3cTests = new TestSuite('W3C Compliance & Browser Compatibility');
 
         w3cTests.addTest('Verify HTML5 doctype in lexamoris.html', async () => {
-            const response = await fetch('/lexamoris.html');
+            const response = await fetch('lexamoris.html');
             const html = await response.text();
             
             const hasDoctype = html.trim().startsWith('<!DOCTYPE html>');
@@ -516,7 +516,7 @@
         });
 
         w3cTests.addTest('Verify lang="de" attribute', async () => {
-            const response = await fetch('/lexamoris.html');
+            const response = await fetch('lexamoris.html');
             const html = await response.text();
             
             const hasLang = html.includes('lang="de"');
@@ -528,7 +528,7 @@
         });
 
         w3cTests.addTest('Verify meta charset UTF-8', async () => {
-            const response = await fetch('/lexamoris.html');
+            const response = await fetch('lexamoris.html');
             const html = await response.text();
             
             const hasCharset = html.includes('charset="UTF-8"');
@@ -540,7 +540,7 @@
         });
 
         w3cTests.addTest('Verify viewport meta tag', async () => {
-            const response = await fetch('/lexamoris.html');
+            const response = await fetch('lexamoris.html');
             const html = await response.text();
             
             const hasViewport = html.includes('name="viewport"');
@@ -552,7 +552,7 @@
         });
 
         w3cTests.addTest('Verify manifest link in HTML', async () => {
-            const response = await fetch('/lexamoris.html');
+            const response = await fetch('lexamoris.html');
             const html = await response.text();
             
             const hasManifest = html.includes('rel="manifest"');

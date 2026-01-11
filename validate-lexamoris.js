@@ -111,7 +111,7 @@ async function validateManifest() {
         
         // URLs
         validator.test('start_url is "/"', manifest.start_url === '/');
-        validator.test('scope is "/"', manifest.scope === '/');
+        validator.test('scope is "/" or relative', manifest.scope === '/' || manifest.scope.startsWith('./'));
         
         // W3C PWA compliance checks
         validator.test('Name is descriptive', manifest.name.length > 5);
@@ -148,7 +148,7 @@ async function validateHTML() {
         
         // Manifest link
         validator.test('Links to manifest.json', html.includes('rel="manifest"'));
-        validator.test('Manifest href is correct', html.includes('href="/manifest.json"'));
+        validator.test('Manifest href is correct', html.includes('href="manifest.json"') || html.includes('href="/manifest.json"'));
         
         // Title
         validator.test('Has title tag', html.includes('<title>'));
@@ -216,7 +216,7 @@ async function validateWaterStatus() {
         validator.test('Has charset UTF-8', html.includes('charset="UTF-8"'));
         validator.test('Has viewport meta', html.includes('name="viewport"'));
         validator.test('Title includes "Water Status"', html.includes('Water Status'));
-        validator.test('Links back to lexamoris.html', html.includes('href="/lexamoris.html"'));
+        validator.test('Links back to lexamoris.html', html.includes('href="lexamoris.html"') || html.includes('href="/lexamoris.html"'));
         validator.test('Includes "Sempre in Costante"', html.includes('Sempre in Costante'));
         
     } catch (error) {
