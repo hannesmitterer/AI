@@ -165,11 +165,11 @@ class QuantumSafeEncryption:
         # Real implementation would use extended Euclidean algorithm
         fp = [0] * self.N
         
-        # Simple approximation: fp[i] = (2 * f[i]) % p for p=3
+        # Simple approximation: compute modular inverse for non-zero coefficients
         for i in range(self.N):
             if f[i] % self.p != 0:
-                # Modular inverse of f[i] mod 3
-                fp[i] = pow(f[i], -1, self.p) if f[i] % self.p != 0 else 0
+                # Modular inverse of f[i] mod p
+                fp[i] = pow(f[i], -1, self.p)
             else:
                 fp[i] = 0
         
