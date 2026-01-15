@@ -124,3 +124,66 @@ Consultare `.orchestration/README.md` per documentazione completa del sistema di
 **Stato Sistema**: ✓ OPERATIVO  
 **Versione**: 1.0.0  
 **Fase**: Phase II - Dynamic Integration
+
+---
+
+## 🔒 AI Security Interface
+
+### Universal Blacklist & Adaptive Threat Management
+
+Questo repository implementa un sistema di sicurezza completo per interfacce AI con tre componenti principali:
+
+#### 1. Protokollierung adaptiver Bedrohungen (Adaptive Threat Logging)
+- **Adaptive Bewertung**: Sistema di scoring dinamico basato su pattern storici
+- **Pattern Learning**: Apprendimento automatico da minacce ripetute
+- **Threshold Dinamici**: Soglie di rilevamento auto-adattive
+
+#### 2. Optimierte Log-Befüllung (Optimized Log Population)
+- **Auto-Rotation**: Rotazione automatica dei log al raggiungimento delle soglie
+- **Compressione**: Archiviazione compressa dei log storici
+- **Storage Intelligente**: Gestione ottimizzata dello spazio
+
+#### 3. Fortschrittliches Firewall-Design (Progressive Firewall Design)
+- **Universal Blacklist**: Lista nera centralizzata con aggiornamenti automatici
+- **Whitelist Priority**: Massima priorità per fonti fidate
+- **Access Control**: Controllo accessi multi-livello con scadenze adaptive
+
+### Implementazioni
+
+- `ai_security_interface.py` - Modulo principale di sicurezza
+- `eternal_security_integration.py` - Integrazione con Eternal Deposition
+- `AI_SECURITY_DOCUMENTATION.md` - Documentazione tecnica completa
+
+### Caratteristiche Chiave
+
+- **Continuous Monitoring**: Monitoraggio sicurezza durante ogni ciclo
+- **Adaptive Blacklist**: Blacklist che si aggiorna automaticamente
+- **Threat Intelligence**: Apprendimento da pattern di minacce
+- **Zero False Positives**: Approccio progressivo minimizza falsi positivi
+
+### Uso Rapido
+
+```python
+from ai_security_interface import AISecurityInterface
+
+security = AISecurityInterface()
+
+# Processa una richiesta
+allowed, message = security.process_request(
+    source_identifier="source_id",
+    request_data={"action": "query"}
+)
+
+# Log una minaccia
+security.detect_and_log_threat(
+    threat_type=ThreatType.MALICIOUS_INPUT,
+    threat_level=ThreatLevel.HIGH,
+    source_identifier="suspicious_source",
+    description="Attack attempt detected"
+)
+```
+
+Consultare [AI_SECURITY_DOCUMENTATION.md](AI_SECURITY_DOCUMENTATION.md) per documentazione dettagliata.
+
+**Stato Security**: ✓ ATTIVO  
+**Versione**: 1.0.0
