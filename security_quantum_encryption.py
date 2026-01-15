@@ -10,6 +10,29 @@ NTRU is resistant to quantum computer attacks (Shor's algorithm) and provides
 post-quantum security for the eternal deposition system.
 
 Based on: NIST Post-Quantum Cryptography Standards
+
+SECURITY NOTICE:
+================
+This is a SIMPLIFIED EDUCATIONAL IMPLEMENTATION of NTRU for demonstration purposes.
+It is NOT suitable for production use without significant security hardening.
+
+For production systems, use verified cryptographic libraries:
+- liboqs (Open Quantum Safe)
+- pqcrypto
+- Microsoft PQCrypto-VPN
+- Google Tink with PQC support
+
+Production Requirements:
+- Proper polynomial inversion using Extended Euclidean Algorithm
+- Cryptographically secure parameter selection
+- Side-channel attack resistance
+- Constant-time operations
+- Proper random number generation from hardware entropy
+- Full NIST standardization compliance
+- Formal security proofs and audits
+
+This implementation provides a conceptual framework and should be replaced
+with production-grade libraries before deployment in security-critical systems.
 """
 
 import hashlib
@@ -156,6 +179,15 @@ class QuantumSafeEncryption:
         """
         Generate NTRU public/private keypair.
         
+        NOTE: This is a simplified NTRU implementation for demonstration purposes.
+        In production, use a verified NTRU library (e.g., pqcrypto, liboqs) that
+        implements full NIST-standard key generation with proper polynomial inversion
+        and cryptographic validation.
+        
+        The proper NTRU key generation should compute:
+        - h = p * g * inverse(f, q) mod q
+        where inverse(f, q) is computed using extended Euclidean algorithm.
+        
         Returns:
             Tuple of (public_key, private_key)
         """
@@ -298,6 +330,16 @@ class QuantumSafeEncryption:
                         public_key: NTRUPublicKey) -> bool:
         """
         Verify quantum-safe signature.
+        
+        NOTE: This is a placeholder signature verification for demonstration.
+        In production, use a proper NTRU signature scheme (e.g., BLISS, Falcon)
+        or other post-quantum signature algorithms (e.g., Dilithium, SPHINCS+)
+        that provide cryptographic security guarantees.
+        
+        Proper verification should validate:
+        - Polynomial relationships between signature, public key, and message hash
+        - Bounded polynomial coefficients
+        - Cryptographic binding to the message
         
         Args:
             data: Original data

@@ -43,6 +43,8 @@ Implementierte Gegenmaßnahmen:
    - Resistent gegen Shor-Algorithmus
    - N=509 Parameter für moderate Sicherheit
    - Hybrid-Verschlüsselung für Kompatibilität
+   - HINWEIS: Vereinfachte Implementierung für Demonstration
+   - EMPFEHLUNG: Für Produktion liboqs oder pqcrypto verwenden
 
 2. Adaptive Frequency Hopping (security_em_hardening.py)
    - 50 Frequenzkanäle im 2.4 GHz Band
@@ -55,8 +57,8 @@ Implementierte Gegenmaßnahmen:
    - Aktive Abschirmung mit dynamischer Anpassung
    - Automatische Aktivierung bei Bedrohungserkennung
 
-4. TensorFlow-basiertes Frühwarnsystem (security_early_warning.py)
-   - Neural Network für Anomalieerkennung
+4. AI-basiertes Frühwarnsystem (security_early_warning.py)
+   - Lightweight Neural Network für Anomalieerkennung
    - Echtzeit-Protokollüberwachung
    - Frequenzabweichungserkennung
    - Automatische Gegenmaßnahmenaktivierung
@@ -411,6 +413,36 @@ Die verbleibenden Risiken sind dokumentiert und Empfehlungen für deren
 Mitigation sind bereitgestellt. Eine Defense-in-Depth-Strategie mit
 mehreren Sicherheitsebenen minimiert die Auswirkungen einzelner
 Kompromittierungen.
+
+IMPLEMENTIERUNGS-HINWEIS
+=========================
+
+Die bereitgestellten Sicherheitsmodule sind als PROOF-OF-CONCEPT und
+DEMONSTRATION implementiert. Für produktive Umgebungen müssen folgende
+Anpassungen vorgenommen werden:
+
+1. Quantum-Safe Encryption:
+   - Ersetzen durch verifizierte Bibliotheken (liboqs, pqcrypto)
+   - Implementierung von Extended Euclidean Algorithm für Polynomial-Inversion
+   - Hardware-Entropie für Schlüsselgenerierung
+   - Constant-time Operationen gegen Side-Channel-Attacks
+
+2. AI/ML Komponenten:
+   - Migration auf TensorFlow/PyTorch für Production
+   - Größere Trainingsdatensätze
+   - Hyperparameter-Optimierung
+   - Continuous Learning Pipeline
+
+3. Performance-Optimierung:
+   - Hardware-Beschleunigung für Kryptographie
+   - Optimierte Routing-Algorithmen für Mesh (>1000 Nodes)
+   - Caching und Memoization
+
+4. Security Hardening:
+   - Externe Security Audits
+   - Penetration Testing
+   - Formal Verification
+   - Compliance-Zertifizierungen
 
 === ENDE DES BERICHTS ===
 

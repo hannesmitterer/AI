@@ -3,11 +3,13 @@
 AI-Based Early Warning System
 ==============================
 
-This module implements a TensorFlow-based anomaly detection system
+This module implements an AI-based anomaly detection system
 for identifying protocol and frequency deviations, data poisoning,
 and other security threats.
 
-Uses neural networks for pattern recognition and threat classification.
+Uses lightweight neural networks for pattern recognition and threat classification.
+Note: This is a standalone implementation without external dependencies. For production
+use with TensorFlow, replace SimpleNeuralNetwork with TensorFlow models.
 """
 
 import time
