@@ -16,7 +16,7 @@ import json
 import hashlib
 from typing import Dict, List, Optional, Set, Tuple
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timedelta
 from enum import Enum
 
 
@@ -390,7 +390,6 @@ class ProgressiveFirewall:
             # Create new entry
             expiry_timestamp = None
             if not is_permanent and expiry_hours:
-                from datetime import timedelta
                 expiry_time = datetime.now() + timedelta(hours=expiry_hours)
                 expiry_timestamp = expiry_time.isoformat()
             
@@ -442,12 +441,16 @@ class ProgressiveFirewall:
             
             # Check if entry has expired
             if not entry.is_permanent and entry.expiry_timestamp:
-                expiry = datetime.fromisoformat(entry.expiry_timestamp)
-                if datetime.now() > expiry:
-                    # Entry expired, remove and allow
-                    self.remove_from_blacklist(source_identifier)
-                    self.allowed_requests += 1
-                    return True, "Blacklist entry expired"
+                try:
+                    expiry = datetime.fromisoformat(entry.expiry_timestamp)
+                    if datetime.now() > expiry:
+                        # Entry expired, remove and allow
+                        self.remove_from_blacklist(source_identifier)
+                        self.allowed_requests += 1
+                        return True, "Blacklist entry expired"
+                except (ValueError, TypeError):
+                    # Invalid timestamp format, treat as non-expiring
+                    pass
             
             # Active blacklist entry
             self.blocked_attempts += 1
@@ -504,13 +507,16 @@ class ProgressiveFirewall:
     
     def get_statistics(self) -> Dict:
         """Get firewall statistics."""
+        total_requests = self.blocked_attempts + self.allowed_requests
+        block_rate = self.blocked_attempts / max(1, total_requests)
+        
         return {
             "blacklist_entries": len(self.blacklist),
             "whitelist_entries": len(self.whitelist),
             "blocked_attempts": self.blocked_attempts,
             "allowed_requests": self.allowed_requests,
             "firewall_rules": len(self.firewall_rules),
-            "block_rate": (self.blocked_attempts / max(1, self.blocked_attempts + self.allowed_requests))
+            "block_rate": block_rate
         }
 
 

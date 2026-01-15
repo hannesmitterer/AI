@@ -17,6 +17,11 @@ import json
 from datetime import datetime
 
 
+# Security monitoring constants
+INITIAL_NODE_COUNT = 144
+NODE_GROWTH_THRESHOLD_MULTIPLIER = 2
+
+
 class SecureEternalEngine(EternalDepositionEngine):
     """
     Extended Eternal Deposition Engine with integrated security monitoring.
@@ -72,7 +77,8 @@ class SecureEternalEngine(EternalDepositionEngine):
             self.security_metrics["anomalies_found"] += 1
         
         # Check for rapid node growth (potential resource abuse)
-        if metrics["nodes"] > self.security_metrics.get("last_node_count", 144) * 2:
+        last_node_count = self.security_metrics.get("last_node_count", INITIAL_NODE_COUNT)
+        if metrics["nodes"] > last_node_count * NODE_GROWTH_THRESHOLD_MULTIPLIER:
             self.security.detect_and_log_threat(
                 threat_type=ThreatType.RESOURCE_ABUSE,
                 threat_level=ThreatLevel.LOW,
