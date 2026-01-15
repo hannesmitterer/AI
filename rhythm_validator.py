@@ -16,6 +16,7 @@ Key Features:
 
 import time
 import math
+import hashlib
 from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -26,6 +27,9 @@ UNIVERSAL_RESONANCE_HZ = 0.043
 FREQUENCY_TOLERANCE = 0.005  # ±0.005 Hz tolerance
 MIN_FREQUENCY = UNIVERSAL_RESONANCE_HZ - FREQUENCY_TOLERANCE
 MAX_FREQUENCY = UNIVERSAL_RESONANCE_HZ + FREQUENCY_TOLERANCE
+
+# Blacklist configuration
+BLACKLIST_VIOLATION_THRESHOLD = 3  # Number of violations before blacklisting
 
 
 @dataclass
@@ -109,7 +113,7 @@ class RhythmValidator:
         
         In a real implementation, this would analyze the packet's
         temporal characteristics. For demonstration, we use a 
-        hash-based approach to derive frequency.
+        cryptographic hash-based approach to derive frequency.
         
         Args:
             packet_data: Raw packet bytes
@@ -117,10 +121,12 @@ class RhythmValidator:
         Returns:
             Calculated frequency in Hz
         """
-        # Hash-based frequency derivation (demonstration)
-        packet_hash = hash(packet_data)
+        # Cryptographic hash-based frequency derivation (demonstration)
+        packet_hash = hashlib.sha256(packet_data).digest()
+        # Use first 4 bytes as integer for frequency calculation
+        hash_int = int.from_bytes(packet_hash[:4], byteorder='big')
         # Map hash to frequency range around universal resonance
-        normalized = (packet_hash % 1000) / 1000.0  # 0.0 to 1.0
+        normalized = (hash_int % 1000) / 1000.0  # 0.0 to 1.0
         
         # Map to range: [0.038 to 0.048] Hz (±0.005 from 0.043)
         frequency_range = 0.010  # Total range
@@ -205,8 +211,8 @@ class RhythmValidator:
                 last_violation=current_time
             )
         
-        # Auto-blacklist after 3 violations
-        if self.blacklist[source_ip].violation_count >= 3:
+        # Auto-blacklist after threshold violations
+        if self.blacklist[source_ip].violation_count >= BLACKLIST_VIOLATION_THRESHOLD:
             print(f"[BLACKLIST] Source {source_ip} blacklisted after {self.blacklist[source_ip].violation_count} violations")
     
     def _log_validation(self, packet: PacketSignature, valid: bool, reason: str) -> None:

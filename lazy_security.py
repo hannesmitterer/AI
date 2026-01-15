@@ -27,6 +27,9 @@ ROTESSCHILD_THRESHOLD_MV_M = 50.0  # Activation threshold in mV/m
 SCAN_INTERVAL_SECONDS = 5.0  # How often to scan environment
 DEACTIVATION_DELAY_SECONDS = 30.0  # Time to wait before deactivating after threat passes
 
+# Simulation parameters
+BASE_FIELD_STRENGTH_MV_M = 30.0  # Base electromagnetic field strength for simulation
+
 
 @dataclass
 class RotesschildScan:
@@ -145,8 +148,7 @@ class LazySecurityEngine:
         
         if simulate:
             # Simulate field strength with some variability
-            # Base level around 30 mV/m with random fluctuations
-            base_strength = 30.0
+            # Base level around BASE_FIELD_STRENGTH_MV_M with random fluctuations
             
             # Add time-based variations (simulated external factors)
             time_factor = math.sin(current_time * 0.1) * 20.0
@@ -154,7 +156,7 @@ class LazySecurityEngine:
             # Add random noise
             noise = random.gauss(0, 10.0)
             
-            field_strength = max(0, base_strength + time_factor + noise)
+            field_strength = max(0, BASE_FIELD_STRENGTH_MV_M + time_factor + noise)
         else:
             # In real implementation, this would interface with actual sensors
             field_strength = 0.0

@@ -14,7 +14,6 @@ Modules:
 """
 
 import time
-import sys
 from datetime import datetime
 
 # Import all Lex Amoris modules

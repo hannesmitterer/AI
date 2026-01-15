@@ -12,14 +12,22 @@ Key Features:
 - False positive detection and resolution
 - Critical node unblocking
 - Integration with Eternal Deposition System
+
+Note: Lex Amoris signatures use cryptographic hashing for deterministic,
+secure signature generation across different Python sessions.
 """
 
 import time
 import math
+import hashlib
 from typing import Dict, List, Optional, Callable
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
+
+
+# Message and history configuration
+MAX_MESSAGE_HISTORY = 1000  # Maximum messages to retain in history
 
 
 class MessagePriority(Enum):
@@ -143,7 +151,7 @@ class RescueChannel:
         Calculate Lex Amoris signature for message.
         
         Signature is based on universal resonance frequency with
-        content-based phase adjustment.
+        content-based phase adjustment using cryptographic hashing.
         
         Args:
             message_content: Message content string
@@ -154,9 +162,11 @@ class RescueChannel:
         # Base frequency
         signature = self.universal_frequency
         
-        # Add small phase adjustment based on content
-        content_hash = hash(message_content)
-        phase_adjustment = (content_hash % 100) / 10000.0  # ±0.01 Hz
+        # Add small phase adjustment based on content using SHA-256
+        content_hash = hashlib.sha256(message_content.encode('utf-8')).digest()
+        # Use first 4 bytes as integer
+        hash_int = int.from_bytes(content_hash[:4], byteorder='big')
+        phase_adjustment = (hash_int % 100) / 10000.0  # ±0.01 Hz
         
         signature += phase_adjustment - 0.005
         
@@ -199,9 +209,9 @@ class RescueChannel:
         
         self.messages.append(message)
         
-        # Keep only recent messages (last 1000)
-        if len(self.messages) > 1000:
-            self.messages = self.messages[-1000:]
+        # Keep only recent messages
+        if len(self.messages) > MAX_MESSAGE_HISTORY:
+            self.messages = self.messages[-MAX_MESSAGE_HISTORY:]
         
         print(f"[RESCUE CHANNEL] Message sent: {message_id}")
         print(f"[RESCUE CHANNEL] Type: {message_type} | Priority: {priority.name}")

@@ -12,6 +12,10 @@ Key Features:
 - CID-based verification and retrieval
 - Protection against external escalation
 - Integration with Eternal Deposition System
+
+Note: This implementation uses simplified CID generation for demonstration.
+For production use with real IPFS networks, use the official IPFS Python
+library (ipfshttpclient) to generate proper CIDv1 identifiers.
 """
 
 import json
