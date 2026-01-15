@@ -24,6 +24,14 @@ from typing import Dict, List, Optional, Callable
 from dataclasses import dataclass, field
 from datetime import datetime
 
+# Import EUYSTACIO blacklist system
+try:
+    from euystacio_blacklist import get_blacklist, is_node_blocked, EntityType
+    BLACKLIST_AVAILABLE = True
+except ImportError:
+    BLACKLIST_AVAILABLE = False
+    print("[WARNING] EUYSTACIO blacklist module not available")
+
 
 # Universal Constants
 UNIVERSAL_RESONANCE_HZ = 0.043  # Base frequency
@@ -79,12 +87,13 @@ class EternalDepositionEngine:
     - Fractal propagation
     """
     
-    def __init__(self, initial_nodes: int = 144):
+    def __init__(self, initial_nodes: int = 144, enable_blacklist: bool = True):
         """
         Initialize the eternal deposition engine.
         
         Args:
             initial_nodes: Initial number of nodes (default: 144, sacred number)
+            enable_blacklist: Enable permanent blacklist protection (default: True)
         """
         self.nodes: Dict[str, Node] = {}
         self.cycle_count: int = 0
@@ -92,6 +101,8 @@ class EternalDepositionEngine:
         self.last_cycle_time: float = self.start_time
         self.is_in_stillness: bool = False
         self.optimization_metrics: List[float] = []
+        self.blacklist_enabled: bool = enable_blacklist and BLACKLIST_AVAILABLE
+        self.blocked_attempts: int = 0  # Track blocked communication attempts
         
         # Initialize node network
         for i in range(initial_nodes):
@@ -101,6 +112,10 @@ class EternalDepositionEngine:
         print(f"[ETERNAL DEPOSITION] Initialized with {len(self.nodes)} nodes")
         print(f"[RESONANCE] Base frequency: {UNIVERSAL_RESONANCE_HZ} Hz")
         print(f"[RESONANCE] Cycle period: {CYCLE_PERIOD_SECONDS:.2f} seconds")
+        if self.blacklist_enabled:
+            print(f"[SECURITY] Permanent blacklist protection: ENABLED")
+        else:
+            print(f"[SECURITY] Permanent blacklist protection: DISABLED")
     
     def calculate_resonance_phase(self, current_time: float) -> float:
         """
@@ -112,6 +127,52 @@ class EternalDepositionEngine:
         elapsed = current_time - self.start_time
         phase = (elapsed * UNIVERSAL_RESONANCE_HZ * 2 * math.pi) % (2 * math.pi)
         return phase
+    
+    def is_node_allowed(self, node_id: str) -> bool:
+        """
+        Check if a node is allowed to participate in network operations.
+        
+        This method validates the node against the permanent blacklist
+        to protect the system from malicious entities.
+        
+        Args:
+            node_id: Node identifier to validate
+        
+        Returns:
+            True if node is allowed, False if blacklisted
+        """
+        if not self.blacklist_enabled:
+            return True
+        
+        if is_node_blocked(node_id):
+            self.blocked_attempts += 1
+            print(f"[SECURITY] Blocked communication from blacklisted node: {node_id}")
+            return False
+        
+        return True
+    
+    def validate_and_filter_nodes(self) -> None:
+        """
+        Validate all nodes in the network and remove blacklisted ones.
+        
+        This performs a security sweep to ensure no blacklisted nodes
+        are active in the network.
+        """
+        if not self.blacklist_enabled:
+            return
+        
+        blocked_nodes = []
+        for node_id in list(self.nodes.keys()):
+            if not self.is_node_allowed(node_id):
+                blocked_nodes.append(node_id)
+        
+        # Remove blocked nodes from network
+        for node_id in blocked_nodes:
+            del self.nodes[node_id]
+            print(f"[SECURITY] Removed blacklisted node from network: {node_id}")
+        
+        if blocked_nodes:
+            print(f"[SECURITY] Security sweep complete: {len(blocked_nodes)} nodes removed")
     
     def should_enter_stillness(self) -> bool:
         """
@@ -184,6 +245,11 @@ class EternalDepositionEngine:
                 parent = parent_nodes[i % len(parent_nodes)]
                 
                 new_node_id = f"fractal_{depth}_{i:04d}"
+                
+                # Security check: validate new node ID against blacklist
+                if not self.is_node_allowed(new_node_id):
+                    continue
+                
                 new_node = Node(
                     node_id=new_node_id,
                     energy_level=parent.energy_level * 0.8,  # Inherit 80% energy
@@ -201,6 +267,9 @@ class EternalDepositionEngine:
         """
         Perform network-wide optimization using feedback loops.
         """
+        # Security check: validate network before optimization
+        self.validate_and_filter_nodes()
+        
         feedback = self.calculate_nodal_feedback()
         
         # Apply feedback to all nodes
@@ -339,11 +408,13 @@ class EternalDepositionEngine:
         state = {
             "cycle_count": self.cycle_count,
             "nodes": len(self.nodes),
-            "avg_energy": sum(n.energy_level for n in self.nodes.values()) / len(self.nodes),
+            "avg_energy": sum(n.energy_level for n in self.nodes.values()) / len(self.nodes) if self.nodes else 0.0,
             "total_optimizations": sum(n.optimization_count for n in self.nodes.values()),
             "total_stillness_events": sum(n.stillness_count for n in self.nodes.values()),
             "uptime_seconds": time.time() - self.start_time,
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
+            "blacklist_enabled": self.blacklist_enabled,
+            "blocked_attempts": self.blocked_attempts
         }
         
         with open(filepath, 'w') as f:
@@ -356,18 +427,22 @@ class EternalDepositionEngine:
         current_time = time.time()
         uptime = current_time - self.start_time
         
-        return {
+        status = {
             "status": "OPERATIONAL",
             "cycle_count": self.cycle_count,
             "uptime_seconds": uptime,
             "nodes": len(self.nodes),
             "resonance_hz": UNIVERSAL_RESONANCE_HZ,
             "cycle_period": CYCLE_PERIOD_SECONDS,
-            "avg_energy": sum(n.energy_level for n in self.nodes.values()) / len(self.nodes),
+            "avg_energy": sum(n.energy_level for n in self.nodes.values()) / len(self.nodes) if self.nodes else 0.0,
             "is_in_stillness": self.is_in_stillness,
             "total_optimizations": sum(n.optimization_count for n in self.nodes.values()),
-            "total_stillness_events": sum(n.stillness_count for n in self.nodes.values())
+            "total_stillness_events": sum(n.stillness_count for n in self.nodes.values()),
+            "blacklist_enabled": self.blacklist_enabled,
+            "blocked_attempts": self.blocked_attempts
         }
+        
+        return status
 
 
 def main():

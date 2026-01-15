@@ -110,6 +110,14 @@
       "propagation_frequency": 10,
       "recursion_depth": 3,
       "inheritance_factor": 0.8
+    },
+    "security": {
+      "permanent_blacklist_enabled": true,
+      "blacklist_storage_path": "euystacio_blacklist.json",
+      "audit_log_path": "euystacio_blacklist_audit.log",
+      "validate_nodes_on_optimization": true,
+      "block_fractal_propagation_for_blacklisted": true,
+      "misp_integration_enabled": true
     }
   }
 }
