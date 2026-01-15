@@ -23,6 +23,7 @@ Usage:
 
 import time
 import json
+import random
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 from enum import Enum
@@ -475,7 +476,6 @@ def main():
     print(f"Normal event: {result if result else 'No threat detected'}")
     
     # Anomalous event
-    import random
     anomalous_event = ProtocolEvent(
         timestamp=time.time(),
         event_type="DATA_TRANSMISSION",
