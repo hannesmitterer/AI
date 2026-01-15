@@ -178,7 +178,7 @@ class QuantumKeyDistributor:
         Simulate quantum transmission with noise.
         
         Args:
-            original_bits: Original bit string
+            original_bits: Original bits as integer
             
         Returns:
             Received bits (with simulated quantum noise)

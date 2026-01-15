@@ -26,7 +26,7 @@ from enum import Enum
 
 
 # Constants
-BLOCK_DIFFICULTY = 4  # Number of leading zeros required in hash
+BLOCK_DIFFICULTY = 4  # Number of leading zeros required in hash (adjustable based on network load)
 MAX_TRANSACTIONS_PER_BLOCK = 100
 GENESIS_PREVIOUS_HASH = "0" * 64
 

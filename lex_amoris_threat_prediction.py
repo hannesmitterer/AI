@@ -38,7 +38,7 @@ except ImportError:
 ANOMALY_THRESHOLD = 0.75  # Threshold for anomaly detection
 HISTORY_WINDOW = 100  # Number of recent observations to keep
 PREDICTION_CONFIDENCE_MIN = 0.60  # Minimum confidence for threat prediction
-RETRAINING_INTERVAL = 3600  # Retrain model every hour (seconds)
+RETRAINING_INTERVAL = 3600  # Retrain model every hour (balances responsiveness with computational cost)
 
 
 @dataclass
