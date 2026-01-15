@@ -17,6 +17,7 @@ Features:
 import time
 import secrets
 import hashlib
+import json
 from typing import Dict, List, Optional
 from dataclasses import dataclass
 from datetime import datetime
@@ -441,7 +442,6 @@ def main():
     
     # Show status
     print("\n[STATUS]")
-    import json
     status = stealth.get_status()
     print(json.dumps(status, indent=2))
     

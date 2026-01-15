@@ -19,6 +19,9 @@ Usage:
 import time
 import sys
 import json
+import hashlib
+import secrets
+import traceback
 from datetime import datetime
 
 # Import all quantum-safe modules
@@ -99,8 +102,6 @@ def demo_blockchain_mesh_network():
     
     # Simulate adding peers
     print("[DEMO] Adding simulated peers...")
-    import hashlib
-    import secrets
     for i in range(3):
         peer_id = f"demo_peer_{i}"
         peer_address = hashlib.sha256(peer_id.encode()).hexdigest()[:32]
@@ -335,7 +336,6 @@ def main():
         print("\n\n[INTERRUPTED] Demo interrupted by user")
     except Exception as e:
         print(f"\n\n[ERROR] Demo failed: {e}")
-        import traceback
         traceback.print_exc()
         sys.exit(1)
 
