@@ -29,6 +29,8 @@ def cleanup_test_files():
     test_files = [
         "euystacio_blacklist.json",
         "euystacio_blacklist_audit.log",
+        # Note: eternal_state.json is included because the Eternal Deposition Engine
+        # may be instantiated during integration tests and creates this file
         "eternal_state.json"
     ]
     for file in test_files:

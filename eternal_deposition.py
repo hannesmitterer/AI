@@ -117,6 +117,17 @@ class EternalDepositionEngine:
         else:
             print(f"[SECURITY] Permanent blacklist protection: DISABLED")
     
+    def _calculate_average_energy(self) -> float:
+        """
+        Calculate average energy across all nodes with zero-division protection.
+        
+        Returns:
+            Average energy level, or 0.0 if no nodes exist
+        """
+        if not self.nodes:
+            return 0.0
+        return sum(n.energy_level for n in self.nodes.values()) / len(self.nodes)
+    
     def calculate_resonance_phase(self, current_time: float) -> float:
         """
         Calculate current phase in the resonance cycle.
@@ -408,7 +419,7 @@ class EternalDepositionEngine:
         state = {
             "cycle_count": self.cycle_count,
             "nodes": len(self.nodes),
-            "avg_energy": sum(n.energy_level for n in self.nodes.values()) / len(self.nodes) if self.nodes else 0.0,
+            "avg_energy": self._calculate_average_energy(),
             "total_optimizations": sum(n.optimization_count for n in self.nodes.values()),
             "total_stillness_events": sum(n.stillness_count for n in self.nodes.values()),
             "uptime_seconds": time.time() - self.start_time,
@@ -434,7 +445,7 @@ class EternalDepositionEngine:
             "nodes": len(self.nodes),
             "resonance_hz": UNIVERSAL_RESONANCE_HZ,
             "cycle_period": CYCLE_PERIOD_SECONDS,
-            "avg_energy": sum(n.energy_level for n in self.nodes.values()) / len(self.nodes) if self.nodes else 0.0,
+            "avg_energy": self._calculate_average_energy(),
             "is_in_stillness": self.is_in_stillness,
             "total_optimizations": sum(n.optimization_count for n in self.nodes.values()),
             "total_stillness_events": sum(n.stillness_count for n in self.nodes.values()),
