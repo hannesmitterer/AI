@@ -20,6 +20,11 @@ from datetime import datetime, timedelta
 from enum import Enum
 
 
+# Blacklist expiry constants (in hours)
+DEFAULT_HIGH_THREAT_EXPIRY_HOURS = 48
+DEFAULT_MEDIUM_THREAT_EXPIRY_HOURS = 24
+
+
 class ThreatLevel(Enum):
     """Threat severity levels."""
     LOW = "low"
@@ -485,12 +490,19 @@ class ProgressiveFirewall:
             # Auto-blacklist high-score threats
             if threat.adaptive_score >= auto_blacklist_threshold:
                 if threat.source_identifier not in self.blacklist:
+                    # Determine expiry hours based on threat level
+                    expiry_hours = None
+                    if threat.threat_level == ThreatLevel.HIGH:
+                        expiry_hours = DEFAULT_HIGH_THREAT_EXPIRY_HOURS
+                    elif threat.threat_level == ThreatLevel.MEDIUM:
+                        expiry_hours = DEFAULT_MEDIUM_THREAT_EXPIRY_HOURS
+                    
                     self.add_to_blacklist(
                         identifier=threat.source_identifier,
                         reason=f"{threat.threat_type.value}: {threat.description}",
                         threat_level=threat.threat_level,
                         is_permanent=threat.threat_level == ThreatLevel.CRITICAL,
-                        expiry_hours=24 if threat.threat_level != ThreatLevel.CRITICAL else None
+                        expiry_hours=expiry_hours
                     )
                     added_count += 1
         
