@@ -304,10 +304,16 @@ class OptimizedLogManager:
             self._compress_archive(archive_file)
     
     def _compress_archive(self, filepath: str) -> None:
-        """Compress archived logs (placeholder for actual compression)."""
-        # In production, this would use gzip or similar
+        """
+        Compress archived logs.
+        
+        Note: Currently a placeholder. In production, this would use gzip or similar
+        compression to reduce storage space. The statistics counter is incremented
+        for tracking purposes, but actual file compression is not yet implemented.
+        """
+        # TODO: Implement actual compression using gzip.compress() or similar
         self.log_statistics["compressions"] += 1
-        print(f"[LOG COMPRESSION] Compressed {filepath}")
+        print(f"[LOG COMPRESSION] Marked for compression: {filepath} (not yet compressed)")
     
     def get_statistics(self) -> Dict:
         """Get log management statistics."""
@@ -449,7 +455,7 @@ class ProgressiveFirewall:
                         self.allowed_requests += 1
                         return True, "Blacklist entry expired"
                 except (ValueError, TypeError):
-                    # Invalid timestamp format, treat as non-expiring
+                    # Invalid timestamp format, entry remains active
                     pass
             
             # Active blacklist entry

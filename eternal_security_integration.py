@@ -181,18 +181,34 @@ class SecureEternalEngine(EternalDepositionEngine):
         }
     
     def save_secure_state(self, filepath: str = "secure_eternal_state.json") -> None:
-        """Save state including security data."""
-        # Save base state
-        super().save_state(filepath)
+        """
+        Save state including security data.
         
-        # Save security state
-        self.security.export_security_state(".")
+        Args:
+            filepath: Base path for state files (directory or file path)
+        """
+        import os
+        
+        # Determine base directory from filepath
+        if os.path.isdir(filepath) or filepath.endswith('/'):
+            base_dir = filepath.rstrip('/')
+            state_file = os.path.join(base_dir, "secure_eternal_state.json")
+        else:
+            base_dir = os.path.dirname(filepath) or "."
+            state_file = filepath
+        
+        # Save base state
+        super().save_state(state_file)
+        
+        # Save security state to same directory
+        self.security.export_security_state(base_dir)
         
         # Save security metrics
-        with open("security_metrics.json", 'w') as f:
+        metrics_file = os.path.join(base_dir, "security_metrics.json")
+        with open(metrics_file, 'w') as f:
             json.dump(self.security_metrics, f, indent=2)
         
-        print(f"[SECURE STATE] Saved complete state with security data")
+        print(f"[SECURE STATE] Saved complete state to {base_dir}/")
 
 
 class SecurityMonitoredDemo:
