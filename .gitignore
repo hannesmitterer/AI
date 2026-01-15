@@ -3,6 +3,12 @@ deployments/
 reports/
 .sync/
 
+# Lex Amoris generated reports
+*_report.json
+*_log.json
+*_blockchain.json
+eternal_state.json
+
 # OS files
 .DS_Store
 Thumbs.db

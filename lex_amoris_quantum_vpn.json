@@ -1,0 +1,217 @@
+{
+  "timestamp": "2026-01-15T01:53:02.447434",
+  "stats": {
+    "total_tunnels": 10,
+    "active_tunnels": 10,
+    "total_keys_generated": 10,
+    "total_bytes_transferred": 0,
+    "total_packets_transferred": 0,
+    "algorithms_in_use": [
+      "KYBER_1024"
+    ]
+  },
+  "tunnels": {
+    "b1b8e142f4e50577": {
+      "tunnel_id": "b1b8e142f4e50577",
+      "local_endpoint": "node_zurich.amoris.net",
+      "remote_endpoint": "node_tokyo.amoris.net",
+      "state": "CONNECTED",
+      "encryption_algorithm": "KYBER_1024",
+      "current_key_id": "4db8f9cd6751fc3b",
+      "established_time": 1768441952.1825464,
+      "uptime_seconds": 30.264923095703125,
+      "bytes_transferred": 0,
+      "packets_transferred": 0
+    },
+    "5b925d97b3f18fba": {
+      "tunnel_id": "5b925d97b3f18fba",
+      "local_endpoint": "node_zurich.amoris.net",
+      "remote_endpoint": "node_newyork.amoris.net",
+      "state": "CONNECTED",
+      "encryption_algorithm": "KYBER_1024",
+      "current_key_id": "d92d691ca5d1a279",
+      "established_time": 1768441952.1828492,
+      "uptime_seconds": 30.264625549316406,
+      "bytes_transferred": 0,
+      "packets_transferred": 0
+    },
+    "7f858131f6a8a8b9": {
+      "tunnel_id": "7f858131f6a8a8b9",
+      "local_endpoint": "node_zurich.amoris.net",
+      "remote_endpoint": "node_sydney.amoris.net",
+      "state": "CONNECTED",
+      "encryption_algorithm": "KYBER_1024",
+      "current_key_id": "e030baf53c455555",
+      "established_time": 1768441952.1831412,
+      "uptime_seconds": 30.264336109161377,
+      "bytes_transferred": 0,
+      "packets_transferred": 0
+    },
+    "96663994f135ad37": {
+      "tunnel_id": "96663994f135ad37",
+      "local_endpoint": "node_zurich.amoris.net",
+      "remote_endpoint": "node_london.amoris.net",
+      "state": "CONNECTED",
+      "encryption_algorithm": "KYBER_1024",
+      "current_key_id": "a91f0513565660a0",
+      "established_time": 1768441952.1834486,
+      "uptime_seconds": 30.26403045654297,
+      "bytes_transferred": 0,
+      "packets_transferred": 0
+    },
+    "78ce84c6a8f30f6c": {
+      "tunnel_id": "78ce84c6a8f30f6c",
+      "local_endpoint": "node_tokyo.amoris.net",
+      "remote_endpoint": "node_newyork.amoris.net",
+      "state": "CONNECTED",
+      "encryption_algorithm": "KYBER_1024",
+      "current_key_id": "db6062e85a981334",
+      "established_time": 1768441952.1837413,
+      "uptime_seconds": 30.263739585876465,
+      "bytes_transferred": 0,
+      "packets_transferred": 0
+    },
+    "e0fa4707eb9d71fb": {
+      "tunnel_id": "e0fa4707eb9d71fb",
+      "local_endpoint": "node_tokyo.amoris.net",
+      "remote_endpoint": "node_sydney.amoris.net",
+      "state": "CONNECTED",
+      "encryption_algorithm": "KYBER_1024",
+      "current_key_id": "1ad644dc9c75fe87",
+      "established_time": 1768441952.184031,
+      "uptime_seconds": 30.26345133781433,
+      "bytes_transferred": 0,
+      "packets_transferred": 0
+    },
+    "c9b0410f341509dd": {
+      "tunnel_id": "c9b0410f341509dd",
+      "local_endpoint": "node_tokyo.amoris.net",
+      "remote_endpoint": "node_london.amoris.net",
+      "state": "CONNECTED",
+      "encryption_algorithm": "KYBER_1024",
+      "current_key_id": "eac7cd21ed776b28",
+      "established_time": 1768441952.1843364,
+      "uptime_seconds": 30.263147830963135,
+      "bytes_transferred": 0,
+      "packets_transferred": 0
+    },
+    "a268131dff2c2e81": {
+      "tunnel_id": "a268131dff2c2e81",
+      "local_endpoint": "node_newyork.amoris.net",
+      "remote_endpoint": "node_sydney.amoris.net",
+      "state": "CONNECTED",
+      "encryption_algorithm": "KYBER_1024",
+      "current_key_id": "641ef16d7d52878e",
+      "established_time": 1768441952.1846266,
+      "uptime_seconds": 30.262859106063843,
+      "bytes_transferred": 0,
+      "packets_transferred": 0
+    },
+    "f8892ab4a9f2a48f": {
+      "tunnel_id": "f8892ab4a9f2a48f",
+      "local_endpoint": "node_newyork.amoris.net",
+      "remote_endpoint": "node_london.amoris.net",
+      "state": "CONNECTED",
+      "encryption_algorithm": "KYBER_1024",
+      "current_key_id": "91a2fe79238ef7ab",
+      "established_time": 1768441952.184918,
+      "uptime_seconds": 30.262568950653076,
+      "bytes_transferred": 0,
+      "packets_transferred": 0
+    },
+    "78488d5f8deaa1d7": {
+      "tunnel_id": "78488d5f8deaa1d7",
+      "local_endpoint": "node_sydney.amoris.net",
+      "remote_endpoint": "node_london.amoris.net",
+      "state": "CONNECTED",
+      "encryption_algorithm": "KYBER_1024",
+      "current_key_id": "1fc6949baa449b43",
+      "established_time": 1768441952.1852248,
+      "uptime_seconds": 30.262263774871826,
+      "bytes_transferred": 0,
+      "packets_transferred": 0
+    }
+  },
+  "key_history": [
+    {
+      "key_id": "4db8f9cd6751fc3b",
+      "generation_time": 1768441952.1825345,
+      "algorithm": "KYBER_1024",
+      "qber": 0.0078125,
+      "is_active": true,
+      "age_seconds": 30.264958381652832
+    },
+    {
+      "key_id": "d92d691ca5d1a279",
+      "generation_time": 1768441952.1828413,
+      "algorithm": "KYBER_1024",
+      "qber": 0.0078125,
+      "is_active": true,
+      "age_seconds": 30.26465368270874
+    },
+    {
+      "key_id": "e030baf53c455555",
+      "generation_time": 1768441952.183135,
+      "algorithm": "KYBER_1024",
+      "qber": 0.00390625,
+      "is_active": true,
+      "age_seconds": 30.264360904693604
+    },
+    {
+      "key_id": "a91f0513565660a0",
+      "generation_time": 1768441952.183442,
+      "algorithm": "KYBER_1024",
+      "qber": 0.0078125,
+      "is_active": true,
+      "age_seconds": 30.264054536819458
+    },
+    {
+      "key_id": "db6062e85a981334",
+      "generation_time": 1768441952.1837358,
+      "algorithm": "KYBER_1024",
+      "qber": 0.01171875,
+      "is_active": true,
+      "age_seconds": 30.2637619972229
+    },
+    {
+      "key_id": "1ad644dc9c75fe87",
+      "generation_time": 1768441952.1840255,
+      "algorithm": "KYBER_1024",
+      "qber": 0.0,
+      "is_active": true,
+      "age_seconds": 30.26347303390503
+    },
+    {
+      "key_id": "eac7cd21ed776b28",
+      "generation_time": 1768441952.1843307,
+      "algorithm": "KYBER_1024",
+      "qber": 0.0078125,
+      "is_active": true,
+      "age_seconds": 30.263168573379517
+    },
+    {
+      "key_id": "641ef16d7d52878e",
+      "generation_time": 1768441952.1846213,
+      "algorithm": "KYBER_1024",
+      "qber": 0.00390625,
+      "is_active": true,
+      "age_seconds": 30.26287841796875
+    },
+    {
+      "key_id": "91a2fe79238ef7ab",
+      "generation_time": 1768441952.184913,
+      "algorithm": "KYBER_1024",
+      "qber": 0.0078125,
+      "is_active": true,
+      "age_seconds": 30.262587547302246
+    },
+    {
+      "key_id": "1fc6949baa449b43",
+      "generation_time": 1768441952.1852188,
+      "algorithm": "KYBER_1024",
+      "qber": 0.0078125,
+      "is_active": true,
+      "age_seconds": 30.262282609939575
+    }
+  ]
+}

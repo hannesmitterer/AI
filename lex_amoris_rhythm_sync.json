@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-15T01:51:41.310461",
+  "timestamp": "2026-01-15T01:53:02.445914",
   "nodes": {
     "node_zurich": {
       "location": {
@@ -12,7 +12,7 @@
       "phase_offset": 0.0,
       "sync_quality": 0.997552998843402,
       "handshake_phase": "LOCKED",
-      "last_sync_time": 1768441901.3099678
+      "last_sync_time": 1768441952.1853874
     },
     "node_tokyo": {
       "location": {
@@ -25,7 +25,7 @@
       "phase_offset": 0.0,
       "sync_quality": 0.9794534681336551,
       "handshake_phase": "FAILED",
-      "last_sync_time": 1768441901.3102274
+      "last_sync_time": 1768441952.1854546
     },
     "node_newyork": {
       "location": {
@@ -37,8 +37,8 @@
       "local_frequency": 0.04580933182762381,
       "phase_offset": 0.0,
       "sync_quality": 0.983369359804623,
-      "handshake_phase": "FAILED",
-      "last_sync_time": 1768441901.3103433
+      "handshake_phase": "LOCKED",
+      "last_sync_time": 1768441952.1854963
     },
     "node_sydney": {
       "location": {
@@ -51,7 +51,7 @@
       "phase_offset": 0.0,
       "sync_quality": 0.9757845656177088,
       "handshake_phase": "FAILED",
-      "last_sync_time": 1768441901.310415
+      "last_sync_time": 1768441952.1855197
     },
     "node_london": {
       "location": {
@@ -64,14 +64,14 @@
       "phase_offset": 0.0,
       "sync_quality": 0.9757845656177088,
       "handshake_phase": "FAILED",
-      "last_sync_time": 1768441901.310415
+      "last_sync_time": 1768441952.1855197
     }
   },
   "sync_status": {
     "total_nodes": 5,
-    "synchronized_pairs": 1,
-    "total_pairs": 1,
-    "average_sync_quality": 0.997552998843402,
+    "synchronized_pairs": 5,
+    "total_pairs": 5,
+    "average_sync_quality": 0.986456876450401,
     "status": "EXCELLENT"
   },
   "handshake_history": [
@@ -82,16 +82,16 @@
       "sync_quality": 0.9795720284194237,
       "distance_km": 9577.422371015577,
       "latency_ms": 31.94684227518351,
-      "timestamp": "2026-01-15T01:51:41.309752"
+      "timestamp": "2026-01-15T01:52:32.185266"
     },
     {
-      "success": false,
+      "success": true,
       "node_a": "node_zurich",
       "node_b": "node_newyork",
       "sync_quality": 0.9831298070800083,
       "distance_km": 6323.748052114231,
       "latency_ms": 21.0937529726456,
-      "timestamp": "2026-01-15T01:51:41.309813"
+      "timestamp": "2026-01-15T01:52:32.185333"
     },
     {
       "success": false,
@@ -100,7 +100,7 @@
       "sync_quality": 0.9759777635652919,
       "distance_km": 16567.77563940424,
       "latency_ms": 55.26415090603861,
-      "timestamp": "2026-01-15T01:51:41.309883"
+      "timestamp": "2026-01-15T01:52:32.185365"
     },
     {
       "success": true,
@@ -109,25 +109,25 @@
       "sync_quality": 0.997552998843402,
       "distance_km": 776.2342453589724,
       "latency_ms": 2.58923873714986,
-      "timestamp": "2026-01-15T01:51:41.309983"
+      "timestamp": "2026-01-15T01:52:32.185390"
     },
     {
-      "success": false,
+      "success": true,
       "node_a": "node_tokyo",
       "node_b": "node_newyork",
       "sync_quality": 0.9827503211720221,
       "distance_km": 10851.732848803775,
       "latency_ms": 36.19748449043296,
-      "timestamp": "2026-01-15T01:51:41.310071"
+      "timestamp": "2026-01-15T01:52:32.185415"
     },
     {
-      "success": false,
+      "success": true,
       "node_a": "node_tokyo",
       "node_b": "node_sydney",
       "sync_quality": 0.98548189535195,
       "distance_km": 7825.818616536859,
       "latency_ms": 26.104121060099715,
-      "timestamp": "2026-01-15T01:51:41.310142"
+      "timestamp": "2026-01-15T01:52:32.185437"
     },
     {
       "success": false,
@@ -136,7 +136,7 @@
       "sync_quality": 0.9794534681336551,
       "distance_km": 9558.56137085063,
       "latency_ms": 31.88392875063798,
-      "timestamp": "2026-01-15T01:51:41.310234"
+      "timestamp": "2026-01-15T01:52:32.185457"
     },
     {
       "success": false,
@@ -145,16 +145,16 @@
       "sync_quality": 0.9798696716802352,
       "distance_km": 15988.755507111682,
       "latency_ms": 53.33274764074179,
-      "timestamp": "2026-01-15T01:51:41.310298"
+      "timestamp": "2026-01-15T01:52:32.185478"
     },
     {
-      "success": false,
+      "success": true,
       "node_a": "node_newyork",
       "node_b": "node_london",
       "sync_quality": 0.983369359804623,
       "distance_km": 5570.222179738048,
       "latency_ms": 18.580261214370005,
-      "timestamp": "2026-01-15T01:51:41.310351"
+      "timestamp": "2026-01-15T01:52:32.185498"
     },
     {
       "success": false,
@@ -163,7 +163,7 @@
       "sync_quality": 0.9757845656177088,
       "distance_km": 16993.933459860895,
       "latency_ms": 56.685660383961014,
-      "timestamp": "2026-01-15T01:51:41.310419"
+      "timestamp": "2026-01-15T01:52:32.185522"
     }
   ]
 }
