@@ -269,6 +269,12 @@ def run_all_tests():
     print(f"\nEnd time: {time.strftime('%Y-%m-%d %H:%M:%S')}")
     print("="*70)
     
+    # Clean up test files after successful run
+    if failed == 0:
+        print("\n[CLEANUP] Removing test files...")
+        cleanup_test_files()
+        print("[CLEANUP] Test environment cleaned")
+    
     return failed == 0
 
 if __name__ == "__main__":
