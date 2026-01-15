@@ -550,7 +550,10 @@ def main():
     print("SYSTEM STATUS")
     print("=" * 70)
     status = engine.get_status()
-    print(json.dumps({k: v for k, v in status.items() if k != "quantum_safe_systems"}, indent=2))
+    # Display basic status without quantum-safe systems
+    basic_status = {k: v for k, v in status.items() 
+                    if k != "quantum_safe_systems"}
+    print(json.dumps(basic_status, indent=2))
     
     if "quantum_safe_systems" in status:
         print("\n" + "=" * 70)

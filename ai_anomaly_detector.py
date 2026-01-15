@@ -114,8 +114,9 @@ class EncryptedBuffer:
         
         # Encrypt data using XOR with key (simplified)
         # In production, use AES-256-GCM or similar
-        encrypted = bytes(a ^ b for a, b in zip(data, 
-            (self.encryption_key * (len(data) // len(self.encryption_key) + 1))[:len(data)]))
+        key_repeat_count = len(data) // len(self.encryption_key) + 1
+        extended_key = (self.encryption_key * key_repeat_count)[:len(data)]
+        encrypted = bytes(a ^ b for a, b in zip(data, extended_key))
         
         self.data.append(encrypted)
         
