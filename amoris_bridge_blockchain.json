@@ -1,0 +1,129 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-01-15T01:51:53.968339",
+  "chain": [
+    {
+      "index": 0,
+      "timestamp": "2026-01-15T01:51:53.132555",
+      "transactions": [
+        {
+          "transaction_id": "genesis",
+          "transaction_type": "CONFIGURATION",
+          "sender": "SYSTEM",
+          "timestamp": "2026-01-15T01:51:53.132546",
+          "data": {
+            "message": "Amoris Bridge Genesis Block",
+            "version": "1.0.0",
+            "protocol": "Lex Amoris",
+            "base_frequency": 0.043
+          },
+          "signature": ""
+        }
+      ],
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "nonce": 66304,
+      "hash": "000022f0f452e01dbe01531d59a1bd2f9271586fc75feb28e0c906b1e2a044a9"
+    },
+    {
+      "index": 1,
+      "timestamp": "2026-01-15T01:51:53.669152",
+      "transactions": [
+        {
+          "transaction_id": "0bc98d755f2bddc9",
+          "transaction_type": "NODE_REGISTRATION",
+          "sender": "SYSTEM",
+          "timestamp": "2026-01-15T01:51:53.669109",
+          "data": {
+            "node_id": "node_zurich",
+            "registration_time": "2026-01-15T01:51:53.669083",
+            "location": "Z\u00fcrich",
+            "frequency": 0.0432
+          },
+          "signature": "8e4132e30137b5887f9858aaf08c681d"
+        },
+        {
+          "transaction_id": "fd35e2c0cab05b01",
+          "transaction_type": "NODE_REGISTRATION",
+          "sender": "SYSTEM",
+          "timestamp": "2026-01-15T01:51:53.669131",
+          "data": {
+            "node_id": "node_tokyo",
+            "registration_time": "2026-01-15T01:51:53.669121",
+            "location": "Tokyo",
+            "frequency": 0.0434
+          },
+          "signature": "6a48c2b4fa10beff93f9b30acb616111"
+        },
+        {
+          "transaction_id": "09f95f29e93b2136",
+          "transaction_type": "NODE_REGISTRATION",
+          "sender": "SYSTEM",
+          "timestamp": "2026-01-15T01:51:53.669145",
+          "data": {
+            "node_id": "node_newyork",
+            "registration_time": "2026-01-15T01:51:53.669137",
+            "location": "New York",
+            "frequency": 0.0431
+          },
+          "signature": "df4ba17c8a235a7ce96db2319636d280"
+        }
+      ],
+      "previous_hash": "000022f0f452e01dbe01531d59a1bd2f9271586fc75feb28e0c906b1e2a044a9",
+      "nonce": 8953,
+      "hash": "00001a333214f89b19374626867c41701ac350dbb2ef2cea2338c4dcb92fc01f"
+    },
+    {
+      "index": 2,
+      "timestamp": "2026-01-15T01:51:53.797957",
+      "transactions": [
+        {
+          "transaction_id": "6f50b91a22de53fc",
+          "transaction_type": "RHYTHM_SYNC",
+          "sender": "node_zurich",
+          "timestamp": "2026-01-15T01:51:53.797934",
+          "data": {
+            "node_a": "node_zurich",
+            "node_b": "node_tokyo",
+            "sync_quality": 0.958,
+            "timestamp": "2026-01-15T01:51:53.797912",
+            "distance_km": 9750,
+            "latency_ms": 42.5
+          },
+          "signature": "c13851001fc23157d3c444eec298d0f3"
+        },
+        {
+          "transaction_id": "8da9dec4772ec52c",
+          "transaction_type": "RHYTHM_SYNC",
+          "sender": "node_zurich",
+          "timestamp": "2026-01-15T01:51:53.797951",
+          "data": {
+            "node_a": "node_zurich",
+            "node_b": "node_newyork",
+            "sync_quality": 0.943,
+            "timestamp": "2026-01-15T01:51:53.797942",
+            "distance_km": 6350,
+            "latency_ms": 31.2
+          },
+          "signature": "d922997c3f2b3960fa866d8afcd6d811"
+        }
+      ],
+      "previous_hash": "00001a333214f89b19374626867c41701ac350dbb2ef2cea2338c4dcb92fc01f",
+      "nonce": 13622,
+      "hash": "0000690e5ed2287eb0955aa061885d332626c3562fa8b3e550b7e5e9826ce43a"
+    }
+  ],
+  "stats": {
+    "total_blocks": 3,
+    "total_transactions": 6,
+    "pending_transactions": 0,
+    "registered_nodes": 3,
+    "transaction_types": {
+      "CONFIGURATION": 1,
+      "NODE_REGISTRATION": 3,
+      "RHYTHM_SYNC": 2
+    },
+    "chain_valid": true,
+    "latest_block_hash": "0000690e5ed2287eb0955aa061885d332626c3562fa8b3e550b7e5e9826ce43a",
+    "blockchain_size_bytes": 2719
+  }
+}

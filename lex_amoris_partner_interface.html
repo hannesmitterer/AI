@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lex Amoris - Partner Interface | Rhythm Validation Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: #b0b0b0;
+            font-size: 1.1em;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+        
+        .card-title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #00d4ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .icon {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .metric:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            color: #b0b0b0;
+            font-size: 0.95em;
+        }
+        
+        .metric-value {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 8px;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-excellent { background: #00ff88; }
+        .status-good { background: #00d4ff; }
+        .status-fair { background: #ffa500; }
+        .status-poor { background: #ff4444; }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .rhythm-visualizer {
+            grid-column: 1 / -1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        #rhythmCanvas {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #00d4ff, #7b2ff7);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+        }
+        
+        button:active {
+            transform: scale(0.95);
+        }
+        
+        .node-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .node-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 3px solid #00d4ff;
+        }
+        
+        .node-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .node-name {
+            font-weight: bold;
+            color: #00d4ff;
+        }
+        
+        .node-status {
+            font-size: 0.9em;
+            padding: 3px 10px;
+            border-radius: 12px;
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+        }
+        
+        .node-details {
+            font-size: 0.9em;
+            color: #b0b0b0;
+        }
+        
+        .alert {
+            background: rgba(255, 68, 68, 0.1);
+            border-left: 3px solid #ff4444;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+        
+        .alert-title {
+            color: #ff4444;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            transition: width 0.3s ease;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #808080;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 Lex Amoris Partner Interface</h1>
+            <p class="subtitle">Dezentrale Rhythm-Validierung & Synchronisations-Dashboard</p>
+        </header>
+        
+        <div class="dashboard">
+            <!-- System Status Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <span>⚡</span> System Status
+                </h2>
+                <div class="metric">
+                    <span class="metric-label">Gesamtstatus</span>
+                    <span class="metric-value" id="systemStatus">
+                        OPERATIONAL<span class="status-indicator status-excellent"></span>
+                    </span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Aktive Knoten</span>
+                    <span class="metric-value" id="activeNodes">5</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Sync-Paare</span>
+                    <span class="metric-value" id="syncPairs">10/10</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Ø Sync-Qualität</span>
+                    <span class="metric-value" id="avgSyncQuality">95.8%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="qualityProgress" style="width: 95.8%"></div>
+                </div>
+            </div>
+            
+            <!-- Rhythm Metrics Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <span>🎵</span> Rhythm Metriken
+                </h2>
+                <div class="metric">
+                    <span class="metric-label">Basis-Frequenz</span>
+                    <span class="metric-value" id="baseFrequency">0.043 Hz</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Phasenausrichtung</span>
+                    <span class="metric-value" id="phaseAlignment">0.982</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Resonanzstabilität</span>
+                    <span class="metric-value" id="resonanceStability">97.3%</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Netzwerk-Kohärenz</span>
+                    <span class="metric-value" id="networkCoherence">94.7%</span>
+                </div>
+            </div>
+            
+            <!-- Security Status Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <span>🔒</span> Sicherheitsstatus
+                </h2>
+                <div class="metric">
+                    <span class="metric-label">Bedrohungsstufe</span>
+                    <span class="metric-value" id="threatLevel">
+                        LOW<span class="status-indicator status-excellent"></span>
+                    </span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Erkannte Bedrohungen</span>
+                    <span class="metric-value" id="detectedThreats">0</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Quantum-VPN</span>
+                    <span class="metric-value" id="quantumVpn">AKTIV</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Blockchain-Status</span>
+                    <span class="metric-value" id="blockchainStatus">VERBUNDEN</span>
+                </div>
+            </div>
+            
+            <!-- Location Info Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <span>🌍</span> Standort-Anpassungen
+                </h2>
+                <div class="metric">
+                    <span class="metric-label">Ø Distanz</span>
+                    <span class="metric-value" id="avgDistance">8,457 km</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Ø Latenz</span>
+                    <span class="metric-value" id="avgLatency">28.2 ms</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Geo-Resonanzfaktor</span>
+                    <span class="metric-value" id="geoResonance">1.023</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-label">Propagationsverzögerung</span>
+                    <span class="metric-value" id="propagationDelay">0.045 s</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Rhythm Visualization -->
+        <div class="rhythm-visualizer">
+            <h2 class="card-title">
+                <span>📊</span> Echtzeit Rhythm-Visualisierung
+            </h2>
+            <canvas id="rhythmCanvas"></canvas>
+            <div class="controls">
+                <button onclick="startMonitoring()">▶ Start Monitoring</button>
+                <button onclick="stopMonitoring()">⏸ Stop</button>
+                <button onclick="performHandshake()">🤝 Handshake Durchführen</button>
+                <button onclick="validateRhythm()">✓ Rhythm Validieren</button>
+                <button onclick="refreshData()">🔄 Daten Aktualisieren</button>
+            </div>
+        </div>
+        
+        <!-- Active Nodes List -->
+        <div class="rhythm-visualizer">
+            <h2 class="card-title">
+                <span>🔗</span> Aktive Knoten
+            </h2>
+            <div class="node-list" id="nodeList">
+                <!-- Nodes will be populated here -->
+            </div>
+        </div>
+        
+        <!-- Alerts Section -->
+        <div class="rhythm-visualizer" id="alertsSection" style="display: none;">
+            <h2 class="card-title">
+                <span>⚠️</span> Warnungen & Ereignisse
+            </h2>
+            <div id="alertsContainer">
+                <!-- Alerts will be populated here -->
+            </div>
+        </div>
+        
+        <footer class="footer">
+            <p>Lex Amoris Partner Interface v1.0.0 | Basierend auf Kosymbiosis-Prinzipien</p>
+            <p>© 2026 Hannes Mitterer | Resonance School</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Global state
+        let isMonitoring = false;
+        let animationId = null;
+        let canvas = null;
+        let ctx = null;
+        let time = 0;
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            canvas = document.getElementById('rhythmCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Initialize nodes
+            updateNodeList();
+            
+            // Start initial monitoring
+            startMonitoring();
+        });
+        
+        function resizeCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        
+        function startMonitoring() {
+            if (isMonitoring) return;
+            isMonitoring = true;
+            animate();
+            console.log('[MONITORING] Started');
+        }
+        
+        function stopMonitoring() {
+            isMonitoring = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+            console.log('[MONITORING] Stopped');
+        }
+        
+        function animate() {
+            if (!isMonitoring) return;
+            
+            // Clear canvas
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw rhythm waves
+            drawRhythmWaves();
+            
+            time += 0.016; // ~60fps
+            animationId = requestAnimationFrame(animate);
+        }
+        
+        function drawRhythmWaves() {
+            const centerY = canvas.height / 2;
+            const frequency = 0.043; // Base rhythm frequency
+            const amplitude = 50;
+            
+            // Draw multiple phase-aligned waves representing different nodes
+            const colors = ['#00d4ff', '#7b2ff7', '#00ff88', '#ffa500', '#ff4444'];
+            
+            for (let i = 0; i < 5; i++) {
+                ctx.beginPath();
+                ctx.strokeStyle = colors[i];
+                ctx.lineWidth = 2;
+                
+                for (let x = 0; x < canvas.width; x++) {
+                    const phase = (i * Math.PI / 5); // Phase offset for each node
+                    const y = centerY + Math.sin((x / 100 + time) * frequency * 100 + phase) * amplitude;
+                    
+                    if (x === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                
+                ctx.stroke();
+            }
+            
+            // Draw center line
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(canvas.width, centerY);
+            ctx.stroke();
+        }
+        
+        function updateNodeList() {
+            const nodes = [
+                { id: 'node_zurich', name: 'Zürich', location: 'Switzerland', status: 'LOCKED', quality: 0.976, latency: 0.14 },
+                { id: 'node_tokyo', name: 'Tokyo', location: 'Japan', status: 'LOCKED', quality: 0.958, latency: 42.5 },
+                { id: 'node_newyork', name: 'New York', location: 'USA', status: 'LOCKED', quality: 0.943, latency: 31.2 },
+                { id: 'node_sydney', name: 'Sydney', location: 'Australia', status: 'LOCKED', quality: 0.952, latency: 53.8 },
+                { id: 'node_london', name: 'London', location: 'UK', status: 'LOCKED', quality: 0.968, latency: 12.3 }
+            ];
+            
+            const nodeList = document.getElementById('nodeList');
+            nodeList.innerHTML = nodes.map(node => `
+                <div class="node-item">
+                    <div class="node-header">
+                        <span class="node-name">${node.name}</span>
+                        <span class="node-status">${node.status}</span>
+                    </div>
+                    <div class="node-details">
+                        📍 ${node.location} | 
+                        🔗 ID: ${node.id} | 
+                        📊 Qualität: ${(node.quality * 100).toFixed(1)}% | 
+                        ⚡ Latenz: ${node.latency.toFixed(2)} ms
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function performHandshake() {
+            console.log('[HANDSHAKE] Initiating Rhythm Handshake...');
+            
+            // Simulate handshake process
+            const phases = ['DISCOVER', 'CALIBRATE', 'SYNCHRONIZE', 'VALIDATE', 'LOCKED'];
+            let currentPhase = 0;
+            
+            const interval = setInterval(() => {
+                if (currentPhase < phases.length) {
+                    console.log(`[HANDSHAKE] Phase: ${phases[currentPhase]}`);
+                    currentPhase++;
+                } else {
+                    clearInterval(interval);
+                    console.log('[HANDSHAKE] Complete ✓');
+                    alert('Rhythm Handshake erfolgreich abgeschlossen!');
+                }
+            }, 500);
+        }
+        
+        function validateRhythm() {
+            console.log('[VALIDATION] Validating rhythm metrics...');
+            
+            setTimeout(() => {
+                const isValid = Math.random() > 0.1; // 90% success rate
+                
+                if (isValid) {
+                    console.log('[VALIDATION] Rhythm validation successful ✓');
+                    alert('✓ Rhythm-Validierung erfolgreich!\n\nAlle Knoten sind synchronisiert und operieren im optimalen Bereich.');
+                } else {
+                    console.log('[VALIDATION] Validation failed ✗');
+                    showAlert('Warnung: Rhythm-Validierung fehlgeschlagen', 
+                             'Einige Knoten zeigen Abweichungen. Bitte Synchronisierung überprüfen.');
+                }
+            }, 1000);
+        }
+        
+        function refreshData() {
+            console.log('[REFRESH] Refreshing data...');
+            
+            // Simulate data refresh with slight variations
+            const updateValue = (elementId, value, isPercentage = false) => {
+                const element = document.getElementById(elementId);
+                if (element && typeof value === 'number') {
+                    const variation = value * (0.98 + Math.random() * 0.04);
+                    element.textContent = isPercentage ? 
+                        `${variation.toFixed(1)}%` : 
+                        variation.toFixed(3);
+                }
+            };
+            
+            updateValue('avgSyncQuality', 95.8, true);
+            updateValue('phaseAlignment', 0.982);
+            updateValue('resonanceStability', 97.3, true);
+            updateValue('networkCoherence', 94.7, true);
+            updateValue('geoResonance', 1.023);
+            
+            updateNodeList();
+            
+            console.log('[REFRESH] Data updated ✓');
+        }
+        
+        function showAlert(title, message) {
+            const alertsSection = document.getElementById('alertsSection');
+            const alertsContainer = document.getElementById('alertsContainer');
+            
+            alertsSection.style.display = 'block';
+            
+            const alertHTML = `
+                <div class="alert">
+                    <div class="alert-title">${title}</div>
+                    <div>${message}</div>
+                </div>
+            `;
+            
+            alertsContainer.innerHTML = alertHTML + alertsContainer.innerHTML;
+        }
+        
+        // Simulate periodic data updates
+        setInterval(() => {
+            if (isMonitoring) {
+                // Randomly update some metrics
+                if (Math.random() > 0.7) {
+                    const threats = Math.floor(Math.random() * 3);
+                    document.getElementById('detectedThreats').textContent = threats;
+                    
+                    if (threats > 0) {
+                        document.getElementById('threatLevel').innerHTML = 
+                            'MODERATE<span class="status-indicator status-fair"></span>';
+                    } else {
+                        document.getElementById('threatLevel').innerHTML = 
+                            'LOW<span class="status-indicator status-excellent"></span>';
+                    }
+                }
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
