@@ -124,3 +124,69 @@ Consultare `.orchestration/README.md` per documentazione completa del sistema di
 **Stato Sistema**: ✓ OPERATIVO  
 **Versione**: 1.0.0  
 **Fase**: Phase II - Dynamic Integration
+
+---
+
+## 🛡️ Security & Defense System
+
+### Blacklist Defense Strategies and Meta-Management
+
+Il repository implementa un sistema completo di sicurezza integrato:
+
+#### 1. Real-time Security Monitoring
+- **Event Tracking**: Monitoraggio in tempo reale di eventi di sicurezza
+- **Protocol Validation**: Validazione delle operazioni di protocollo
+- **Logging Avanzato**: Sistema di logging completo con classificazione per gravità
+- **Alert System**: Notifiche immediate per eventi critici
+
+#### 2. Adaptive Defense Mechanisms
+- **Blacklist Management**: Gestione dinamica delle blacklist
+- **Attack Pattern Detection**: Rilevamento di pattern di attacco noti
+  - SQL Injection
+  - XSS (Cross-Site Scripting)
+  - Path Traversal
+  - Command Injection
+- **Rate Limiting**: Protezione contro attacchi brute-force
+- **Threat Scoring**: Valutazione adattiva delle minacce
+
+#### 3. Token Validation & MISP Integration
+- **Secure Token Generation**: Generazione di token con firma HMAC
+- **Token Lifecycle**: Gestione completa del ciclo di vita dei token
+- **MISP Events**: Integrazione con MISP per threat intelligence
+- **Automated Response**: Risposte automatiche alle minacce rilevate
+
+### Moduli di Sicurezza
+
+- `security_monitoring.py` - Sistema di monitoraggio in tempo reale
+- `adaptive_defense.py` - Motore di difesa adattiva
+- `misp_integration.py` - Integrazione MISP e validazione token
+- `integrated_security.py` - Sistema di sicurezza integrato
+- `demo_security.py` - Demo completa delle funzionalità
+- `test_security.py` - Test unitari (26 test, tutti passano ✓)
+
+### Utilizzo Rapido
+
+```python
+from integrated_security import IntegratedSecuritySystem
+
+# Inizializza il sistema di sicurezza
+security = IntegratedSecuritySystem()
+security.start()
+
+# Processa una richiesta con tutti i controlli di sicurezza
+result = security.process_request(
+    identifier="user_123",
+    request_data={"endpoint": "/api/data"},
+    token="your_token_here"
+)
+
+# Ottieni lo stato completo del sistema
+status = security.get_comprehensive_status()
+
+# Esporta report di sicurezza
+security.export_security_report("security_report.json")
+```
+
+Per documentazione completa vedere [SECURITY_DOCUMENTATION.md](SECURITY_DOCUMENTATION.md)
+
+---
