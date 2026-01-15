@@ -73,11 +73,15 @@ class SecureEternalDepositionEngine(EternalDepositionEngine):
         # Use node_id as entity_id for security checks
         resource_path = f"/node/{node_id}/{operation}"
         
+        # Get node energy level safely
+        node = self.nodes.get(node_id)
+        energy_level = node.energy_level if node else 0.0
+        
         allowed, reason = self.security.process_request(
             entity_id=node_id,
             resource_path=resource_path,
             behavior={
-                "energy_level": self.nodes.get(node_id).energy_level if node_id in self.nodes else 0,
+                "energy_level": energy_level,
                 "operation": operation,
                 "cycle": self.cycle_count
             }

@@ -151,13 +151,18 @@ class ThreatDetector:
             duration: Duration in seconds (None for permanent)
         """
         current_time = time.time()
-        expires_at = None if duration is None else current_time + (duration or self.blacklist_duration)
+        if duration is None:
+            expires_at = None
+        else:
+            expires_at = current_time + duration
         
         if entity_id in self.blacklist:
             # Update existing entry
             threat = self.blacklist[entity_id]
             threat.update_activity()
-            threat.threat_level = max(threat.threat_level, threat_level, key=lambda x: x.value)
+            # Update to higher threat level
+            if threat_level.value > threat.threat_level.value:
+                threat.threat_level = threat_level
             if reason:
                 threat.reason = reason
         else:
@@ -241,7 +246,7 @@ class ThreatDetector:
         comparison_count = 0
         
         for key in current:
-            if key in previous[0]:
+            if previous and key in previous[0]:
                 try:
                     current_val = float(current[key])
                     avg_val = sum(float(p.get(key, 0)) for p in previous) / len(previous)

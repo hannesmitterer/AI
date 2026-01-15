@@ -133,7 +133,10 @@ class ThreatDetector {
         if (this.blacklist.has(entityId)) {
             const threat = this.blacklist.get(entityId);
             threat.updateActivity();
-            threat.threatLevel = Math.max(threat.threatLevel, threatLevel);
+            // Update to higher threat level
+            if (threatLevel > threat.threatLevel) {
+                threat.threatLevel = threatLevel;
+            }
             if (reason) {
                 threat.reason = reason;
             }
