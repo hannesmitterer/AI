@@ -24,8 +24,8 @@ from enum import Enum
 
 
 # Constants
-SACRED_HISTORY_LIMIT = 144  # Maximum ethical vectors to track
-RECENT_VECTORS_WINDOW = 20  # Recent vectors for sovereignty calculation
+SACRED_HISTORY_LIMIT = 144  # Sacred number from Kosymbiosis - maximum ethical vectors to track
+RECENT_VECTORS_WINDOW = 20  # Number of recent vectors to consider for sovereignty calculation
 
 
 class EthicalStatus(Enum):

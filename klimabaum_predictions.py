@@ -31,7 +31,6 @@ RECENT_READINGS_WINDOW = 50  # Recent readings for analysis
 MIN_DATA_CONFIDENCE_FACTOR = 50.0  # Minimum readings for full confidence
 CONFIDENCE_WEEK_HOURS = 168.0  # Hours in a week
 HARMONIC_RESONANCE_FACTOR = 0.3  # Resonance adjustment factor
-MAX_TASKS_PER_CYCLE = 3  # Maximum tasks to execute per cycle
 
 
 class ClimatePattern(Enum):
@@ -178,7 +177,7 @@ class KlimabaumEngine:
             quadrants[quadrant].append(temp)
         
         # Calculate inter-quadrant variance
-        avg_temps = [sum(q) / len(q) if q else None for q in quadrants]
+        avg_temps = [sum(q) / len(q) if len(q) > 0 else None for q in quadrants]
         # Check if all quadrants have data
         if all(t is not None for t in avg_temps):
             overall_avg = sum(t for t in avg_temps if t is not None) / len([t for t in avg_temps if t is not None])
@@ -203,9 +202,17 @@ class KlimabaumEngine:
         recent = self.readings[-10:]
         temps = [r.temperature_celsius for r in recent]
         
+        # Require at least 3 readings for trend analysis
+        if len(temps) < 3:
+            return ClimatePattern.STABLE
+        
         # Calculate trend
-        avg_first_half = sum(temps[:len(temps)//2]) / (len(temps)//2)
-        avg_second_half = sum(temps[len(temps)//2:]) / (len(temps) - len(temps)//2)
+        half_point = len(temps) // 2
+        if half_point == 0:  # Safety check
+            return ClimatePattern.STABLE
+            
+        avg_first_half = sum(temps[:half_point]) / half_point
+        avg_second_half = sum(temps[half_point:]) / (len(temps) - half_point)
         
         diff = avg_second_half - avg_first_half
         
