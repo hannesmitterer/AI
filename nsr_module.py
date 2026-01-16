@@ -23,6 +23,11 @@ from datetime import datetime
 from enum import Enum
 
 
+# Constants
+SACRED_HISTORY_LIMIT = 144  # Maximum ethical vectors to track
+RECENT_VECTORS_WINDOW = 20  # Recent vectors for sovereignty calculation
+
+
 class EthicalStatus(Enum):
     """Ethical validation status for operations."""
     APPROVED = "approved"
@@ -111,8 +116,8 @@ class NSRModule:
         self.ethical_history.append(vector)
         
         # Maintain history limit
-        if len(self.ethical_history) > 144:
-            self.ethical_history = self.ethical_history[-144:]
+        if len(self.ethical_history) > SACRED_HISTORY_LIMIT:
+            self.ethical_history = self.ethical_history[-SACRED_HISTORY_LIMIT:]
         
         return EthicalStatus.APPROVED
     
@@ -201,7 +206,7 @@ class NSRModule:
             return 1.0
         
         # Calculate weighted average of sovereignty impacts
-        recent_vectors = self.ethical_history[-20:]  # Last 20 vectors
+        recent_vectors = self.ethical_history[-RECENT_VECTORS_WINDOW:]
         avg_impact = sum(v.sovereignty_impact for v in recent_vectors) / len(recent_vectors)
         
         # Normalize to 0-1 range

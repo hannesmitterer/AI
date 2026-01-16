@@ -27,6 +27,10 @@ from klimabaum_predictions import KlimabaumEngine, ClimatePrediction, ClimatePat
 from eternal_deposition import EternalDepositionEngine, Node
 
 
+# Constants
+MAX_TASKS_PER_CYCLE = 3  # Maximum tasks to execute per autonomous cycle
+
+
 @dataclass
 class AutonomousTask:
     """Represents an autonomous AI task."""
@@ -378,7 +382,7 @@ class AIBioComprehensive:
         pending_tasks.sort(key=lambda t: t.priority, reverse=True)
         
         tasks_executed = 0
-        for task in pending_tasks[:3]:  # Execute up to 3 tasks per cycle
+        for task in pending_tasks[:MAX_TASKS_PER_CYCLE]:  # Execute up to max tasks per cycle
             if self.execute_task(task.task_id):
                 tasks_executed += 1
         

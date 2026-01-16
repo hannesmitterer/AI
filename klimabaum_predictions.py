@@ -25,6 +25,15 @@ from datetime import datetime, timedelta
 from enum import Enum
 
 
+# Constants
+SACRED_HISTORY_LIMIT = 144  # Sacred number from Kosymbiosis
+RECENT_READINGS_WINDOW = 50  # Recent readings for analysis
+MIN_DATA_CONFIDENCE_FACTOR = 50.0  # Minimum readings for full confidence
+CONFIDENCE_WEEK_HOURS = 168.0  # Hours in a week
+HARMONIC_RESONANCE_FACTOR = 0.3  # Resonance adjustment factor
+MAX_TASKS_PER_CYCLE = 3  # Maximum tasks to execute per cycle
+
+
 class ClimatePattern(Enum):
     """Climate pattern types."""
     STABLE = "stable"
@@ -102,7 +111,7 @@ class KlimabaumEngine:
         self.harmonic_factors = [1.0, 1.618, 2.0, 3.236]  # Golden ratio harmonics
         
         # Model parameters
-        self.max_readings_history = 144  # Sacred number
+        self.max_readings_history = SACRED_HISTORY_LIMIT  # Sacred number
         self.baseline_temperature = 20.0  # Celsius
         self.baseline_humidity = 60.0  # Percent
         
@@ -157,7 +166,7 @@ class KlimabaumEngine:
             return 0.0
         
         # Analyze temperature variation with resonance phase
-        recent = self.readings[-50:] if len(self.readings) >= 50 else self.readings
+        recent = self.readings[-RECENT_READINGS_WINDOW:] if len(self.readings) >= RECENT_READINGS_WINDOW else self.readings
         
         # Calculate correlation using simplified method
         phase_temps = [(r.resonance_phase, r.temperature_celsius) for r in recent]
@@ -165,14 +174,15 @@ class KlimabaumEngine:
         # Group by phase quadrant and calculate variance
         quadrants = [[] for _ in range(4)]
         for phase, temp in phase_temps:
-            quadrant = int(phase / (math.pi / 2))
-            if quadrant < 4:
-                quadrants[quadrant].append(temp)
+            quadrant = int(phase / (math.pi / 2)) % 4  # Use modulo to prevent out of bounds
+            quadrants[quadrant].append(temp)
         
         # Calculate inter-quadrant variance
-        avg_temps = [sum(q) / len(q) if q else 0 for q in quadrants]
-        if all(avg_temps):
-            variance = sum((t - sum(avg_temps) / len(avg_temps)) ** 2 for t in avg_temps)
+        avg_temps = [sum(q) / len(q) if q else None for q in quadrants]
+        # Check if all quadrants have data
+        if all(t is not None for t in avg_temps):
+            overall_avg = sum(t for t in avg_temps if t is not None) / len([t for t in avg_temps if t is not None])
+            variance = sum((t - overall_avg) ** 2 for t in avg_temps if t is not None)
             # Normalize to correlation coefficient
             correlation = min(1.0, variance / 10.0)
             return correlation
@@ -277,7 +287,7 @@ class KlimabaumEngine:
             # Apply harmonic influence
             for harmonic in self.harmonic_factors:
                 harmonic_phase = (target_phase * harmonic) % (2 * math.pi)
-                resonance_adjustment += math.sin(harmonic_phase) * 0.3 * resonance_correlation
+                resonance_adjustment += math.sin(harmonic_phase) * HARMONIC_RESONANCE_FACTOR * resonance_correlation
         
         # Calculate predictions
         predicted_temp = avg_temp + trend_adjustment + resonance_adjustment
@@ -287,9 +297,9 @@ class KlimabaumEngine:
         predicted_humidity = max(0.0, min(100.0, predicted_humidity))
         
         # Calculate confidence based on data availability and pattern stability
-        data_confidence = min(1.0, len(self.readings) / 50.0)
+        data_confidence = min(1.0, len(self.readings) / MIN_DATA_CONFIDENCE_FACTOR)
         pattern_confidence = 0.8 if pattern in [ClimatePattern.STABLE, ClimatePattern.WARMING, ClimatePattern.COOLING] else 0.5
-        time_confidence = max(0.3, 1.0 - (hours_ahead / 168.0))  # Decreases over 1 week
+        time_confidence = max(0.3, 1.0 - (hours_ahead / CONFIDENCE_WEEK_HOURS))  # Decreases over 1 week
         
         confidence = data_confidence * pattern_confidence * time_confidence
         
