@@ -23,6 +23,8 @@ const STILLNESS_DURATION_CAP_MS = 2000;  // Maximum stillness duration in ms (pr
 // Climate Pattern Constants
 const CLIMATE_PATTERN_HISTORY = 288;  // 24 hours of data at 5-minute intervals
 const CLIMATE_DATA_RELIABILITY_THRESHOLD = 0.85;  // Minimum reliability score for climate data
+const CLIMATE_UPDATE_INTERVAL_MS = 300000;  // Update climate data every 5 minutes
+const CLIMATE_INFLUENCE_SCALE_FACTOR = 0.02;  // Maximum climate influence on optimization
 
 /**
  * ClimatePattern class representing climate data observation
@@ -257,8 +259,8 @@ class EternalDepositionEngine {
 
         const currentTime = Date.now();
 
-        // Update climate data every 5 minutes (300000 ms)
-        if (currentTime - this.lastClimateUpdate < 300000) return;
+        // Update climate data every 5 minutes
+        if (currentTime - this.lastClimateUpdate < CLIMATE_UPDATE_INTERVAL_MS) return;
 
         // Generate new climate pattern
         const pattern = this.generateClimatePattern(currentTime);
@@ -298,8 +300,8 @@ class EternalDepositionEngine {
         // Average prediction as climate influence
         const avgPrediction = predictions.reduce((a, b) => a + b, 0) / predictions.length;
 
-        // Scale to smaller influence factor (0.02 max)
-        return avgPrediction * 0.02;
+        // Scale to smaller influence factor
+        return avgPrediction * CLIMATE_INFLUENCE_SCALE_FACTOR;
     }
 
     propagateFractalPattern(depth = 3) {
@@ -593,7 +595,9 @@ if (typeof module !== 'undefined' && module.exports) {
         MAX_OPTIMIZATION_METRICS,
         STILLNESS_DURATION_CAP_MS,
         CLIMATE_PATTERN_HISTORY,
-        CLIMATE_DATA_RELIABILITY_THRESHOLD
+        CLIMATE_DATA_RELIABILITY_THRESHOLD,
+        CLIMATE_UPDATE_INTERVAL_MS,
+        CLIMATE_INFLUENCE_SCALE_FACTOR
     };
 }
 
@@ -610,6 +614,8 @@ if (typeof window !== 'undefined') {
         HARMONIC_432_HZ,
         PHI,
         CLIMATE_PATTERN_HISTORY,
-        CLIMATE_DATA_RELIABILITY_THRESHOLD
+        CLIMATE_DATA_RELIABILITY_THRESHOLD,
+        CLIMATE_UPDATE_INTERVAL_MS,
+        CLIMATE_INFLUENCE_SCALE_FACTOR
     };
 }

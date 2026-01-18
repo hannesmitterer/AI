@@ -39,6 +39,8 @@ STILLNESS_DURATION_CAP = 2.0  # Maximum stillness duration in seconds (practical
 # Climate Pattern Constants
 CLIMATE_PATTERN_HISTORY = 288  # 24 hours of data at 5-minute intervals
 CLIMATE_DATA_RELIABILITY_THRESHOLD = 0.85  # Minimum reliability score for climate data
+CLIMATE_UPDATE_INTERVAL_SECONDS = 300  # Update climate data every 5 minutes
+CLIMATE_INFLUENCE_SCALE_FACTOR = 0.02  # Maximum climate influence on optimization
 
 
 @dataclass
@@ -265,8 +267,8 @@ class EternalDepositionEngine:
         
         current_time = time.time()
         
-        # Update climate data every 5 minutes (300 seconds)
-        if current_time - self.last_climate_update < 300:
+        # Update climate data every 5 minutes
+        if current_time - self.last_climate_update < CLIMATE_UPDATE_INTERVAL_SECONDS:
             return
         
         # Generate new climate pattern
@@ -305,8 +307,8 @@ class EternalDepositionEngine:
         # Average prediction as climate influence
         avg_prediction = sum(predictions) / len(predictions)
         
-        # Scale to smaller influence factor (0.02 max)
-        return avg_prediction * 0.02
+        # Scale to smaller influence factor
+        return avg_prediction * CLIMATE_INFLUENCE_SCALE_FACTOR
     
     def propagate_fractal_pattern(self, depth: int = 3) -> None:
         """
