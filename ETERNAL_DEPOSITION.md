@@ -39,8 +39,6 @@ ClimatePattern {
 
 ### 3. Nodal Network Architecture
 
-### 3. Nodal Network Architecture
-
 The system consists of a scalable network of **nodes**, where each node:
 - Maintains an internal energy state (0.0 to 1.0)
 - Tracks its resonance phase
@@ -54,8 +52,6 @@ The system consists of a scalable network of **nodes**, where each node:
 - Nodes are interconnected through shared feedback mechanisms
 - Each node contributes to the collective system energy
 - Each node maintains climate intelligence for improved optimization
-
-### 4. Feedback Loop Optimization
 
 ### 4. Feedback Loop Optimization
 
