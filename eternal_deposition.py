@@ -96,6 +96,10 @@ class Node:
         """
         Predict climate trend based on local intelligence.
         
+        Uses simple linear regression on temperature data.
+        Note: Assumes equally-spaced time intervals (uses index positions).
+        For production use with real timestamps, consider using actual time differences.
+        
         Returns normalized trend value (-1 to 1) or None if insufficient data.
         """
         reliable_data = self.get_reliable_climate_data()

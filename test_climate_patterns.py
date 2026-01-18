@@ -136,7 +136,7 @@ def test_climate_trend_prediction():
     assert trend > 0, f"Should detect warming trend, got {trend}"
     
     # Test cooling trend
-    node.climate_patterns = []
+    node.climate_patterns = []  # Clear for next test - direct access for testing only
     for i in range(10):
         pattern = ClimatePattern(
             timestamp=time.time() + i,
