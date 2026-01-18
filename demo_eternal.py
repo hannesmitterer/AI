@@ -131,12 +131,73 @@ def demo_live_monitoring():
     for key, value in status.items():
         print(f"  {key}: {value}")
 
+def demo_climate_patterns():
+    """Demonstrate climate pattern monitoring and prediction."""
+    print("\n" + "="*70)
+    print("DEMO 6: Climate Pattern Monitoring (NSR Extension)")
+    print("="*70 + "\n")
+    
+    engine = EternalDepositionEngine(initial_nodes=30)
+    
+    print("Testing climate pattern generation...")
+    
+    # Generate and display sample patterns
+    for i in range(3):
+        pattern = engine.generate_climate_pattern(time.time() + i * 100)
+        print(f"  Pattern {i+1}:")
+        print(f"    Temperature: {pattern.temperature:.3f}")
+        print(f"    Humidity: {pattern.humidity:.3f}")
+        print(f"    Pressure: {pattern.pressure:.3f}")
+        print(f"    Reliability: {pattern.reliability:.3f}")
+        print(f"    Is Reliable: {pattern.is_reliable()}")
+    
+    print("\nAdding climate data to nodes...")
+    
+    # Force climate update
+    engine.last_climate_update = 0
+    
+    # Run cycles to collect climate data
+    for i in range(5):
+        metrics = engine.execute_cycle()
+        if i == 0:
+            print(f"  Cycle {metrics['cycle']}: Climate data collected")
+    
+    # Test trend prediction
+    print("\nTesting climate trend predictions...")
+    
+    # Add trend data to a sample node
+    node = list(engine.nodes.values())[0]
+    
+    # Simulate warming trend
+    for i in range(10):
+        pattern = engine.generate_climate_pattern(time.time() + i * 10)
+        pattern.temperature = 0.5 + i * 0.02  # Increasing temperature
+        node.add_climate_pattern(pattern)
+    
+    trend = node.predict_climate_trend()
+    print(f"  Node prediction with warming trend: {trend:.4f}")
+    print(f"  Interpretation: {'Warming' if trend > 0 else 'Cooling' if trend < 0 else 'Stable'}")
+    
+    # Get climate statistics
+    print("\nClimate monitoring statistics:")
+    status = engine.get_status()
+    print(f"  Climate monitoring enabled: {status['climate_monitoring']}")
+    print(f"  Total climate data points: {status['climate_data_total']}")
+    print(f"  Reliable data points: {status['climate_data_reliable']}")
+    print(f"  Reliability ratio: {status['climate_reliability_ratio']:.3f}")
+    
+    # Demonstrate climate influence on optimization
+    climate_influence = engine.calculate_climate_influence()
+    print(f"  Climate influence on system: {climate_influence:.6f}")
+    print(f"  Influence range: ±0.02 (scaled for stability)")
+
+
 def main():
     """Run all demos."""
-    print("="*70)
+    print("=" * 70)
     print(" "*15 + "ETERNAL DEPOSITION SYSTEM")
     print(" "*20 + "Demo Script")
-    print("="*70)
+    print("=" * 70)
     
     try:
         demo_basic_operation()
@@ -152,6 +213,9 @@ def main():
         time.sleep(1)
         
         demo_live_monitoring()
+        time.sleep(1)
+        
+        demo_climate_patterns()
         
     except KeyboardInterrupt:
         print("\n\nDemo interrupted by user")
