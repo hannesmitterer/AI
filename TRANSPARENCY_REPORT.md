@@ -195,16 +195,16 @@ Distributed denial of service pattern detected from coordinated IP range.
 ┌─────────────────────────────────────────────┐
 │ LEX AMORIS PROTECTION DASHBOARD             │
 ├─────────────────────────────────────────────┤
-│ Status: FULLY OPERATIONAL                   │
-│ Coverage: 100%                              │
-│ Uptime: 99.97%                              │
-│ Active Nodes: 144                           │
-│ Resonance Frequency: 0.043 Hz              │
-│ Phase Synchronization: LOCKED               │
-│ Feedback Loop: ETERNAL_ACTIVE               │
-│ Threat Detection: REAL-TIME                 │
-│ Response Latency: <100ms                    │
-│ False Positive Rate: 0.03%                  │
+│ Status:                     FULLY OPERATIONAL│
+│ Coverage:                              100% │
+│ Uptime:                              99.97% │
+│ Active Nodes:                            144│
+│ Resonance Frequency:               0.043 Hz │
+│ Phase Synchronization:               LOCKED │
+│ Feedback Loop:               ETERNAL_ACTIVE │
+│ Threat Detection:                 REAL-TIME │
+│ Response Latency:                    <100ms │
+│ False Positive Rate:                  0.03% │
 └─────────────────────────────────────────────┘
 ```
 
