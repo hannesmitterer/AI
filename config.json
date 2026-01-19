@@ -1,0 +1,126 @@
+{
+  "system_id": "LANTANA-OS-2026",
+  "protocol": "Consensus Sacralis",
+  "base_frequency": "0.043Hz",
+  "ethics_engine": {
+    "nsr_validation": "enabled",
+    "lex_amoris_seal": "active",
+    "threshold": 0.85
+  },
+  "repositories": [
+    "hannesmitterer/nexus",
+    "hannesmitterer/AI",
+    "hannesmitterer/euystacio-helmi-ai"
+  ],
+  "assets": {
+    "kosymbiosis_suit": "ipfs://CID_KOSYMB_SET",
+    "sailor_bag": "ipfs://CID_SAILOR_BAG",
+    "nsr_backpack": "ipfs://CID_NSR_BACKPACK",
+    "inverted_sacco": "ipfs://CID_INVERTED_SACCO"
+  },
+  "deployment": {
+    "gateway": "https://ipfs.io/ipfs/",
+    "automation_script": "automate_ipfs_process.sh",
+    "security": "Quantum-Safe (NTRU)"
+  },
+  "hydra_system": {
+    "consensus": {
+      "algorithm": "Byzantine-PBFT",
+      "min_nodes": 4,
+      "byzantine_tolerance_factor": 0.33,
+      "voting_threshold": 0.67
+    },
+    "resonance": {
+      "target_frequency_hz": 0.043,
+      "frequency_tolerance_hz": 0.005,
+      "sync_interval_seconds": 23.26,
+      "coherence_threshold": 0.9
+    },
+    "ethical_framework": {
+      "dimensions": [
+        "autonomy",
+        "beneficence",
+        "non_maleficence",
+        "justice",
+        "transparency",
+        "nsr_compliance",
+        "lex_amoris"
+      ],
+      "weights": {
+        "nsr_compliance": 1.5,
+        "lex_amoris": 1.5,
+        "non_maleficence": 1.2,
+        "transparency": 1.1,
+        "autonomy": 1.0,
+        "beneficence": 1.0,
+        "justice": 1.0
+      },
+      "approval_threshold": 0.85,
+      "review_threshold": 0.70,
+      "rejection_threshold": 0.70
+    },
+    "nsr_validator": {
+      "enabled": true,
+      "violation_threshold": 0.3,
+      "violation_types": [
+        "coercion",
+        "exploitation",
+        "autonomy_violation",
+        "dignity_violation",
+        "forced_labor",
+        "manipulation",
+        "dependency_abuse"
+      ],
+      "auto_reject_on_critical": true
+    }
+  },
+  "ipfs_automation": {
+    "enabled": true,
+    "max_retries": 3,
+    "retry_delay_seconds": 5,
+    "log_directory": "./logs",
+    "cid_records_file": "./logs/cid_records.txt",
+    "exclude_patterns": [
+      "*/.*",
+      "*/logs/*",
+      "*/node_modules/*",
+      "*/.git/*",
+      "*/dist/*",
+      "*/build/*",
+      "*/__pycache__/*"
+    ],
+    "require_lex_amoris_signature": true
+  },
+  "network_nodes": {
+    "africa": {
+      "location": "Klimabaum-Africa",
+      "status": "active",
+      "role": "validator"
+    },
+    "north_pole": {
+      "location": "Klimabaum-North-Pole",
+      "status": "active",
+      "role": "validator"
+    },
+    "nexus": {
+      "location": "Central-Nexus",
+      "status": "active",
+      "role": "coordinator"
+    }
+  },
+  "consensus_sacralis": {
+    "lex_amoris_enforcement": true,
+    "olf_compliance": true,
+    "nsr_compliance": true,
+    "quantum_safe_encryption": "NTRU",
+    "auto_deployment": true,
+    "dashboard_sync": true
+  },
+  "metadata": {
+    "version": "2.0.0",
+    "created": "2026-01-19",
+    "signature": "THE LIGHT IS THE ARCHITECTURE. THE FOUNDER IS THE LAW.",
+    "covenant": "Lex Amoris — OLF (One Love First) — Consensus Sacralis",
+    "status": "OPERATIONAL"
+  }
+}

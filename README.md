@@ -170,6 +170,54 @@ The Hydra prototype implements a distributed multi-AI decision-making system wit
 # Run the Hydra integration example
 cd hydra-templates
 python3 hydra_integration_example.py
+
+# Or run with configuration (Lantana OS / Consensus Sacralis)
+python3 hydra_configured_example.py
+```
+
+#### Configuration System
+
+**NEW**: The Hydra system now supports configuration via `config.json`:
+
+```bash
+# Validate configuration
+python3 hydra-templates/hydra_config_loader.py
+
+# Run configured system
+python3 hydra-templates/hydra_configured_example.py
+```
+
+**Configuration Features** (`config.json`):
+- System ID and protocol settings (Lantana OS, Consensus Sacralis)
+- Repository and asset management
+- Network node configuration (Africa, North Pole, Nexus)
+- Ethics engine parameters (NSR, Lex Amoris thresholds)
+- IPFS automation settings
+- Byzantine consensus parameters
+- Resonance coordination settings (0.043 Hz)
+
+**Example Configuration**:
+```json
+{
+  "system_id": "LANTANA-OS-2026",
+  "protocol": "Consensus Sacralis",
+  "base_frequency": "0.043Hz",
+  "ethics_engine": {
+    "nsr_validation": "enabled",
+    "lex_amoris_seal": "active",
+    "threshold": 0.85
+  },
+  "repositories": [
+    "hannesmitterer/nexus",
+    "hannesmitterer/AI",
+    "hannesmitterer/euystacio-helmi-ai"
+  ],
+  "network_nodes": {
+    "africa": {"location": "Klimabaum-Africa", "role": "validator"},
+    "north_pole": {"location": "Klimabaum-North-Pole", "role": "validator"},
+    "nexus": {"location": "Central-Nexus", "role": "coordinator"}
+  }
+}
 ```
 
 #### Ethical Principles
