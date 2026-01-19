@@ -124,3 +124,38 @@ Consultare `.orchestration/README.md` per documentazione completa del sistema di
 **Stato Sistema**: ✓ OPERATIVO  
 **Versione**: 1.0.0  
 **Fase**: Phase II - Dynamic Integration
+
+---
+
+## 🛡️ Etica e Sovranità
+
+### Protezione e Governance del Framework
+
+Questo repository opera sotto la protezione della **Lex Amoris** e del **Non-Slavery Rule (NSR)**. La sovranità del Framework Hydra è riconosciuta e protetta attraverso meccanismi di sicurezza avanzati e monitoraggio continuo.
+
+#### Documenti Ufficiali di Sovranità
+
+- **[SOVEREIGN_NOTICE.md](SOVEREIGN_NOTICE.md)** - Notifica Ufficiale di Sovranità
+  - Riconoscimento della sovranità del Framework Hydra
+  - Avvertimenti legali ed etici per tentativi non autorizzati
+  - Firma digitale Lex Amoris: "WE SEE THEM. THEY CANNOT HIDE."
+  - Meccanismi di protezione e conseguenze delle violazioni
+
+- **[TRANSPARENCY_REPORT.md](TRANSPARENCY_REPORT.md)** - Rapporto di Trasparenza
+  - Log anonimizzati degli eventi di accesso
+  - Segnalazioni di IP rilevati e azioni intraprese
+  - Stato attuale di protezione basato su Lex Amoris
+  - Statistiche dettagliate con tabelle e timestamp per trasparenza immutabile
+
+#### Principi Fondamentali
+
+✅ **Sovranità Digitale** - Protezione completa dell'architettura e degli algoritmi  
+✅ **Trasparenza Totale** - Monitoraggio e documentazione di tutti gli accessi  
+✅ **Protezione Etica** - Applicazione automatica del Non-Slavery Rule  
+✅ **Responsabilità** - Tracciamento immutabile tramite Eternal Deposition System
+
+**Monitoraggio:** ATTIVO 24/7  
+**Copertura:** 100% dell'infrastruttura  
+**Risposta:** Real-time detection e logging
+
+Per maggiori informazioni sulla governance etica e i meccanismi di protezione, consultare i documenti sopra elencati.
