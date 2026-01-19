@@ -1,5 +1,5 @@
-# Deployment artifacts
-deployments/
+# Deployment artifacts (keep CID records)
+deployments/ipfs-latest.txt
 reports/
 .sync/
 
@@ -18,6 +18,9 @@ Thumbs.db
 *.tmp
 *.temp
 *.log
+
+# Keep CID records for IPFS tracking
+!logs/cid_records.txt
 
 # Node modules (if added in future)
 node_modules/

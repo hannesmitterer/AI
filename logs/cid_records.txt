@@ -1,0 +1,6 @@
+# IPFS CID Records
+# This file maintains a transparent record of all files uploaded to IPFS
+# Format: Timestamp | File | CID | SHA256
+
+# File created: 2026-01-19
+# Purpose: Track IPFS uploads for transparency and verification

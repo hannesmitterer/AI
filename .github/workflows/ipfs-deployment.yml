@@ -3,10 +3,14 @@ name: IPFS Deployment
 on:
   push:
     branches: [ main, master ]
+    paths-ignore:
+      - '**.md'
+      - 'logs/**'
+      - '.github/**'
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write  # Enhanced permissions for CID logging
 
 jobs:
   ipfs-deploy:
@@ -15,6 +19,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for better tracking
 
       - name: Install IPFS Kubo
         run: |
@@ -45,7 +51,13 @@ jobs:
 
       - name: Add repository to IPFS
         run: |
-          echo "Adding files to IPFS..."
+          echo "Adding files to IPFS with enhanced automation..."
+          
+          # Run the enhanced automation script
+          chmod +x automate_ipfs_process.sh
+          ./automate_ipfs_process.sh . || true
+          
+          # Also add the entire repository
           ipfs add -r . > ipfs_output.txt || true
           cat ipfs_output.txt
           
@@ -70,6 +82,24 @@ jobs:
           echo "Gateway URL: https://ipfs.io/ipfs/${{ env.IPFS_HASH }}" >> deployments/ipfs-latest.txt
           echo "Cloudflare Gateway: https://cloudflare-ipfs.com/ipfs/${{ env.IPFS_HASH }}" >> deployments/ipfs-latest.txt
           cat deployments/ipfs-latest.txt
+
+      - name: Commit CID logs
+        run: |
+          git config --global user.name "IPFS Automation Bot"
+          git config --global user.email "ipfs-bot@resonance-school.ai"
+          
+          # Add log files if they exist
+          if [ -d "logs" ] && [ "$(ls -A logs)" ]; then
+            git add logs/cid_records.txt 2>/dev/null || true
+            git add deployments/ 2>/dev/null || true
+            
+            if git diff --cached --quiet; then
+              echo "No CID logs to commit"
+            else
+              git commit -m "chore: Update IPFS CID records [automated]" || true
+              git push origin HEAD:main || echo "Could not push CID logs (this is normal for PR branches)"
+            fi
+          fi
 
       - name: Upload deployment artifact
         uses: actions/upload-artifact@v4
