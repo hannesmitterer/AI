@@ -19,6 +19,11 @@ Thumbs.db
 *.temp
 *.log
 
+# EUYSTACIO runtime files
+euystacio_blacklist.json
+euystacio_blacklist_audit.log
+eternal_state.json
+
 # Node modules (if added in future)
 node_modules/
 

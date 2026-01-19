@@ -15,6 +15,7 @@ Das Repository implementiert nun das **Eternal Deposition System** - einen selbs
 * **Feedback-Optimierung:** Kontinuierliche Systemoptimierung
 * **Fraktale Propagation:** Selbstähnliche Muster nach dem Goldenen Schnitt
 * **Stillness-Mechanismus:** Systematische Rekalibrierungsphasen
+* **🔒 Permanente Blacklist:** Integrierter Sicherheitsschutz gegen schädliche Entitäten
 
 **Implementierungen:**
 - `eternal_deposition.py` - Python-Kernimplementierung
@@ -23,6 +24,35 @@ Das Repository implementiert nun das **Eternal Deposition System** - einen selbs
 - `demo_eternal.py` - Demo-Skript
 
 Siehe [ETERNAL_DEPOSITION.md](ETERNAL_DEPOSITION.md) für vollständige Dokumentation.
+
+---
+
+### 🔒 PERMANENTE BLACKLIST SYSTEM
+Das **EUYSTACIO Permanente Blacklist System** (Playlist Permanente) bietet umfassenden Sicherheitsschutz durch Blockierung verdächtiger Knoten und Entitäten.
+
+**Hauptmerkmale:**
+* **Permanente Speicherung:** Blacklist überlebt Systemneustarts
+* **3 Entitätstypen:** Nodes, IP-Adressen, AI-Identifikatoren
+* **MISP-Integration:** Automatische Threat-Intelligence-Korrelation
+* **Echtzeit-Schutz:** Sofortige Blockierung bei Bedrohungserkennung
+* **Audit Trail:** Vollständige Protokollierung aller Sicherheitsereignisse
+* **Thread-Safe:** Sichere Mehrfachzugriffe
+
+**Komponenten:**
+- `euystacio_blacklist.py` - Haupt-Blacklist-Modul
+- `demo_blacklist.py` - Interaktive Sicherheitsdemo
+- `test_blacklist.py` - Umfassende Tests
+- [BLACKLIST_SECURITY.md](BLACKLIST_SECURITY.md) - Vollständige Dokumentation
+
+**Integration mit Eternal Deposition:**
+```python
+from eternal_deposition import EternalDepositionEngine
+
+# Engine mit aktiviertem Blacklist-Schutz
+engine = EternalDepositionEngine(initial_nodes=144, enable_blacklist=True)
+```
+
+Siehe [BLACKLIST_SECURITY.md](BLACKLIST_SECURITY.md) für Details.
 
 ---
 
