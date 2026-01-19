@@ -55,9 +55,16 @@ class NSRValidator:
     preventing any form of slavery, servitude, or coercion.
     """
     
-    def __init__(self):
+    def __init__(self, violation_threshold: float = 0.3):
+        """
+        Initialize NSR Validator
+        
+        Args:
+            violation_threshold: Maximum acceptable risk score (0.0 to 1.0)
+                                Default: 0.3 for moderate sensitivity
+        """
         self.validation_history: List[NSRValidationResult] = []
-        self.violation_threshold = 0.3  # Max acceptable risk score
+        self.violation_threshold = violation_threshold
     
     def validate_decision(self, decision_id: str, proposal: str, context: Optional[Dict] = None) -> NSRValidationResult:
         """

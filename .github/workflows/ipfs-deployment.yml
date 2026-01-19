@@ -88,17 +88,24 @@ jobs:
           git config --global user.name "IPFS Automation Bot"
           git config --global user.email "ipfs-bot@resonance-school.ai"
           
-          # Add log files if they exist
-          if [ -d "logs" ] && [ "$(ls -A logs)" ]; then
-            git add logs/cid_records.txt 2>/dev/null || true
-            git add deployments/ 2>/dev/null || true
-            
-            if git diff --cached --quiet; then
-              echo "No CID logs to commit"
-            else
-              git commit -m "chore: Update IPFS CID records [automated]" || true
-              git push origin HEAD:main || echo "Could not push CID logs (this is normal for PR branches)"
+          # Only commit on main branch, not on PR branches
+          CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          
+          if [ "$CURRENT_BRANCH" = "main" ] || [ "$CURRENT_BRANCH" = "master" ]; then
+            # Add log files if they exist
+            if [ -d "logs" ] && [ "$(ls -A logs)" ]; then
+              git add logs/cid_records.txt 2>/dev/null || true
+              git add deployments/ 2>/dev/null || true
+              
+              if git diff --cached --quiet; then
+                echo "No CID logs to commit"
+              else
+                git commit -m "chore: Update IPFS CID records [automated]" || true
+                git push origin HEAD:main || echo "Could not push CID logs"
+              fi
             fi
+          else
+            echo "Skipping CID log commit on branch: $CURRENT_BRANCH"
           fi
 
       - name: Upload deployment artifact

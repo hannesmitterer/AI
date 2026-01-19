@@ -134,8 +134,13 @@ class EthicalDecisionAPI:
         - Does it preserve freedom of choice?
         - Does it enable self-determination?
         - Does it avoid coercion?
+        
+        TODO: Production implementation requires:
+        - Advanced NLP for proposal analysis
+        - Semantic understanding of autonomy concepts
+        - Machine learning for pattern recognition
         """
-        # Mock implementation
+        # Mock implementation - replace with real AI analysis in production
         score = 0.85
         reasoning = "Proposal preserves individual choice and enables self-determination"
         confidence = 0.80

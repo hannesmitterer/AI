@@ -11,6 +11,17 @@ CID_RECORD="${LOG_DIR}/cid_records.txt"
 MAX_RETRIES=3
 RETRY_DELAY=5
 
+# Exclusion patterns for find command (can be customized)
+EXCLUDE_PATTERNS=(
+    -path '*/\.*'           # Hidden files and directories
+    -o -path '*/logs/*'     # Log directory
+    -o -path '*/node_modules/*'  # Node.js dependencies
+    -o -path '*/.git/*'     # Git directory
+    -o -path '*/dist/*'     # Build artifacts
+    -o -path '*/build/*'    # Build artifacts
+    -o -path '*/__pycache__/*'  # Python cache
+)
+
 # Initialize logging
 mkdir -p "${LOG_DIR}"
 
@@ -78,7 +89,8 @@ process_directory() {
     
     log "INFO" "Starting recursive scan of directory: $dir"
     
-    # Find all files (excluding hidden files and directories)
+    # Build find command with exclusions
+    # Find all files excluding patterns defined above
     while IFS= read -r -d '' file; do
         file_count=$((file_count + 1))
         
@@ -103,7 +115,7 @@ process_directory() {
                 fail_count=$((fail_count + 1))
             fi
         fi
-    done < <(find "$dir" -type f ! -path '*/\.*' ! -path '*/logs/*' -print0)
+    done < <(find "$dir" -type f \( "${EXCLUDE_PATTERNS[@]}" \) -prune -o -type f -print0)
     
     log "INFO" "Processing complete. Total files: $file_count, Successful: $success_count, Failed: $fail_count"
     

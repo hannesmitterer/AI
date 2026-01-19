@@ -62,6 +62,13 @@ class ResonanceCoordinator:
     """
     
     TARGET_FREQUENCY = 0.043  # Hz (Schumann-inspired resonance)
+    # Note: 0.043 Hz (~23.26 second period) chosen for AI decision-making cycles
+    # This frequency allows for:
+    # - Complete Byzantine consensus rounds (~15-20 seconds)
+    # - Thoughtful ethical evaluation across multiple nodes
+    # - Network synchronization with minimal overhead
+    # Different from Earth's Schumann resonance (7.83 Hz) but optimized for
+    # distributed AI collaboration rather than electromagnetic resonance
     FREQUENCY_TOLERANCE = 0.005  # ±0.005 Hz acceptable variance
     SYNC_INTERVAL = 1.0 / TARGET_FREQUENCY  # ~23.26 seconds
     

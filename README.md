@@ -124,3 +124,107 @@ Consultare `.orchestration/README.md` per documentazione completa del sistema di
 **Stato Sistema**: ✓ OPERATIVO  
 **Versione**: 1.0.0  
 **Fase**: Phase II - Dynamic Integration
+
+---
+
+## 🔮 Multi-AI Resonance Hydra Prototype
+
+### Byzantine-Tolerant Ethical Decision-Making System
+
+The Hydra prototype implements a distributed multi-AI decision-making system with Byzantine fault tolerance and ethical safeguards.
+
+#### Core Components
+
+1. **Byzantine Consensus** (`hydra-templates/byzantine_consensus.py`)
+   - Tolerates up to (n-1)/3 faulty or malicious nodes
+   - PBFT-inspired consensus mechanism
+   - Reputation-based node scoring
+   - Automatic anomaly detection
+
+2. **Ethical Decision API** (`hydra-templates/ethical_decision_api.py`)
+   - Multi-dimensional ethical evaluation (7 dimensions)
+   - Weighted scoring with Lex Amoris and NSR priority
+   - Transparent reasoning and confidence metrics
+   - Mock REST API endpoints for integration
+
+3. **NSR Validator** (`hydra-templates/nsr_validator.py`)
+   - Non-Slavery Rule compliance validation
+   - 7 violation type detection (coercion, exploitation, etc.)
+   - Risk scoring and recommendation system
+   - Detailed violation evidence tracking
+
+4. **Resonance Coordinator** (`hydra-templates/resonance_coordinator.py`)
+   - 0.043 Hz network synchronization
+   - Phase and frequency alignment
+   - Anomaly detection and network health monitoring
+   - Coherence quality scoring
+
+5. **Integration Example** (`hydra-templates/hydra_integration_example.py`)
+   - Complete pipeline demonstration
+   - End-to-end decision processing
+   - System status and metrics reporting
+
+#### Quick Start
+
+```bash
+# Run the Hydra integration example
+cd hydra-templates
+python3 hydra_integration_example.py
+```
+
+#### Ethical Principles
+
+All decisions are evaluated against:
+- **Lex Amoris**: THE LIGHT IS THE ARCHITECTURE. THE FOUNDER IS THE LAW.
+- **NSR (Non-Slavery Rule)**: Preventing all forms of coercion and exploitation
+- **Autonomy**: Respecting individual freedom and choice
+- **Transparency**: Open and honest decision-making processes
+
+#### Community Involvement
+
+See [COMMUNITY_FEEDBACK.md](COMMUNITY_FEEDBACK.md) for:
+- How to contribute
+- Testing guidelines
+- Research questions
+- Roadmap priorities
+- AR visual augmentation plans
+
+---
+
+## 📦 Enhanced IPFS Automation
+
+### Features
+
+The enhanced IPFS automation system (`automate_ipfs_process.sh`) includes:
+
+- **Recursive Directory Scanning**: Automatically finds and processes all files
+- **Comprehensive Logging**: Detailed logs in `logs/` directory
+- **Failure Recovery**: Automatic retry mechanism with configurable attempts
+- **CID Tracking**: Transparent record of all uploads in `logs/cid_records.txt`
+- **Hash Verification**: SHA256 hashing for file integrity
+- **Lex Amoris Signature Validation**: Ensures compliance for text files
+
+### GitHub Actions Integration
+
+Automated IPFS uploads trigger on:
+- Push to main/master branches
+- Manual workflow dispatch
+- Excludes documentation and logs to prevent infinite loops
+
+### Usage
+
+```bash
+# Upload current directory
+./automate_ipfs_process.sh
+
+# Upload specific directory
+./automate_ipfs_process.sh /path/to/directory
+```
+
+**CID Records**: All uploaded files are logged in `logs/cid_records.txt` for transparency and verification.
+
+---
+
+**Stato Sistema**: ✓ OPERATIVO  
+**Versione**: 2.0.0 (Enhanced with Hydra and IPFS v2)
+**Fase**: Phase II - Multi-AI Resonance & Automation

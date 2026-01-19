@@ -110,7 +110,8 @@ class ByzantineConsensus:
         if self.nodes[proposer_id].status == NodeStatus.FAULTY:
             raise ValueError(f"Faulty node cannot propose: {proposer_id}")
         
-        decision_id = hashlib.sha256(f"{proposer_id}:{proposal}".encode()).hexdigest()[:16]
+        # Use full hash for cryptographic security in Byzantine fault-tolerant system
+        decision_id = hashlib.sha256(f"{proposer_id}:{proposal}".encode()).hexdigest()
         decision = Decision(
             decision_id=decision_id,
             proposal=proposal,
