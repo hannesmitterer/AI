@@ -20,7 +20,7 @@ from typing import Dict, Optional
 try:
     from eternal_deposition import EternalDepositionEngine
 except ImportError:
-    # Fallback if running standalone
+    # Module not available - cross-linking can run independently
     EternalDepositionEngine = None
 
 from cross_linking_protocol import (
@@ -120,8 +120,8 @@ class IntegratedResonanceSystem:
         # Execute Eternal Deposition cycle if enabled
         eternal_metrics = None
         if self.enable_eternal and self.eternal_engine:
-            # Note: This would execute one cycle of the eternal engine
-            # For now, we'll just get status
+            # Get current status from eternal engine
+            # Full cycle integration can be added when needed
             eternal_status = self.eternal_engine.get_status()
             eternal_metrics = {
                 "cycle": self.cycle_count,

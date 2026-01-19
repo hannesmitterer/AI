@@ -176,8 +176,9 @@ class PingConfirmationProtocol:
         """
         Send ping to allied node.
         
-        In production, this would make actual network calls.
-        For now, simulates the ping process.
+        Note: This is a mock implementation. In a production deployment,
+        this would make actual network API calls to the allied node endpoints.
+        The simulation ensures the protocol logic is correct.
         """
         if node_id not in self.allied_nodes:
             return False
@@ -376,7 +377,9 @@ class BroadcastProtocol:
         """
         Pin content to IPFS for redundancy.
         
-        In production, would interact with IPFS API.
+        Note: This is a mock implementation. In a production deployment,
+        this would interact with IPFS API (e.g., via ipfshttpclient library)
+        to actually pin content. The simulation validates the protocol flow.
         """
         self.ipfs_cids.append(content_id)
         print(f"[BROADCAST] Content pinned to IPFS: {content_id}")
