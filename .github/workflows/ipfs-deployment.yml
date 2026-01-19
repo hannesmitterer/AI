@@ -100,8 +100,18 @@ jobs:
               if git diff --cached --quiet; then
                 echo "No CID logs to commit"
               else
-                git commit -m "chore: Update IPFS CID records [automated]" || true
-                git push origin HEAD:main || echo "Could not push CID logs"
+                git commit -m "chore: Update IPFS CID records [automated]" || {
+                  echo "Warning: Could not create commit"
+                  exit 0
+                }
+                
+                git push origin HEAD:main || {
+                  echo "Warning: Could not push CID logs - this may be a permissions issue"
+                  echo "CID logs were committed locally but not pushed"
+                  exit 0
+                }
+                
+                echo "✓ CID logs committed and pushed successfully"
               fi
             fi
           else

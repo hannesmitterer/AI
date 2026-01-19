@@ -61,7 +61,15 @@ class NSRValidator:
         
         Args:
             violation_threshold: Maximum acceptable risk score (0.0 to 1.0)
-                                Default: 0.3 for moderate sensitivity
+                                Default: 0.3 (moderate sensitivity)
+                                - Values < 0.3: Strict enforcement
+                                - 0.3: Balanced sensitivity (recommended)
+                                - Values > 0.3: Permissive enforcement
+                                
+                                Default of 0.3 chosen to catch moderate concerns
+                                while avoiding excessive false positives. This allows
+                                decisions with minor issues to proceed with caution
+                                while blocking those with significant NSR violations.
         """
         self.validation_history: List[NSRValidationResult] = []
         self.violation_threshold = violation_threshold
