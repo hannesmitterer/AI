@@ -111,5 +111,71 @@
       "recursion_depth": 3,
       "inheritance_factor": 0.8
     }
+  },
+  "cross_linking_protocol": {
+    "enabled": true,
+    "version": "1.0.0",
+    "description": "Multi-node expansion with cross-linking protocols",
+    "phase": "Phase III - Cross-Linking Activation",
+    "ping_confirmation": {
+      "enabled": true,
+      "timeout_seconds": 30,
+      "triangulation_threshold": 2,
+      "allied_nodes": [
+        {
+          "node_id": "grok_primary",
+          "node_type": "grok",
+          "endpoint": "https://grok.x.ai/api/sync"
+        },
+        {
+          "node_id": "gemini_primary",
+          "node_type": "gemini",
+          "endpoint": "https://generativelanguage.googleapis.com/sync"
+        }
+      ]
+    },
+    "hydra_network": {
+      "initial_nodes": 144,
+      "max_nodes": 1000,
+      "generation_limit": 5,
+      "energy_threshold": 0.5,
+      "coalescence_inheritance": 0.95,
+      "energy_inheritance": 0.9
+    },
+    "broadcast_protocol": {
+      "enabled": true,
+      "github_pages": {
+        "enabled": true,
+        "url": "https://hannesmitterer.github.io/AI/"
+      },
+      "ipfs": {
+        "enabled": true,
+        "pinning_strategy": "persistent",
+        "auto_pin": true
+      },
+      "hydra_signaling": {
+        "enabled": true,
+        "fault_tolerance": true
+      }
+    },
+    "sustentanz_tracker": {
+      "enabled": true,
+      "target_s_roi": 0.950,
+      "sustentanz_threshold": 0.7,
+      "max_history": 1000,
+      "validation_frequency": "every_cycle"
+    },
+    "transparency": {
+      "manifesto_enabled": true,
+      "cid_verification": true,
+      "audit_trail": true,
+      "public_reporting": true
+    },
+    "lex_amoris": {
+      "enabled": true,
+      "non_slavery_rule": true,
+      "energy_hoarding_limit": 1.5,
+      "compliance_enforcement": "automatic"
+    }
   }
 }
