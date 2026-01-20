@@ -50,6 +50,9 @@ contract PeacebondTreasury {
     /// @notice Emergency mode flag
     bool public emergencyMode;
     
+    /// @notice Reentrancy guard flag
+    bool private _locked;
+    
     // ============================================
     // EVENTS
     // ============================================
@@ -89,6 +92,13 @@ contract PeacebondTreasury {
         _;
     }
     
+    modifier nonReentrant() {
+        require(!_locked, "Reentrancy detected");
+        _locked = true;
+        _;
+        _locked = false;
+    }
+    
     // ============================================
     // CONSTRUCTOR
     // ============================================
@@ -100,6 +110,7 @@ contract PeacebondTreasury {
         forensicSwitchActive = false;
         emergencyMode = false;
         lastCentralizationCheck = block.number;
+        _locked = false;
         
         // Initialize with seedbringer as first council member
         emergencyCouncil.push(msg.sender);
@@ -231,9 +242,9 @@ contract PeacebondTreasury {
     
     /**
      * @notice Redirect treasury resources to safe vault in emergency
-     * @dev Only callable when forensic switch is active
+     * @dev Only callable when forensic switch is active. Protected against reentrancy.
      */
-    function redirectToSafeVault() external onlyCouncil whenEmergency {
+    function redirectToSafeVault() external onlyCouncil whenEmergency nonReentrant {
         uint256 balance = address(this).balance;
         require(balance > 0, "No funds to redirect");
         

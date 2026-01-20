@@ -18,6 +18,8 @@ Response to EU 2026 Framework - Protocol EUYSTACIO/NSR
 import hashlib
 import json
 import time
+import tempfile
+import shutil
 from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -311,7 +313,9 @@ class TripleSignIPFS:
         content_str = json.dumps(data, sort_keys=True)
         hash_bytes = hashlib.sha256(content_str.encode()).digest()
         # Simulate CIDv1 format (simplified)
-        cid = "bafybei" + hash_bytes.hex()[:52]
+        # CIDv1 base32 encoding typically results in ~59 char for SHA-256
+        CIDV1_SIMULATED_LENGTH = 52  # Truncated for demonstration
+        cid = "bafybei" + hash_bytes.hex()[:CIDV1_SIMULATED_LENGTH]
         return cid
     
     def _pin_to_ipfs(self, data: Dict) -> Dict:
@@ -324,36 +328,43 @@ class TripleSignIPFS:
         Returns:
             Result with CID
         """
-        # Save data to temporary file
-        temp_file = "/tmp/triple_sign_identity.json"
-        with open(temp_file, 'w') as f:
-            json.dump(data, f, indent=2)
+        # Use secure temporary file
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as temp_file:
+            temp_path = temp_file.name
+            json.dump(data, temp_file, indent=2)
         
-        # Add to IPFS
-        result = subprocess.run(
-            ["ipfs", "add", "-q", temp_file],
-            capture_output=True,
-            text=True,
-            timeout=30
-        )
-        
-        if result.returncode != 0:
-            raise RuntimeError(f"IPFS add failed: {result.stderr}")
-        
-        cid = result.stdout.strip()
-        
-        # Pin the CID
-        subprocess.run(
-            ["ipfs", "pin", "add", cid],
-            capture_output=True,
-            text=True,
-            timeout=30
-        )
-        
-        # Clean up temp file
-        os.remove(temp_file)
-        
-        return {"cid": cid}
+        try:
+            # Validate IPFS binary exists (basic security check)
+            ipfs_binary = shutil.which('ipfs')
+            if not ipfs_binary:
+                raise RuntimeError("IPFS binary not found in PATH")
+            
+            # Add to IPFS using validated binary path
+            result = subprocess.run(
+                [ipfs_binary, "add", "-q", temp_path],
+                capture_output=True,
+                text=True,
+                timeout=30
+            )
+            
+            if result.returncode != 0:
+                raise RuntimeError(f"IPFS add failed: {result.stderr}")
+            
+            cid = result.stdout.strip()
+            
+            # Pin the CID
+            subprocess.run(
+                [ipfs_binary, "pin", "add", cid],
+                capture_output=True,
+                text=True,
+                timeout=30
+            )
+            
+            return {"cid": cid}
+        finally:
+            # Clean up temp file securely
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
     
     def verify_shard_integrity(self, shard: IPFSShard) -> bool:
         """

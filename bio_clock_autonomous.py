@@ -19,6 +19,7 @@ import time
 import hashlib
 import hmac
 import json
+import os
 from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -138,9 +139,8 @@ class AutonomousBioClock:
         """
         # Initialize secret key for cryptographic signatures
         if secret_key is None:
-            secret_key = hashlib.sha256(
-                f"EUYSTACIO_NSR_{time.time()}".encode()
-            ).digest()
+            # Use cryptographically secure random bytes
+            secret_key = os.urandom(32)
         self.secret_key = secret_key
         
         # Initialize local oscillator
@@ -193,9 +193,10 @@ class AutonomousBioClock:
         self.timestamp_chain.append(timestamp)
         self.sequence_counter += 1
         
-        # Maintain reasonable chain length (keep last 1000 timestamps)
-        if len(self.timestamp_chain) > 1000:
-            self.timestamp_chain = self.timestamp_chain[-1000:]
+        # Maintain reasonable chain length (keep last MAX_CHAIN_LENGTH timestamps)
+        MAX_CHAIN_LENGTH = 1000  # Balance between history and memory usage
+        if len(self.timestamp_chain) > MAX_CHAIN_LENGTH:
+            self.timestamp_chain = self.timestamp_chain[-MAX_CHAIN_LENGTH:]
         
         return timestamp
     
