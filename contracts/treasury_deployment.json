@@ -1,0 +1,28 @@
+{
+  "contract": "PeacebondTreasury",
+  "constructor_params": {
+    "_safeVault": "0x5d61a4B25034393A37ef9307C8Ba3aE99e49944b",
+    "_centralizationThreshold": 10
+  },
+  "deployment_timestamp": "2026-01-20T22:51:39.333581",
+  "networks": {
+    "sepolia": {
+      "name": "Ethereum Sepolia Testnet",
+      "chain_id": 11155111,
+      "rpc": "https://rpc.sepolia.org",
+      "explorer": "https://sepolia.etherscan.io"
+    },
+    "mainnet": {
+      "name": "Ethereum Mainnet",
+      "chain_id": 1,
+      "rpc": "https://eth.llamarpc.com",
+      "explorer": "https://etherscan.io"
+    },
+    "polygon": {
+      "name": "Polygon Mainnet",
+      "chain_id": 137,
+      "rpc": "https://polygon-rpc.com",
+      "explorer": "https://polygonscan.com"
+    }
+  }
+}
