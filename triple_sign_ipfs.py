@@ -302,18 +302,20 @@ class TripleSignIPFS:
         """
         Simulate IPFS CID generation for testing.
         
-        In production, this would be replaced by actual IPFS pinning.
+        NOTE: This generates a simplified CID for testing/demonstration purposes.
+        In production, this would be replaced by actual IPFS pinning which returns
+        a properly formatted CIDv1 with base32 encoding and multihash formatting.
         
         Args:
             data: Data to generate CID for
             
         Returns:
-            Simulated CIDv1 string
+            Simulated CIDv1 string (not a valid IPFS CID, for testing only)
         """
         content_str = json.dumps(data, sort_keys=True)
         hash_bytes = hashlib.sha256(content_str.encode()).digest()
-        # Simulate CIDv1 format (simplified)
-        # CIDv1 base32 encoding typically results in ~59 char for SHA-256
+        # Simulate CIDv1 format (simplified for demonstration)
+        # Real CIDv1 uses base32 encoding and proper multihash formatting
         CIDV1_SIMULATED_LENGTH = 52  # Truncated for demonstration
         cid = "bafybei" + hash_bytes.hex()[:CIDV1_SIMULATED_LENGTH]
         return cid
@@ -353,12 +355,15 @@ class TripleSignIPFS:
             cid = result.stdout.strip()
             
             # Pin the CID
-            subprocess.run(
+            pin_result = subprocess.run(
                 [ipfs_binary, "pin", "add", cid],
                 capture_output=True,
                 text=True,
                 timeout=30
             )
+            
+            if pin_result.returncode != 0:
+                raise RuntimeError(f"IPFS pin failed: {pin_result.stderr}")
             
             return {"cid": cid}
         finally:

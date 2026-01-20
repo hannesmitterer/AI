@@ -31,6 +31,7 @@ BIO_CLOCK_FREQUENCY_HZ = 0.0043  # 0.0043 Hz signal (232.56 second cycle)
 BIO_CLOCK_PERIOD_SECONDS = 1.0 / BIO_CLOCK_FREQUENCY_HZ  # ~232.56 seconds
 MAX_DRIFT_TOLERANCE_MS = 50  # Maximum acceptable drift in milliseconds
 CRYPTO_SIGNATURE_STRENGTH = 32  # SHA-256 bytes
+MAX_CHAIN_LENGTH = 1000  # Maximum timestamp chain length (balance history vs memory)
 
 
 @dataclass
@@ -193,8 +194,7 @@ class AutonomousBioClock:
         self.timestamp_chain.append(timestamp)
         self.sequence_counter += 1
         
-        # Maintain reasonable chain length (keep last MAX_CHAIN_LENGTH timestamps)
-        MAX_CHAIN_LENGTH = 1000  # Balance between history and memory usage
+        # Maintain reasonable chain length
         if len(self.timestamp_chain) > MAX_CHAIN_LENGTH:
             self.timestamp_chain = self.timestamp_chain[-MAX_CHAIN_LENGTH:]
         
