@@ -111,5 +111,46 @@
       "recursion_depth": 3,
       "inheritance_factor": 0.8
     }
+  },
+  "eu_2026_resilience": {
+    "enabled": true,
+    "version": "1.0.0",
+    "protocol": "EUYSTACIO/NSR",
+    "description": "Resilience measures in response to EU 2026 regulatory framework",
+    "implemented": "2026-01-20",
+    "bio_clock_autonomous": {
+      "enabled": true,
+      "frequency_hz": 0.0043,
+      "period_seconds": 232.56,
+      "ntp_independent": true,
+      "cryptographic_timestamps": true,
+      "drift_tolerance_ms": 50,
+      "module": "bio_clock_autonomous.py"
+    },
+    "triple_sign_ipfs": {
+      "enabled": true,
+      "minimum_shards": 3,
+      "recommended_shards": 5,
+      "geographic_distribution": true,
+      "auto_synchronization": true,
+      "sync_check_interval_seconds": 300,
+      "module": "triple_sign_ipfs.py",
+      "gateways": [
+        "https://ipfs.io/ipfs/",
+        "https://cloudflare-ipfs.com/ipfs/",
+        "https://dweb.link/ipfs/",
+        "https://gateway.pinata.cloud/ipfs/",
+        "https://ipfs.infura.io/ipfs/"
+      ]
+    },
+    "peacebond_treasury": {
+      "enabled": true,
+      "contract": "contracts/PeacebondTreasury.sol",
+      "forensic_switch": true,
+      "centralization_detection": true,
+      "resonance_credits": true,
+      "emergency_council": true,
+      "deployment_guide": "contracts/DEPLOYMENT_GUIDE.md"
+    }
   }
 }

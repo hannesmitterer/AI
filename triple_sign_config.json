@@ -1,0 +1,63 @@
+{
+  "version": "1.0",
+  "protocol": "EUYSTACIO_NSR_Triple_Sign",
+  "primary_cid": "bafybei41d1d15d0b331ca291d96dfb2832c7a50e285356cabaadc64be8",
+  "content_hash": "5e5186bb6e38474aba20268df4df0ad9c32c6b97391b254f69b4a98173100084",
+  "shards": [
+    {
+      "shard_id": "shard_00",
+      "ipfs_cid": "bafybei41d1d15d0b331ca291d96dfb2832c7a50e285356cabaadc64be8",
+      "gateway_url": "https://ipfs.io/ipfs/",
+      "geographic_region": "US-EAST",
+      "last_sync": 1768949492.854276,
+      "is_verified": true,
+      "content_hash": "5e5186bb6e38474aba20268df4df0ad9c32c6b97391b254f69b4a98173100084"
+    },
+    {
+      "shard_id": "shard_01",
+      "ipfs_cid": "bafybei41d1d15d0b331ca291d96dfb2832c7a50e285356cabaadc64be8",
+      "gateway_url": "https://cloudflare-ipfs.com/ipfs/",
+      "geographic_region": "GLOBAL-CDN",
+      "last_sync": 1768949492.854277,
+      "is_verified": true,
+      "content_hash": "5e5186bb6e38474aba20268df4df0ad9c32c6b97391b254f69b4a98173100084"
+    },
+    {
+      "shard_id": "shard_02",
+      "ipfs_cid": "bafybei41d1d15d0b331ca291d96dfb2832c7a50e285356cabaadc64be8",
+      "gateway_url": "https://dweb.link/ipfs/",
+      "geographic_region": "US-WEST",
+      "last_sync": 1768949492.8542771,
+      "is_verified": true,
+      "content_hash": "5e5186bb6e38474aba20268df4df0ad9c32c6b97391b254f69b4a98173100084"
+    },
+    {
+      "shard_id": "shard_03",
+      "ipfs_cid": "bafybei41d1d15d0b331ca291d96dfb2832c7a50e285356cabaadc64be8",
+      "gateway_url": "https://gateway.pinata.cloud/ipfs/",
+      "geographic_region": "US-CENTRAL",
+      "last_sync": 1768949492.8542774,
+      "is_verified": true,
+      "content_hash": "5e5186bb6e38474aba20268df4df0ad9c32c6b97391b254f69b4a98173100084"
+    },
+    {
+      "shard_id": "shard_04",
+      "ipfs_cid": "bafybei41d1d15d0b331ca291d96dfb2832c7a50e285356cabaadc64be8",
+      "gateway_url": "https://ipfs.infura.io/ipfs/",
+      "geographic_region": "EU-WEST",
+      "last_sync": 1768949492.8542776,
+      "is_verified": true,
+      "content_hash": "5e5186bb6e38474aba20268df4df0ad9c32c6b97391b254f69b4a98173100084"
+    },
+    {
+      "shard_id": "custom_05",
+      "ipfs_cid": "bafybei41d1d15d0b331ca291d96dfb2832c7a50e285356cabaadc64be8",
+      "gateway_url": "https://w3s.link/ipfs/",
+      "geographic_region": "GLOBAL-WEB3",
+      "last_sync": 1768949492.8542778,
+      "is_verified": true,
+      "content_hash": "5e5186bb6e38474aba20268df4df0ad9c32c6b97391b254f69b4a98173100084"
+    }
+  ],
+  "exported_at": "2026-01-20T22:51:32.854429+00:00"
+}

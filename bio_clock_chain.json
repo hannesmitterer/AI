@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "frequency_hz": 0.0043,
+  "chain": [
+    {
+      "epoch_time": 1768949480.538543,
+      "monotonic_time": 407.994350993,
+      "signature": "1f01d45d87d2093e612ddf826b921b14818867cb7b7fe81ea49c96f6c49bf5f7",
+      "sequence_number": 0,
+      "previous_hash": null
+    },
+    {
+      "epoch_time": 1768949481.5387785,
+      "monotonic_time": 408.994586672,
+      "signature": "f51ae2e52e872dba0606c5f2753e66b64fd73b8e736a8a9875550d02c56f395d",
+      "sequence_number": 1,
+      "previous_hash": "86b518069bf5bfae49ee3d70634e3681e7b6d87a8b3f32527b07c80cb963214c"
+    },
+    {
+      "epoch_time": 1768949482.5391319,
+      "monotonic_time": 409.994939776,
+      "signature": "a44489574b8671b24a67ed4c642b87a59f273d450c88c1146f63fa17c6578a0e",
+      "sequence_number": 2,
+      "previous_hash": "696f47aad6ace48b62f8d5e01b91d9779e03a27b87e6bdfd16adfc4b2a3ce95f"
+    },
+    {
+      "epoch_time": 1768949483.539495,
+      "monotonic_time": 410.995302682,
+      "signature": "c93532488e90005ef5123ee02b1c1a3cf18d84e3b9d816b8bc113dacdd56a60a",
+      "sequence_number": 3,
+      "previous_hash": "428e4746c6c3ae5f058661ed789e6bdbe40f768b3f8d05144f9a2a5bb354cfc5"
+    },
+    {
+      "epoch_time": 1768949484.5398085,
+      "monotonic_time": 411.995616403,
+      "signature": "7937740e1425149f51da1e439d23dba5801b45c60eb6041e4d7c88ce96868c84",
+      "sequence_number": 4,
+      "previous_hash": "4b18940aae6854b92ce171191862d117e76c94defc4135c059ec4aa65e4d8f1e"
+    }
+  ],
+  "exported_at": "2026-01-20T22:51:25.540184+00:00"
+}
