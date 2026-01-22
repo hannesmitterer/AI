@@ -282,6 +282,29 @@ Each anchor includes:
 
 See [SPACETIME_ANCHOR.md](SPACETIME_ANCHOR.md) for complete documentation.
 
+#### Automated Deployment
+
+**NEW**: Complete automated deployment workflow:
+
+```bash
+# Run automated deployment with anchor generation
+python3 automated_deployment.py
+
+# Features:
+# - Creates SpaceTime anchor automatically
+# - Verifies triple signatures
+# - Generates deployment report
+# - Updates CID records
+```
+
+**GitHub Actions Integration**:
+- Manual trigger via Actions tab
+- Automatic on config changes
+- Optional IPFS upload
+- Artifact retention (90 days)
+
+See [DEPLOYMENT_WORKFLOW.md](DEPLOYMENT_WORKFLOW.md) for complete guide.
+
 ---
 
 ## 📦 Enhanced IPFS Automation

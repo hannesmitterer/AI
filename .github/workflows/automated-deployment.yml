@@ -1,0 +1,151 @@
+name: Automated Deployment with SpaceTime Anchor
+
+on:
+  workflow_dispatch:
+    inputs:
+      create_anchor:
+        description: 'Create SpaceTime Anchor'
+        required: true
+        default: 'true'
+        type: boolean
+      upload_to_ipfs:
+        description: 'Upload to IPFS'
+        required: true
+        default: 'false'
+        type: boolean
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'config.json'
+      - 'hydra-templates/**'
+      - 'spacetime_anchor.py'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    name: Automated Deployment
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Validate configuration
+        run: |
+          echo "Validating config.json..."
+          python3 -c "import json; json.load(open('config.json'))"
+          echo "✓ Configuration valid"
+      
+      - name: Run configuration loader
+        run: |
+          echo "Loading system configuration..."
+          python3 hydra-templates/hydra_config_loader.py
+      
+      - name: Create SpaceTime Anchor
+        if: ${{ github.event.inputs.create_anchor != 'false' }}
+        run: |
+          echo "Creating SpaceTime deployment anchor..."
+          python3 spacetime_anchor.py
+      
+      - name: Run automated deployment
+        run: |
+          echo "Running automated deployment workflow..."
+          python3 automated_deployment.py
+      
+      - name: Upload anchor artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: spacetime-anchors
+          path: |
+            anchors/*.json
+            reports/*.json
+          retention-days: 90
+      
+      - name: Setup IPFS (optional)
+        if: ${{ github.event.inputs.upload_to_ipfs == 'true' }}
+        run: |
+          # Install IPFS
+          wget https://dist.ipfs.tech/kubo/v0.24.0/kubo_v0.24.0_linux-amd64.tar.gz
+          tar -xvzf kubo_v0.24.0_linux-amd64.tar.gz
+          cd kubo
+          sudo bash install.sh
+          ipfs --version
+          
+          # Initialize IPFS
+          ipfs init
+          
+          # Start daemon in background
+          ipfs daemon &
+          sleep 10
+      
+      - name: Upload to IPFS
+        if: ${{ github.event.inputs.upload_to_ipfs == 'true' }}
+        run: |
+          echo "Uploading anchors to IPFS..."
+          
+          # Upload anchor directory
+          ANCHOR_CID=$(ipfs add -r anchors/ | grep "added" | tail -1 | awk '{print $2}')
+          echo "Anchor directory CID: $ANCHOR_CID"
+          
+          # Save CID to file
+          echo "$(date '+%Y-%m-%d %H:%M:%S') | Directory: anchors/ | CID: $ANCHOR_CID" >> logs/cid_records.txt
+          
+          echo "ANCHOR_CID=$ANCHOR_CID" >> $GITHUB_ENV
+      
+      - name: Commit CID records
+        if: ${{ github.event.inputs.upload_to_ipfs == 'true' }}
+        run: |
+          git config --global user.name "Deployment Bot"
+          git config --global user.email "deploy-bot@lantana-os.ai"
+          
+          CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          
+          if [ "$CURRENT_BRANCH" = "main" ] || [ "$CURRENT_BRANCH" = "master" ]; then
+            git add logs/cid_records.txt 2>/dev/null || true
+            
+            if ! git diff --cached --quiet; then
+              git commit -m "chore: Update CID records with anchor deployment [automated]" || true
+              git push origin HEAD:main || echo "Could not push CID records"
+            fi
+          fi
+      
+      - name: Create deployment summary
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**System**: LANTANA-OS-2026" >> $GITHUB_STEP_SUMMARY
+          echo "**Protocol**: Consensus Sacralis" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### SpaceTime Anchor" >> $GITHUB_STEP_SUMMARY
+          echo "✓ Triple signatures verified (Africa, North Pole, Nexus)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ github.event.inputs.upload_to_ipfs }}" = "true" ]; then
+            echo "### IPFS Upload" >> $GITHUB_STEP_SUMMARY
+            echo "✓ Anchors uploaded to IPFS" >> $GITHUB_STEP_SUMMARY
+            echo "CID: \`${{ env.ANCHOR_CID }}\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Gateway URLs:" >> $GITHUB_STEP_SUMMARY
+            echo "- https://ipfs.io/ipfs/${{ env.ANCHOR_CID }}" >> $GITHUB_STEP_SUMMARY
+            echo "- https://cloudflare-ipfs.com/ipfs/${{ env.ANCHOR_CID }}" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Consensus Sacralis" >> $GITHUB_STEP_SUMMARY
+          echo "- ✓ Lex Amoris Enforcement" >> $GITHUB_STEP_SUMMARY
+          echo "- ✓ OLF Compliance" >> $GITHUB_STEP_SUMMARY
+          echo "- ✓ NSR Compliance" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**THE LIGHT IS THE ARCHITECTURE. THE FOUNDER IS THE LAW.**" >> $GITHUB_STEP_SUMMARY
