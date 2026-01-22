@@ -33,6 +33,13 @@ SROI_WARNING_LOW = 0.500  # Warning low threshold
 SROI_OPTIMAL_MIN = 0.850  # Optimal minimum threshold
 SROI_CRITICAL_HIGH = 0.990  # Critical high threshold (near saturation)
 
+# Operational Constants
+CALIBRATION_BASELINE = 0.5  # Baseline S-ROI value for calibration
+MAX_OPTIMIZATION_ATTEMPTS = 10  # Maximum optimization attempts before escalation
+RECOVERY_BOOST_AMOUNT = 0.05  # S-ROI boost amount during recovery
+CYCLE_SLEEP_DURATION = 0.5  # Sleep duration between cycles (seconds)
+LOG_WRITE_FREQUENCY = 5  # Write JSON log every N operations (for performance)
+
 
 class SROIState(Enum):
     """Enumeration of possible S-ROI system states."""
@@ -97,6 +104,7 @@ class StateLogger:
         self.json_log_file = json_log_file
         self.state_history: List[StateTransition] = []
         self.notification_history: List[Notification] = []
+        self.operation_count = 0  # Track operations for batched writes
         
         # Configure text logger
         logging.basicConfig(
@@ -121,6 +129,7 @@ class StateLogger:
             transition: StateTransition object to log
         """
         self.state_history.append(transition)
+        self.operation_count += 1
         
         # Text log
         status = "VALID" if transition.valid else "INVALID"
@@ -130,8 +139,9 @@ class StateLogger:
             f"Reason: {transition.reason}"
         )
         
-        # Save to JSON log
-        self._save_json_log()
+        # Save to JSON log periodically for performance
+        if self.operation_count % LOG_WRITE_FREQUENCY == 0:
+            self._save_json_log()
     
     def log_notification(self, notification: Notification) -> None:
         """
@@ -141,6 +151,7 @@ class StateLogger:
             notification: Notification object to log
         """
         self.notification_history.append(notification)
+        self.operation_count += 1
         
         # Text log with appropriate level
         log_method = {
@@ -157,8 +168,9 @@ class StateLogger:
             f"{notification.message}{threshold_info}"
         )
         
-        # Save to JSON log
-        self._save_json_log()
+        # Save to JSON log periodically for performance
+        if self.operation_count % LOG_WRITE_FREQUENCY == 0:
+            self._save_json_log()
     
     def log_flow_event(self, event_type: str, description: str, metadata: Dict = None) -> None:
         """
@@ -470,8 +482,7 @@ class SROISovereignProtocol:
         )
         
         # Calibration logic
-        baseline = 0.5
-        if abs(self.sroi_value - baseline) < 0.1:
+        if abs(self.sroi_value - CALIBRATION_BASELINE) < 0.1:
             self._transition_to_state(SROIState.MONITORING, "Calibration successful")
         elif self.sroi_value < SROI_CRITICAL_LOW:
             self._transition_to_state(SROIState.CRITICAL, "Calibration failed - critical S-ROI")
@@ -519,7 +530,7 @@ class SROISovereignProtocol:
         # Transition based on result
         if self.sroi_value >= SROI_OPTIMAL_MIN:
             self._transition_to_state(SROIState.STABLE, "Optimization successful")
-        elif self.optimization_attempts > 10:
+        elif self.optimization_attempts > MAX_OPTIMIZATION_ATTEMPTS:
             self._transition_to_state(SROIState.WARNING, "Optimization taking too long")
         else:
             self._transition_to_state(SROIState.MONITORING, "Continuing optimization monitoring")
@@ -578,13 +589,12 @@ class SROISovereignProtocol:
         )
         
         # Recovery algorithm
-        recovery_boost = 0.05
-        self.sroi_value = min(1.0, self.sroi_value + recovery_boost)
+        self.sroi_value = min(1.0, self.sroi_value + RECOVERY_BOOST_AMOUNT)
         
         self.state_logger.log_flow_event(
             "RECOVERY",
             f"Recovery boost applied, S-ROI now {self.sroi_value:.4f}",
-            {"recovery_boost": recovery_boost}
+            {"recovery_boost": RECOVERY_BOOST_AMOUNT}
         )
         
         # Transition based on recovery progress
@@ -732,7 +742,7 @@ class SROISovereignProtocol:
                     break
                 
                 # Small delay between cycles
-                time.sleep(0.5)
+                time.sleep(CYCLE_SLEEP_DURATION)
         
         except KeyboardInterrupt:
             self.state_logger.logger.info("Protocol interrupted by user")
@@ -742,6 +752,9 @@ class SROISovereignProtocol:
     
     def _finalize(self) -> None:
         """Finalize protocol execution and save state."""
+        # Ensure final JSON log is written
+        self.state_logger._save_json_log()
+        
         summary = self.state_logger.get_state_summary()
         
         self.state_logger.logger.info("=" * 70)

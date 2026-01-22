@@ -70,6 +70,16 @@ INITIALIZING → CALIBRATING → MONITORING → OPTIMIZING → STABLE
 | TARGET | 0.950 | Target S-ROI value |
 | CRITICAL_HIGH | 0.990 | Near-saturation warning |
 
+### Operational Parameters
+
+| Parameter | Value | Description |
+|-----------|-------|-------------|
+| CALIBRATION_BASELINE | 0.5 | Baseline S-ROI value for calibration |
+| MAX_OPTIMIZATION_ATTEMPTS | 10 | Maximum optimization attempts before escalation |
+| RECOVERY_BOOST_AMOUNT | 0.05 | S-ROI boost amount during recovery |
+| CYCLE_SLEEP_DURATION | 0.5 | Sleep duration between cycles (seconds) |
+| LOG_WRITE_FREQUENCY | 5 | Write JSON log every N operations (for performance) |
+
 ## Components
 
 ### 1. StateLogger
@@ -83,6 +93,11 @@ Comprehensive logging system that tracks:
 **Log Files Generated:**
 - `sroi_protocol.log` - Human-readable text log
 - `sroi_state_log.json` - Structured JSON log for programmatic access
+
+**Performance Optimization:**
+- JSON logs are written in batches (every 5 operations by default) to reduce I/O overhead
+- Final state is always saved on protocol finalization
+- Configurable via `LOG_WRITE_FREQUENCY` constant
 
 **Example Usage:**
 ```python
