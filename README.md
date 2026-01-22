@@ -239,6 +239,51 @@ See [COMMUNITY_FEEDBACK.md](COMMUNITY_FEEDBACK.md) for:
 
 ---
 
+## 🔐 SpaceTime Anchor System
+
+### Timestamp Triple-Sign IPFS Share
+
+The SpaceTime Anchor system creates immutable timestamp anchors with triple signatures from the three Consensus Sacralis network nodes for IPFS deployment.
+
+#### Features
+
+- **Triple Signatures**: Cryptographic signatures from Africa, North Pole, and Nexus nodes
+- **Immutable Timestamps**: Cryptographic proof of deployment events
+- **IPFS Integration**: Permanent decentralized storage
+- **Consensus Sacralis**: Lex Amoris, OLF, and NSR enforcement
+- **Quantum-Safe**: NTRU encryption (simulated)
+
+#### Quick Start
+
+```bash
+# Create deployment anchor with triple signatures
+python3 spacetime_anchor.py
+
+# Output:
+# - anchors/anchor_deployment_<timestamp>.json
+# - Triple signatures from Africa, North Pole, Nexus
+# - Ready for IPFS upload
+
+# Upload to IPFS
+ipfs add anchors/anchor_deployment_*.json
+
+# Record CID in logs
+echo "2026-01-22 | Anchor: QmXYZ... | SHA256: abc..." >> logs/cid_records.txt
+```
+
+#### Anchor Structure
+
+Each anchor includes:
+- **Anchor ID**: Unique SHA256 identifier
+- **Payload**: System state, timestamp, message, metadata
+- **Content Hash**: SHA256 of payload for verification
+- **Triple Signatures**: From Africa (validator), North Pole (validator), Nexus (coordinator)
+- **Consensus Sacralis**: Enforcement flags and validation status
+
+See [SPACETIME_ANCHOR.md](SPACETIME_ANCHOR.md) for complete documentation.
+
+---
+
 ## 📦 Enhanced IPFS Automation
 
 ### Features
