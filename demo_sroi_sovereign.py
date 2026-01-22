@@ -12,7 +12,7 @@ Demonstrates the capabilities of the S-ROI Sovereign protocol including:
 
 import time
 import logging
-from sroi_sovereign import SROISovereign, SROI_TARGET
+from sroi_sovereign import SROISovereign
 
 
 def print_separator(title=""):

@@ -13,7 +13,6 @@ Tests the S-ROI Sovereign protocol implementation including:
 import unittest
 import time
 import logging
-from datetime import datetime, timedelta
 from sroi_sovereign import (
     SROISovereign, SROIState, StealthMode,
     SROILogger, StealthModeController,
