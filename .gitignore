@@ -19,6 +19,11 @@ Thumbs.db
 *.temp
 *.log
 
+# Security logs
+attack_log.json
+eternal_security.json
+*_security.json
+
 # Node modules (if added in future)
 node_modules/
 

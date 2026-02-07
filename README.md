@@ -26,6 +26,23 @@ Siehe [ETERNAL_DEPOSITION.md](ETERNAL_DEPOSITION.md) für vollständige Dokument
 
 ---
 
+### 🔒 SECURITY FRAMEWORK
+Erweiterte Sicherheitsarchitektur mit **Blacklisting-Strategien** und **Meta-Management** für künstliche Bedrohungsabwehr.
+
+* **Bedrohungserkennung:** Pattern-basierte und adaptive Anomalieerkennung
+* **Angriffsprotokollierung:** Strukturiertes Logging mit Analytics
+* **Scan-Abwehr:** Honeypots, Rate Limiting und stille Scan-Erkennung
+* **Integration:** Nahtlose Einbindung in Eternal Deposition System
+
+**Implementierungen:**
+- `security_framework.py` - Python Security Framework
+- `security_framework.js` - JavaScript Security Framework
+- `security_integration.py` - Integration mit Eternal Deposition
+
+Siehe [SECURITY_FRAMEWORK.md](SECURITY_FRAMEWORK.md) für vollständige Dokumentation.
+
+---
+
 ### 🧬 KERNDATEN DER GOVERNANCE
 * **MSI ActiveHash:** `0xTFK42D...9A8C7F` (Legge Eterna)
 * **Mandat:** Non-Slavery Rule (NSR) & Optimal Life Function (OLF)
