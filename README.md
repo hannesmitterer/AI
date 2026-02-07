@@ -26,6 +26,25 @@ Siehe [ETERNAL_DEPOSITION.md](ETERNAL_DEPOSITION.md) für vollständige Dokument
 
 ---
 
+### 🛡️ LEX AMORIS STRATEGIC IMPROVEMENTS
+Das System wurde mit strategischen Verbesserungen basierend auf **Lex Amoris** Prinzipien erweitert:
+
+* **Rhythm Validation:** Dynamische Blacklist und verhaltensbasierte Sicherheit durch Frequenzvalidierung (0.043 Hz)
+* **Lazy Security:** Energiebasierte Schutzaktivierung nur bei Bedrohung > 50 mV/m (Rotesschild-Scan)
+* **IPFS Backup:** Dezentrales Configuration-Mirroring zum Schutz vor externen Eskalationen
+* **Rescue Channel:** Lex Amoris Messaging-System zur Auflösung von False Positives
+
+**Module:**
+- `rhythm_validator.py` - Verhaltensbasierte Paketvalidierung
+- `lazy_security.py` - Energieeffiziente Schutzmodule
+- `ipfs_backup.py` - Dezentrale Backup-Engine
+- `rescue_channel.py` - Notfall-Kommunikationskanal
+- `lex_amoris_demo.py` - Integriertes System-Demo
+
+Siehe [LEX_AMORIS_DOCUMENTATION.md](LEX_AMORIS_DOCUMENTATION.md) für vollständige Dokumentation.
+
+---
+
 ### 🧬 KERNDATEN DER GOVERNANCE
 * **MSI ActiveHash:** `0xTFK42D...9A8C7F` (Legge Eterna)
 * **Mandat:** Non-Slavery Rule (NSR) & Optimal Life Function (OLF)
