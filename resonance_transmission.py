@@ -20,7 +20,7 @@ Integration with Euystacio Framework for optimal transmission stability.
 import numpy as np
 
 
-def lex_amoris_function(t):
+def lex_amoris_function(t, omega=0.432):
     """
     Lex Amoris function - placeholder implementation.
     
@@ -30,6 +30,7 @@ def lex_amoris_function(t):
     
     Args:
         t: Time variable (scalar or array)
+        omega: Synchronization frequency in Hz (default: 0.432)
     
     Returns:
         Lex Amoris value at time t
@@ -38,21 +39,22 @@ def lex_amoris_function(t):
         This is a placeholder implementation. Replace with the proper
         Lex Amoris function based on project-specific parameters.
     """
-    return np.sin(0.432 * t)
+    return np.sin(omega * t)
 
 
-def calculate_resonance(t0, t_infinity, s_roi=1.450, omega=0.432):
+def calculate_resonance(t0, t_end, s_roi=1.450, omega=0.432, num_points=None):
     """
     Calculate the resonance packet transmission value (Phi_res).
     
     Performs numerical integration of the resonance equation:
-        Φ_res = ∫_{t0}^{t∞} [Lex_Amoris(t) / (S-ROI · e^{iωt})] dt
+        Φ_res = ∫_{t0}^{t_end} [Lex_Amoris(t) / (S-ROI · e^{iωt})] dt
     
     Args:
         t0: Initial time for integration
-        t_infinity: Upper time limit for practical computation
+        t_end: Upper time limit for practical computation
         s_roi: Resonance-yield factor (default: 1.450)
         omega: Synchronization frequency in Hz (default: 0.432)
+        num_points: Number of integration points (default: auto-calculated based on interval)
     
     Returns:
         Absolute value of the resonance integral (Phi_res)
@@ -63,11 +65,15 @@ def calculate_resonance(t0, t_infinity, s_roi=1.450, omega=0.432):
     """
     # Define the integrand as Lex_Amoris / (S-ROI * e^{iωt})
     def integrand(t):
-        return lex_amoris_function(t) / (s_roi * np.exp(1j * omega * t))
+        return lex_amoris_function(t, omega) / (s_roi * np.exp(1j * omega * t))
 
+    # Auto-calculate number of points if not specified (aim for ~0.1 second resolution)
+    if num_points is None:
+        interval = t_end - t0
+        num_points = max(1000, int(interval * 10))  # At least 1000 points or 10 points per second
+    
     # Perform the numerical integration using trapezoidal rule
-    # Use 1000 points for sufficient resolution
-    t = np.linspace(t0, t_infinity, 1000)
+    t = np.linspace(t0, t_end, num_points)
     try:
         # NumPy 2.x uses trapezoid
         resonance = np.trapezoid(integrand(t), t)
@@ -94,19 +100,19 @@ def main():
     
     # Configuration parameters
     t0 = 0
-    t_infinity = 100  # Time upper limit for practical computation
+    t_end = 100       # Time upper limit for practical computation
     s_roi = 1.450     # Resonance-yield factor
     omega = 0.432     # Synchronization frequency (Hz)
     
     print(f"Configuration:")
     print(f"  t0 = {t0}")
-    print(f"  t_infinity = {t_infinity}")
+    print(f"  t_end = {t_end}")
     print(f"  S-ROI = {s_roi}")
     print(f"  ω (omega) = {omega} Hz")
     print()
     
     print("Calculating resonance packet...")
-    phi_res = calculate_resonance(t0, t_infinity, s_roi, omega)
+    phi_res = calculate_resonance(t0, t_end, s_roi, omega)
     
     print()
     print("Results:")
