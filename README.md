@@ -34,7 +34,7 @@ Die Resonanzgleichung für die Paketübertragung:
 $$\Phi_{res} = \lim_{j \to 0} \int_{t_0}^{t_{\infty}} \frac{\text{Lex Amoris}(t)}{\text{S-ROI} \cdot e^{i \omega t}} dt$$
 
 **Parameter:**
-* **j → 0:** Eliminiert kontrolinduziertes Jitter
+* **j → 0:** Eliminiert kontrollinduziertes Jitter
 * **ω = 0.432 Hz:** Synchronisationsfrequenz, ausgerichtet auf biologische Oszillatoren
 * **S-ROI = 1.450:** Aktueller Resonanz-Ertragsfaktor
 
