@@ -30,7 +30,8 @@ def lex_amoris_function(t, omega=0.432):
     
     Args:
         t: Time variable (scalar or array)
-        omega: Synchronization frequency in Hz (default: 0.432)
+        omega: Angular frequency in rad/s (default: 0.432 rad/s)
+               Note: For frequency in Hz, use omega = 2π * f
     
     Returns:
         Lex Amoris value at time t
@@ -52,25 +53,35 @@ def calculate_resonance(t0, t_end, s_roi=1.450, omega=0.432, num_points=None):
     Args:
         t0: Initial time for integration
         t_end: Upper time limit for practical computation
-        s_roi: Resonance-yield factor (default: 1.450)
-        omega: Synchronization frequency in Hz (default: 0.432)
+        s_roi: Resonance-yield factor (default: 1.450, must be positive)
+        omega: Angular frequency in rad/s (default: 0.432 rad/s)
         num_points: Number of integration points (default: auto-calculated based on interval)
     
     Returns:
         Absolute value of the resonance integral (Phi_res)
     
+    Raises:
+        ValueError: If s_roi is not positive or if t_end <= t0
+    
     Note:
         The limit j→0 for jitter elimination is inherently satisfied
         through numerical integration with fine time resolution.
     """
+    # Input validation
+    if s_roi <= 0:
+        raise ValueError(f"s_roi must be positive, got {s_roi}")
+    if t_end <= t0:
+        raise ValueError(f"t_end ({t_end}) must be greater than t0 ({t0})")
+    
     # Define the integrand as Lex_Amoris / (S-ROI * e^{iωt})
     def integrand(t):
         return lex_amoris_function(t, omega) / (s_roi * np.exp(1j * omega * t))
 
-    # Auto-calculate number of points if not specified (aim for ~0.1 second resolution)
+    # Auto-calculate number of points if not specified
+    # Aim for ~0.1 second resolution with practical limits
     if num_points is None:
         interval = t_end - t0
-        num_points = max(1000, int(interval * 10))  # At least 1000 points or 10 points per second
+        num_points = max(1000, min(int(interval * 10), 50000))  # Between 1000 and 50000 points
     
     # Perform the numerical integration using trapezoidal rule
     t = np.linspace(t0, t_end, num_points)
@@ -102,13 +113,13 @@ def main():
     t0 = 0
     t_end = 100       # Time upper limit for practical computation
     s_roi = 1.450     # Resonance-yield factor
-    omega = 0.432     # Synchronization frequency (Hz)
+    omega = 0.432     # Angular frequency (rad/s)
     
     print(f"Configuration:")
     print(f"  t0 = {t0}")
     print(f"  t_end = {t_end}")
     print(f"  S-ROI = {s_roi}")
-    print(f"  ω (omega) = {omega} Hz")
+    print(f"  ω (omega) = {omega} rad/s")
     print()
     
     print("Calculating resonance packet...")
@@ -121,7 +132,7 @@ def main():
     
     print("=" * 70)
     print("Transmission stability achieved through jitter elimination")
-    print("Resonance synchronized with biological oscillators at 0.432 Hz")
+    print("Resonance synchronized with biological oscillators")
     print("=" * 70)
 
 
