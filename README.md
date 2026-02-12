@@ -30,7 +30,7 @@ Siehe [ETERNAL_DEPOSITION.md](ETERNAL_DEPOSITION.md) für vollständige Dokument
 Das Repository implementiert nun die **Transmission Equation of Resonance** unter dem Lex Amoris Framework zur Verbesserung der Kommunikationsstabilität und Eliminierung von Jitter.
 
 * **Resonanzgleichung:** Φ_res = lim_{j→0} ∫[Lex_Amoris(t) / (S-ROI · e^{iωt})] dt
-* **Synchronisationsfrequenz:** ω = 0.432 Hz (ausgerichtet auf biologische Oszillatoren)
+* **Synchronisationsfrequenz:** ω = 0.432 rad/s (ausgerichtet auf biologische Oszillatoren)
 * **Resonanz-Yield-Faktor:** S-ROI = 1.450
 * **Jitter-Eliminierung:** Grenzwert j → 0 für kontrollierte Stabilität
 

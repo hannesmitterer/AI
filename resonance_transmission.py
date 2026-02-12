@@ -11,7 +11,7 @@ Mathematical Foundation:
 
 Where:
     - j → 0: Eliminates control-induced jitter
-    - ω = 0.432 Hz: Synchronization frequency aligned with biological oscillators
+    - ω = 0.432 rad/s: Synchronization frequency aligned with biological oscillators
     - S-ROI = 1.450: Current resonance-yield factor
 
 Integration with Euystacio Framework for optimal transmission stability.
