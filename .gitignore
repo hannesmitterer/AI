@@ -3,6 +3,9 @@ deployments/
 reports/
 .sync/
 
+# Entropy Wall runtime data
+.entropy_wall/
+
 # OS files
 .DS_Store
 Thumbs.db
