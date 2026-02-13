@@ -537,5 +537,82 @@
 
         window.onload = connectSeedbringerWallet; 
     </script>
+    
+    <!-- Internet Organica: SovereignShield & Wall of Entropy Integration -->
+    <script src="sovereign-shield.js"></script>
+    <script src="wall-of-entropy.js"></script>
+    <script>
+        // Initialize Internet Organica protection systems
+        console.log('🏛️ Internet Organica Framework Loading...');
+        
+        // Initialize Wall of Entropy
+        const wallOfEntropy = new WallOfEntropy({
+            maxEntries: 10000,
+            autoPublish: true,
+            persistToIPFS: false
+        });
+        
+        // Log system initialization
+        wallOfEntropy.log({
+            type: 'system_initialization',
+            severity: 'info',
+            description: 'Internet Organica dashboard initialized',
+            details: {
+                framework: 'Internet Organica',
+                version: '1.0.0',
+                principles: ['Lex Amoris', 'NSR', 'OLF'],
+                biological_frequency: 0.432
+            },
+            nsr_compliance: true
+        });
+        
+        // Initialize SovereignShield
+        const sovereignShield = new SovereignShield({
+            biologicalFrequency: 0.432,
+            schumannResonance: 7.83,
+            monitoringEnabled: true,
+            autoNeutralize: true,
+            logToEntropy: true
+        });
+        
+        // Activate protection
+        sovereignShield.activate();
+        
+        // Log health check every 30 seconds
+        setInterval(() => {
+            wallOfEntropy.logHealthCheck({
+                status: 'healthy',
+                metrics: {
+                    uptime: performance.now() / 1000,
+                    memory: performance.memory ? performance.memory.usedJSHeapSize : 'N/A'
+                }
+            });
+        }, 30000);
+        
+        // Make systems available globally for debugging
+        window.internetOrganica = {
+            wallOfEntropy,
+            sovereignShield,
+            version: '1.0.0',
+            principles: {
+                lex_amoris: true,
+                nsr: true,
+                olf: true
+            },
+            getSummary: () => {
+                return {
+                    entropy_logs: wallOfEntropy.getStatistics(),
+                    security_summary: sovereignShield.getThreatSummary(),
+                    framework: 'Internet Organica',
+                    status: 'operational'
+                };
+            }
+        };
+        
+        console.log('✅ Internet Organica Framework: ACTIVE');
+        console.log('✅ SovereignShield: PROTECTING');
+        console.log('✅ Wall of Entropy: LOGGING');
+        console.log('View dashboard at: entropy-dashboard.html');
+    </script>
 </body>
 </html>

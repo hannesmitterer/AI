@@ -1,8 +1,35 @@
-# Dynamic Orchestration System
+# Dynamic Orchestration System - Internet Organica
 
 ## Overview
 
-This repository implements a comprehensive dynamic orchestration and automation system designed to enable seamless synchronization, continuous integration, and global accessibility across multiple repositories.
+This repository implements a comprehensive dynamic orchestration and automation system designed to enable seamless synchronization, continuous integration, and global accessibility. Enhanced with the **Internet Organica** framework, the system now includes sovereign protection, biological rhythm alignment, and transparent public logging.
+
+## Internet Organica Framework
+
+### Core Principles
+- **Lex Amoris (Law of Love)**: All operations stem from love and respect
+- **Non-Slavery Rule (NSR)**: No domination, extraction, or manipulation
+- **One Love First (OLF)**: Love-based decision making
+- **Biological Alignment**: 0.432 Hz frequency synchronization
+- **Digital Sovereignty**: Decentralized, owner-controlled systems
+- **Transparency**: Public logging via Wall of Entropy
+
+### Protection Systems
+
+#### SovereignShield
+Active defense against:
+- **SPID**: Surveillance, Profiling, Identification, Deanonymization
+- **CIE**: Centralized Intelligence Extraction
+- **Tracking**: Unauthorized monitoring and cookies
+- **Manipulation**: Behavioral exploitation techniques
+
+#### Wall of Entropy
+Public transparency system logging:
+- Unauthorized access attempts
+- NSR violations
+- Security events
+- System health checks
+- All events publicly verifiable
 
 ## Key Components
 
