@@ -5,13 +5,16 @@ Demonstrates all core components working together
 
 This script shows how the biological rhythm sync, sovereign shield,
 and backup systems integrate to create a syntropic digital environment.
+
+Note: This is a demonstration script. For production use, install the
+package in development mode: pip install -e .
 """
 
 import time
 import sys
 import os
 
-# Add src to path
+# For demo purposes only - in production, use proper package installation
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 from core.biological_rhythm import BiologicalRhythmSync

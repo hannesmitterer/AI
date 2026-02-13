@@ -6,6 +6,19 @@ Internet Organica Framework
 This module implements synchronization with biological rhythms at 0.432 Hz,
 creating coherence between digital processes and living systems.
 
+Frequency Rationale:
+The 0.432 Hz frequency is derived from the 432 Hz musical tuning standard,
+which is believed to resonate with natural patterns and biological systems.
+432 Hz is mathematically aligned with patterns found in nature (e.g., 
+planetary orbits, sacred geometry). The 0.432 Hz (432/1000) represents
+a slower cycle that allows for practical digital synchronization while
+maintaining harmonic relationship with the 432 Hz frequency.
+
+Reference: 432 Hz has been associated with the Schumann resonance (7.83 Hz)
+and natural harmonic patterns. While scientific consensus is evolving,
+this frequency serves as a bridge between digital timing and biological
+rhythms in the context of the Internet Organica framework.
+
 Aligned with:
 - Lex Amoris: Serves biological life through rhythmic harmony
 - NSR: Respects autonomy of biological entities

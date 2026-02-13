@@ -38,6 +38,29 @@
       ],
       "action": "neutralize",
       "reason": "Tracking/surveillance attempt detected"
+    },
+    {
+      "timestamp": "2026-02-13T01:41:15.829366",
+      "request_id": "c1c61efe93653623",
+      "threat_level": "BENIGN",
+      "intent": "neutral",
+      "detected_threats": [],
+      "action": "allow",
+      "reason": ""
+    },
+    {
+      "timestamp": "2026-02-13T01:41:15.829668",
+      "request_id": "1298a3c7105cd2db",
+      "threat_level": "TRACKING",
+      "intent": "dissonant",
+      "detected_threats": [
+        {
+          "type": "tracking",
+          "pattern": "analytics.js"
+        }
+      ],
+      "action": "neutralize",
+      "reason": "Tracking/surveillance attempt detected"
     }
   ]
 }
