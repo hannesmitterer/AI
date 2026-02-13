@@ -24,11 +24,13 @@ NC='\033[0m' # No Color
 
 # 1. Hardware-Clock Tuning
 echo -e "${BLUE}[1/7] Tuning System Clock to 0.432 Hz frequency base...${NC}"
-# Setzt den Kernel-Scheduler auf den h-Faktor (Pseudo-Code für FPGA/Kernel-Mod)
+# Note: kernel.resonance_frequency is a conceptual parameter for custom kernels
+# This represents future integration with hardware-level frequency alignment
+# Standard Linux kernels do not support this parameter
 if command -v sysctl &> /dev/null; then
-    sudo sysctl -w kernel.resonance_frequency=0.432 2>/dev/null || echo "  ⚠ Kernel tuning not available (requires custom kernel)"
+    sudo sysctl -w kernel.resonance_frequency=0.432 2>/dev/null || echo "  ⚠ Kernel tuning not available (requires custom kernel - future feature)"
 fi
-echo "  ✓ Biological rhythm alignment: 0.432 Hz"
+echo "  ✓ Biological rhythm alignment: 0.432 Hz (conceptual)"
 echo ""
 
 # 2. Environment Variables for Lex Amoris & Internet Organica

@@ -50,20 +50,31 @@ verify_nsr_compliance() {
     local file="$1"
     
     # Check for NSR violations in code
+    # Note: These are simple pattern checks. In production, use more sophisticated
+    # context-aware analysis to avoid false positives in comments or documentation.
     local violations=""
     
-    # Check for surveillance patterns
-    if grep -qi 'track.*user\|surveillance\|spy\|monitor.*secret' "$file" 2>/dev/null; then
-        violations="${violations}surveillance_pattern "
-    fi
-    
-    # Check for extraction patterns
-    if grep -qi 'extract.*without.*consent\|harvest.*data.*profit\|sell.*user.*data' "$file" 2>/dev/null; then
-        violations="${violations}extraction_pattern "
+    # Only check actual code files, skip documentation
+    if [[ ! "$file" =~ \.(md|txt)$ ]]; then
+        # Check for surveillance patterns in code context
+        if grep -qi 'track.*user\|surveillance\|spy.*on.*user\|monitor.*without.*consent' "$file" 2>/dev/null; then
+            # Verify it's not in a comment or documentation
+            if ! grep -qi '^\s*[#/\*].*track.*user' "$file" 2>/dev/null; then
+                violations="${violations}surveillance_pattern "
+            fi
+        fi
+        
+        # Check for extraction patterns in code context
+        if grep -qi 'extract.*without.*consent\|harvest.*data.*profit\|sell.*user.*data' "$file" 2>/dev/null; then
+            if ! grep -qi '^\s*[#/\*].*extract' "$file" 2>/dev/null; then
+                violations="${violations}extraction_pattern "
+            fi
+        fi
     fi
     
     if [ -n "$violations" ]; then
-        echo -e "${RED}[NSR VIOLATION] Detected: $violations${NC}"
+        echo -e "${RED}[NSR VIOLATION] Potential issues detected: $violations${NC}"
+        echo -e "${YELLOW}[NOTE] Review manually - may be false positive in comments${NC}"
         echo "[ALERT] Logging to Wall of Entropy..."
         return 1
     fi

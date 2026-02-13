@@ -67,13 +67,21 @@ class SovereignShield {
     
     /**
      * Initialize biological rhythm synchronization
+     * Note: High-frequency timer (2315ms) - can be disabled if needed for performance
      */
     initializeBiologicalSync() {
         const period = 1000 / this.config.biologicalFrequency; // milliseconds
         
         console.log(`[BioSync] Synchronizing to ${this.config.biologicalFrequency} Hz (${period.toFixed(2)}ms period)`);
         
+        // Only run if monitoring is enabled and we're in a browser environment
+        if (!this.config.monitoringEnabled || typeof window === 'undefined') {
+            console.log('[BioSync] Skipping periodic checks (monitoring disabled or non-browser environment)');
+            return;
+        }
+        
         // Align system operations with biological rhythm
+        // Note: This is a placeholder for future biological alignment features
         this.bioSyncInterval = setInterval(() => {
             this.performBiologicalCheck();
         }, period);
