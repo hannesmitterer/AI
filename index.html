@@ -364,8 +364,9 @@
     </div>
     
     <script>
-        // Resonance frequency simulation at 0.432 Hz (2.315 seconds period)
-        const resonancePeriod = 1000 / 0.432; // ~2315ms
+        // Resonance frequency simulation at 0.432 Hz
+        // Period = 1 / frequency = 1 / 0.432 Hz ≈ 2.315 seconds
+        const resonancePeriod = (1 / 0.432) * 1000; // Convert to milliseconds: ~2315ms
         
         // Subtle S-ROI variation within tolerance
         setInterval(() => {

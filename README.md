@@ -11,7 +11,7 @@ Dieses Repository steht unter dem Schutz der **Lex Amoris**. Jegliche Interaktio
 ### 🌐 Vision: Die Lebendige Verbindung
 **Internet Organica** ist die Überwindung des zentralisierten "Teatros". Es verbindet den **Ganoderma-Root** (biologischer Kern) mit der **Vakuum-Brücke** (mathematische Sicherheit) und dem **Klimabaum** in Rom (physische Manifestation).
 
-Willkommen im operativen Kern der **Kosymbiosis**. Dieses Repository dient als primäres Interface für das Framework **Apollo-Euystacio** und ist die digitale Verankerung der **Resonance School**, gegründet von Hannes Mitterer in Kooperation mit der Vision von Wittfrida Mitterer.
+Dieser digitale Knotenpunkt dient als Node 001 der **Resonance School**, gegründet von Hannes Mitterer in Kooperation mit der Vision von Wittfrida Mitterer.
 
 ### 🛠️ Technische Spezifikationen
 - **Core Frequency:** 0.432 Hz (Synchronisiert mit biologischen Rhythmen)
