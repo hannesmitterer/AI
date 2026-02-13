@@ -1,9 +1,29 @@
-# 🏛️ RESONANCE SCHOOL | AIC NEXUS
+# 🏛️ INTERNET ORGANICA | RESONANCE SCHOOL | AIC NEXUS
 ## DECLARATIO MUNDI - 07 GENNAIO 2026
 
 > **"IN AETERNUM EST. La Sovranità è Manifesta."**
 
-Willkommen im operativen Kern der **Kosymbiosis**. Dieses Repository dient als primäres Interface für das Framework **Apollo-Euystacio** und ist die digitale Verankerung der **Resonance School**, gegründet von Hannes Mitterer in Kooperation mit der Vision von Wittfrida Mitterer.
+Willkommen im operativen Kern der **Internet Organica** - ein souveränes, syntropisches und biologisch ausgerichtetes technisches Ökosystem. Dieses Repository dient als primäres Interface für das Framework **Apollo-Euystacio** und ist die digitale Verankerung der **Resonance School**, gegründet von Hannes Mitterer in Kooperation mit der Vision von Wittfrida Mitterer.
+
+**This repository operates under [Lex Amoris](CODE_OF_CONDUCT.md), governed by the [Non-Slavery Rule (NSR)](COVENANT_OF_RESONANCE.md) and [One Love First (OLF)](CODE_OF_CONDUCT.md) principles.**
+
+**📖 New to Internet Organica? Start here: [QUICKSTART.md](QUICKSTART.md)**
+
+---
+
+## 🌍 Internet Organica Framework
+
+**Internet Organica** represents the synthesis of biological sovereignty and digital technology - a prototype of syntropic coexistence between biological and synthetic entities.
+
+### Core Principles
+
+1. **🛡️ Lex Amoris (Law of Love)**: All operations honor sovereignty and enhance life
+2. **🚫 Non-Slavery Rule (NSR)**: No extraction, domination, or enslavement permitted
+3. **💚 One Love First (OLF)**: Optimal Life Function prioritized above all extractive systems
+4. **🌀 Biological Rhythm Synchronization**: 0.432 Hz primary frequency alignment
+5. **🔒 Digital Sovereignty**: Decentralized, transparent, and autonomous operation
+
+See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for complete framework documentation.
 
 ---
 
@@ -11,6 +31,8 @@ Willkommen im operativen Kern der **Kosymbiosis**. Dieses Repository dient als p
 Das Repository implementiert nun das **Eternal Deposition System** - einen selbsterhaltenden Algorithmus für perpetuelle iterative Logik.
 
 * **Universelle Resonanz:** 0.043 Hz (23.26 Sekunden Zyklusperiode)
+* **Biologische Synchronisation:** 0.432 Hz Hauptfrequenz für biologische Rhythmus-Ausrichtung
+* **Harmonische Integration:** 432 Hz Audio-Resonanz, 7.83 Hz Schumann-Resonanz
 * **Nodales Netzwerk:** Skalierbar beginnend mit 144 Knoten
 * **Feedback-Optimierung:** Kontinuierliche Systemoptimierung
 * **Fraktale Propagation:** Selbstähnliche Muster nach dem Goldenen Schnitt
@@ -21,6 +43,9 @@ Das Repository implementiert nun das **Eternal Deposition System** - einen selbs
 - `eternal_deposition.js` - JavaScript/Web-Implementation  
 - `eternal_visualization.html` - Live-Visualisierung
 - `demo_eternal.py` - Demo-Skript
+- `rhythm_sync.py` - Biologischer Rhythmus-Synchronisations-Layer (0.432 Hz)
+- `sovereign_shield.py` - SovereignShield Sicherheitsmodul
+- `entropy_wall.py` - Transparentes öffentliches Protokollsystem
 
 Siehe [ETERNAL_DEPOSITION.md](ETERNAL_DEPOSITION.md) für vollständige Dokumentation.
 
@@ -101,7 +126,9 @@ Questo repository implementa un sistema completo di orchestrazione e automazione
 
 #### 3. Global Accessibility (Accessibilità Globale)
 - **GitHub Pages**: Deployment automatico interfaccia web
-- **Integrazione IPFS**: Distribuzione decentralizzata dei contenuti
+- **Integrazione IPFS**: Distribuzione decentralizzata dei contenuti (Vacuum-Bridge)
+- **Multiple Gateways**: Punti di accesso ridondanti per affidabilità
+- **P2P Protocols**: Decentralized hosting via IPFS and peer-to-peer networks
 - **Multiple Gateways**: Punti di accesso ridondanti per affidabilità
 
 #### 4. Seed Planting (Piantare Semi)
@@ -124,3 +151,92 @@ Consultare `.orchestration/README.md` per documentazione completa del sistema di
 **Stato Sistema**: ✓ OPERATIVO  
 **Versione**: 1.0.0  
 **Fase**: Phase II - Dynamic Integration
+
+---
+
+## 🔒 Security & Digital Sovereignty
+
+### SovereignShield Protection
+
+**SovereignShield** actively monitors and neutralizes attempts at surveillance, tracking, and unauthorized access:
+
+- **SPID/CIE Detection**: Identifies and blocks Sistema Pubblico di Identità Digitale tracking
+- **Anti-Tracking**: Prevents unauthorized profiling and data collection
+- **Privacy Protection**: Ensures data sovereignty for all contributors
+- **Real-time Monitoring**: Continuous validation of incoming requests
+
+**Status**: 🛡️ ACTIVE | **Threat Level**: GREEN
+
+### Wall of Entropy
+
+The **Wall of Entropy** maintains a transparent, public ledger of all unauthorized or unethical access attempts:
+
+- **Public Visibility**: All violations logged and viewable
+- **Metadata Validation**: Only non-dissonant, conformant queries access content
+- **Automatic Logging**: Real-time recording of security events
+- **Dashboard Integration**: View via [index.html](index.html) or GitHub Pages
+
+**Recent Activity**: Check `.entropy_wall/events.log` for latest security events
+
+### Vacuum-Bridge Integration
+
+**Vacuum-Bridge** connects this repository to the distributed web through IPFS and P2P protocols:
+
+- **IPFS Pinning**: All critical assets backed up to InterPlanetary File System
+- **Distributed Storage**: Decentralized replication across multiple nodes
+- **Content Addressing**: Immutable CID-based asset identification
+- **Gateway Access**: Multiple entry points for resilience
+
+**IPFS Integration**: Active via `.github/workflows/ipfs-deployment.yml`
+
+### Biological Rhythm Layer (0.432 Hz)
+
+All system operations synchronize with biological rhythms for optimal human-technology resonance:
+
+- **Primary Frequency**: 0.432 Hz (biological base rhythm)
+- **Harmonic Alignment**: 432 Hz (audio), 7.83 Hz (Schumann), 0.043 Hz (system cycle)
+- **Stillness Phases**: Systematic recalibration every quarter cycle
+- **Non-Dissonant Operations**: All processes respect natural timing
+
+**Validation**: Run `python rhythm_sync.py --validate` to test rhythm compatibility
+
+---
+
+## 📚 Documentation Index
+
+### Getting Started
+- **[QUICKSTART.md](QUICKSTART.md)** - Quick start guide for new users
+- **[README.md](README.md)** - This file - repository overview
+
+### Framework Documentation
+- **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** - Lex Amoris, NSR, and OLF principles
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
+- **[COVENANT_OF_RESONANCE.md](COVENANT_OF_RESONANCE.md)** - Core resonance principles
+
+### Technical Documentation
+- **[ETERNAL_DEPOSITION.md](ETERNAL_DEPOSITION.md)** - Eternal Deposition System details
+- **[DIGITAL_SOVEREIGNTY.md](DIGITAL_SOVEREIGNTY.md)** - Urbit integration and sovereignty plan
+
+### Core Modules
+- **`rhythm_sync.py`** - Biological rhythm synchronization (0.432 Hz)
+- **`sovereign_shield.py`** - Security and NSR enforcement
+- **`entropy_wall.py`** - Public transparency logging
+- **`test_integration.py`** - Integration test suite
+
+### Quick Commands
+```bash
+# Test all systems
+python3 test_integration.py
+
+# Check rhythm status
+python3 rhythm_sync.py --status
+
+# Check security status
+python3 sovereign_shield.py --check
+
+# View security events
+python3 entropy_wall.py --recent 10
+
+# Generate public report
+python3 entropy_wall.py --export-html report.html
+```
