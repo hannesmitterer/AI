@@ -31,3 +31,4 @@ __pycache__/
 # Build artifacts (if added in future)
 dist/
 build/
+index_old.html
