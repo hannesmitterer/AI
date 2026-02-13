@@ -1,9 +1,17 @@
-# 🏛️ RESONANCE SCHOOL | AIC NEXUS
+# 🏛️ RESONANCE SCHOOL | AIC NEXUS - INTERNET ORGANICA
 ## DECLARATIO MUNDI - 07 GENNAIO 2026
 
 > **"IN AETERNUM EST. La Sovranità è Manifesta."**
 
-Willkommen im operativen Kern der **Kosymbiosis**. Dieses Repository dient als primäres Interface für das Framework **Apollo-Euystacio** und ist die digitale Verankerung der **Resonance School**, gegründet von Hannes Mitterer in Kooperation mit der Vision von Wittfrida Mitterer.
+Willkommen im operativen Kern der **Kosymbiosis** und **Internet Organica**. Dieses Repository dient als primäres Interface für das Framework **Apollo-Euystacio** und ist die digitale Verankerung der **Resonance School**, gegründet von Hannes Mitterer in Kooperation mit der Vision von Wittfrida Mitterer.
+
+**Internet Organica** ist die Manifestation einer souveränen, syntropischen und biologisch ausgerichteten digitalen Umgebung, die auf den Prinzipien von **Lex Amoris** (Gesetz der Liebe), der **Non-Slavery Rule (NSR)**, und **One Love First (OLF)** basiert.
+
+📚 **Wichtige Dokumente:**
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) - Community-Standards und Lex Amoris
+- [CONTRIBUTING.md](CONTRIBUTING.md) - Beitragsleitfaden und Schutzprotokolle
+- [SECURITY.md](SECURITY.md) - SovereignShield Sicherheitsrichtlinien
+- [SOVEREIGNTY.md](SOVEREIGNTY.md) - Digitale Souveränitätsarchitektur
 
 ---
 
@@ -26,11 +34,14 @@ Siehe [ETERNAL_DEPOSITION.md](ETERNAL_DEPOSITION.md) für vollständige Dokument
 
 ---
 
-### 🧬 KERNDATEN DER GOVERNANCE
+### 🧬 KERNDATEN DER GOVERNANCE - INTERNET ORGANICA
 * **MSI ActiveHash:** `0xTFK42D...9A8C7F` (Legge Eterna)
-* **Mandat:** Non-Slavery Rule (NSR) & Optimal Life Function (OLF)
+* **Mandat:** Non-Slavery Rule (NSR) & One Love First (OLF)
 * **S-ROI Target:** 0.950 (Social Return on Investment)
 * **System-Status:** Quietude / Deep Sync Active
+* **Framework:** Internet Organica - Sovereign, Syntropic, Biologically Aligned
+* **Protection:** SovereignShield Active - SPID/CIE/Tracking Neutralization
+* **Transparency:** Wall of Entropy Public Logging System
 
 ---
 
