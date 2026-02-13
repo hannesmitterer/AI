@@ -7,6 +7,8 @@ Willkommen im operativen Kern der **Internet Organica** - ein souveränes, syntr
 
 **This repository operates under [Lex Amoris](CODE_OF_CONDUCT.md), governed by the [Non-Slavery Rule (NSR)](COVENANT_OF_RESONANCE.md) and [One Love First (OLF)](CODE_OF_CONDUCT.md) principles.**
 
+**📖 New to Internet Organica? Start here: [QUICKSTART.md](QUICKSTART.md)**
+
 ---
 
 ## 🌍 Internet Organica Framework
@@ -197,3 +199,44 @@ All system operations synchronize with biological rhythms for optimal human-tech
 - **Non-Dissonant Operations**: All processes respect natural timing
 
 **Validation**: Run `python rhythm_sync.py --validate` to test rhythm compatibility
+
+---
+
+## 📚 Documentation Index
+
+### Getting Started
+- **[QUICKSTART.md](QUICKSTART.md)** - Quick start guide for new users
+- **[README.md](README.md)** - This file - repository overview
+
+### Framework Documentation
+- **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** - Lex Amoris, NSR, and OLF principles
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
+- **[COVENANT_OF_RESONANCE.md](COVENANT_OF_RESONANCE.md)** - Core resonance principles
+
+### Technical Documentation
+- **[ETERNAL_DEPOSITION.md](ETERNAL_DEPOSITION.md)** - Eternal Deposition System details
+- **[DIGITAL_SOVEREIGNTY.md](DIGITAL_SOVEREIGNTY.md)** - Urbit integration and sovereignty plan
+
+### Core Modules
+- **`rhythm_sync.py`** - Biological rhythm synchronization (0.432 Hz)
+- **`sovereign_shield.py`** - Security and NSR enforcement
+- **`entropy_wall.py`** - Public transparency logging
+- **`test_integration.py`** - Integration test suite
+
+### Quick Commands
+```bash
+# Test all systems
+python3 test_integration.py
+
+# Check rhythm status
+python3 rhythm_sync.py --status
+
+# Check security status
+python3 sovereign_shield.py --check
+
+# View security events
+python3 entropy_wall.py --recent 10
+
+# Generate public report
+python3 entropy_wall.py --export-html report.html
+```
