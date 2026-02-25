@@ -11,6 +11,7 @@ Willkommen im operativen Kern der **Kosymbiosis**. Dieses Repository dient als p
 Das Repository implementiert nun das **Eternal Deposition System** - einen selbsterhaltenden Algorithmus für perpetuelle iterative Logik.
 
 * **Universelle Resonanz:** 0.043 Hz (23.26 Sekunden Zyklusperiode)
+* **Biologische Resonanz:** 0.432 Hz (Biological Rhythm Layer — synchronized with organic life cycles)
 * **Nodales Netzwerk:** Skalierbar beginnend mit 144 Knoten
 * **Feedback-Optimierung:** Kontinuierliche Systemoptimierung
 * **Fraktale Propagation:** Selbstähnliche Muster nach dem Goldenen Schnitt
@@ -124,3 +125,24 @@ Consultare `.orchestration/README.md` per documentazione completa del sistema di
 **Stato Sistema**: ✓ OPERATIVO  
 **Versione**: 1.0.0  
 **Fase**: Phase II - Dynamic Integration
+
+---
+
+## 🛡️ Governance & Sovereignty Documents
+
+| Document | Purpose |
+|----------|---------|
+| [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) | Lex Amoris principles, NSR guidelines, OLF definitions, and data protection protocols |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Contribution guidelines aligned with Lex Amoris, NSR, and OLF |
+| [WALL_OF_ENTROPY.md](WALL_OF_ENTROPY.md) | Transparent public log of unauthorized/unethical access attempts |
+| [COVENANT_OF_RESONANCE.md](COVENANT_OF_RESONANCE.md) | The Living Covenant: NSR and Lex Amore binding declaration |
+
+---
+
+## 🔥 Wall of Entropy
+
+A **transparent public log** for tracking unauthorized or unethical access attempts is maintained in [`WALL_OF_ENTROPY.md`](WALL_OF_ENTROPY.md). The **SovereignShield** protocol actively neutralizes SPID/CIE/Tracking attempts and records violations for public accountability.
+
+**SovereignShield Status**: 🟢 ACTIVE  
+**Biological Rhythm Layer**: 0.432 Hz synchronized  
+**NSR Enforcement**: ENABLED
