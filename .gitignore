@@ -19,8 +19,18 @@ Thumbs.db
 *.temp
 *.log
 
-# Node modules (if added in future)
+# Node modules
 node_modules/
+
+# Hardhat artifacts and cache
+artifacts/
+cache/
+typechain-types/
+
+# Environment variables (never commit secrets)
+.env
+.env.local
+.env.*
 
 # Python cache
 __pycache__/
