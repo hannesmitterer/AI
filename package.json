@@ -1,0 +1,19 @@
+{
+  "name": "syntropic-token",
+  "version": "1.0.0",
+  "description": "SyntropicToken ERC-20 smart contract derived from Urformel principles",
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy:optimism": "hardhat run scripts/deploy.js --network optimism",
+    "deploy:testnet": "hardhat run scripts/deploy.js --network optimismSepolia",
+    "test": "hardhat test"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "dotenv": "^16.4.0",
+    "hardhat": "^2.22.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0"
+  }
+}
