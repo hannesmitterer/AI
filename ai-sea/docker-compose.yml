@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # AI-SEA Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+      - DATABASE_NAME=ai_sea
+      - LOG_LEVEL=INFO
+      - PHI_THRESHOLD=0.005
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    networks:
+      - ai-sea-network
+
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - mongo-config:/data/configdb
+    environment:
+      - MONGO_INITDB_DATABASE=ai_sea
+    restart: unless-stopped
+    networks:
+      - ai-sea-network
+
+  # Frontend (Optional - for local serving)
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    restart: unless-stopped
+    networks:
+      - ai-sea-network
+
+volumes:
+  mongo-data:
+    driver: local
+  mongo-config:
+    driver: local
+
+networks:
+  ai-sea-network:
+    driver: bridge

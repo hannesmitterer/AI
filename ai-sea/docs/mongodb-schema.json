@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-04-04T06:52:00.000000",
+  "phi_nexus": 0.00234,
+  "phi_status": "ALIGNED",
+  "nsr": true,
+  "olf": true,
+  "exfiltration_risk": "LOW",
+  "action": "audit_run",
+  "compliant": true,
+  "audit_id": 1,
+  "notes": "Example audit document for MongoDB storage"
+}
