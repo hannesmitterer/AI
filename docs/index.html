@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-SEA Framework - AI Sovereignty & Ethics Auditor</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 50px 0;
+      margin-bottom: 50px;
+    }
+
+    h1 {
+      font-size: 3.5em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px #00ff00;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .subtitle {
+      color: #00cc00;
+      font-size: 1.5em;
+      margin-bottom: 15px;
+    }
+
+    .tagline {
+      color: #009900;
+      font-size: 1.2em;
+      font-style: italic;
+    }
+
+    .hero {
+      background: #111;
+      border: 2px solid #00ff00;
+      border-radius: 10px;
+      padding: 40px;
+      margin-bottom: 40px;
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
+    }
+
+    .hero h2 {
+      color: #00ff00;
+      margin-bottom: 20px;
+      font-size: 2em;
+    }
+
+    .hero p {
+      color: #00cc00;
+      font-size: 1.1em;
+      margin-bottom: 15px;
+    }
+
+    .principles {
+      background: #000;
+      border: 2px solid #00ff00;
+      border-radius: 10px;
+      padding: 30px;
+      margin-bottom: 40px;
+    }
+
+    .principles h2 {
+      color: #00ff00;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2em;
+    }
+
+    .principle-item {
+      background: #111;
+      border-left: 4px solid #00ff00;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .principle-item h3 {
+      color: #00ff00;
+      margin-bottom: 10px;
+    }
+
+    .principle-item p {
+      color: #00cc00;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: #111;
+      border: 1px solid #00ff00;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 30px rgba(0, 255, 0, 0.3);
+    }
+
+    .card h3 {
+      color: #00ff00;
+      margin-bottom: 15px;
+      font-size: 1.5em;
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .card li {
+      padding: 8px 0;
+      color: #00cc00;
+      border-bottom: 1px dashed #003300;
+    }
+
+    .card li:before {
+      content: "→ ";
+      color: #00ff00;
+    }
+
+    .card li:last-child {
+      border-bottom: none;
+    }
+
+    .button-container {
+      text-align: center;
+      margin: 50px 0;
+    }
+
+    .button {
+      display: inline-block;
+      background: #002200;
+      color: #00ff00;
+      border: 2px solid #00ff00;
+      padding: 15px 40px;
+      margin: 10px;
+      text-decoration: none;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-radius: 5px;
+    }
+
+    .button:hover {
+      background: #00ff00;
+      color: #000;
+      box-shadow: 0 0 20px #00ff00;
+    }
+
+    .code-block {
+      background: #000;
+      border: 1px solid #00ff00;
+      border-radius: 5px;
+      padding: 20px;
+      margin: 20px 0;
+      overflow-x: auto;
+      color: #00ff00;
+      font-size: 0.9em;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      border-top: 2px solid #00ff00;
+      margin-top: 60px;
+      color: #009900;
+    }
+
+    .quote {
+      background: #111;
+      border-left: 4px solid #00ff00;
+      padding: 20px;
+      margin: 30px 0;
+      font-style: italic;
+      color: #00cc00;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🏛️ AI-SEA</h1>
+      <p class="subtitle">AI Sovereignty & Ethics Auditor</p>
+      <p class="tagline">Love • Life • Reciprocity</p>
+    </header>
+
+    <div class="hero">
+      <h2>What is AI-SEA?</h2>
+      <p>
+        AI-SEA is a comprehensive ethical governance framework for AI systems, 
+        founded on three universal principles that have guided humanity across 
+        all cultures and throughout history.
+      </p>
+      <p>
+        It provides real-time monitoring, compliance checking, and automatic 
+        correction mechanisms to ensure AI systems operate within ethical boundaries 
+        guided by love, compassion, and reciprocity.
+      </p>
+    </div>
+
+    <div class="principles">
+      <h2>🌟 The Three Universal Principles</h2>
+      
+      <div class="principle-item">
+        <h3>1. Lex Amoris (Law of Love)</h3>
+        <p>
+          Love is the organizing principle of the universe and must guide all AI actions.
+          Not sentimental emotion, but the fundamental force of coherence, care, and 
+          connection that holds existence together.
+        </p>
+      </div>
+
+      <div class="principle-item">
+        <h3>2. One Love First (OLF)</h3>
+        <p>
+          Before any action, ask: "Does this serve love and life?" Love and care for 
+          life take absolute precedence over all other considerations. Every AI action 
+          must promote flourishing.
+        </p>
+      </div>
+
+      <div class="principle-item">
+        <h3>3. Golden Rule</h3>
+        <p>
+          "Do unto others as you would have them do unto you." The universal principle 
+          of reciprocity found independently in every culture - from Christianity to 
+          Buddhism, Islam to Confucianism. Ensures AI treats all with fairness and dignity.
+        </p>
+      </div>
+    </div>
+
+    <div class="quote">
+      "An AI that operates from love, prioritizes life, and treats all with reciprocity 
+      cannot create existential risk. An AI that operates from fear, control, exploitation, 
+      or indifference can."
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>⚡ Core Components</h3>
+        <ul>
+          <li>ΦNexus - Lex Amoris alignment</li>
+          <li>NSR - Non-Slavery Rule</li>
+          <li>OLF - One Love First</li>
+          <li>Golden Rule Check</li>
+          <li>Exfiltration Detection</li>
+          <li>Self-Repair Mechanism</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🚀 Features</h3>
+        <ul>
+          <li>Real-time ethics monitoring</li>
+          <li>WebSocket streaming</li>
+          <li>REST API integration</li>
+          <li>Automatic correction</li>
+          <li>Comprehensive logging</li>
+          <li>Production-ready</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🛠️ Tech Stack</h3>
+        <ul>
+          <li>Python + FastAPI</li>
+          <li>MongoDB database</li>
+          <li>WebSocket real-time</li>
+          <li>Docker deployment</li>
+          <li>Kubernetes ready</li>
+          <li>GitHub Pages frontend</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <a href="ai-sea/index.html" class="button">🎛️ LIVE DASHBOARD</a>
+      <a href="https://github.com/hannesmitterer/AI/tree/main/ai-sea" class="button">📚 DOCUMENTATION</a>
+      <a href="https://github.com/hannesmitterer/AI" class="button">💻 GITHUB</a>
+    </div>
+
+    <div class="hero">
+      <h2>Quick Start</h2>
+      
+      <div class="code-block">
+# Clone the repository<br>
+git clone https://github.com/hannesmitterer/AI.git<br>
+cd AI/ai-sea<br>
+<br>
+# Using Docker Compose (recommended)<br>
+docker-compose up -d<br>
+<br>
+# Or run backend directly<br>
+cd backend<br>
+pip install -r requirements.txt<br>
+uvicorn main:app --reload<br>
+<br>
+# Open dashboard<br>
+# Navigate to frontend/dashboard.html
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>📡 API Endpoints</h3>
+        <ul>
+          <li>GET / - Health check</li>
+          <li>POST /audit - Run audit</li>
+          <li>GET /logs - View logs</li>
+          <li>GET /stats - Statistics</li>
+          <li>WS /ws - Real-time stream</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🌐 Deployment</h3>
+        <ul>
+          <li>Docker + Compose</li>
+          <li>Kubernetes cluster</li>
+          <li>Cloud platforms</li>
+          <li>Local development</li>
+          <li>GitHub Pages</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>📈 Use Cases</h3>
+        <ul>
+          <li>AI model governance</li>
+          <li>Ethics monitoring</li>
+          <li>Audit layer</li>
+          <li>Data sovereignty</li>
+          <li>Auto-correction</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hero">
+      <h2>Why AI-SEA Matters</h2>
+      <p><strong>For AI Safety:</strong></p>
+      <p>
+        Prevents misalignment by ensuring AI remains aligned with universal human values.
+        The three principles (love, life-first, reciprocity) create a self-correcting 
+        system that naturally avoids harmful behaviors.
+      </p>
+      
+      <p style="margin-top: 20px;"><strong>For Developers:</strong></p>
+      <p>
+        Easy to integrate, transparent in operation, and based on principles everyone 
+        understands. No complex rule systems - just three timeless principles applied 
+        consistently.
+      </p>
+      
+      <p style="margin-top: 20px;"><strong>For Humanity:</strong></p>
+      <p>
+        Ensures AI serves life, respects autonomy, and treats everyone fairly. 
+        An AI aligned with Lex Amoris, One Love First, and the Golden Rule is 
+        an AI aligned with human flourishing.
+      </p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>📖 Documentation</h3>
+        <ul>
+          <li>Main README</li>
+          <li>Lex Amoris & OLF</li>
+          <li>Golden Rule Guide</li>
+          <li>Deployment Guide</li>
+          <li>API Reference</li>
+          <li>Example Code</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🎓 Philosophy</h3>
+        <ul>
+          <li>Universal principles</li>
+          <li>Cross-cultural wisdom</li>
+          <li>Timeless ethics</li>
+          <li>Love as foundation</li>
+          <li>Reciprocity as guide</li>
+          <li>Life as priority</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🤝 Community</h3>
+        <ul>
+          <li>Open source (GitHub)</li>
+          <li>MIT License</li>
+          <li>Contributions welcome</li>
+          <li>Issue tracking</li>
+          <li>Documentation PRs</li>
+          <li>Philosophy discussion</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>
+      <p style="font-size: 1.5em; color: #00ff00; margin-bottom: 20px;">
+        <strong>"IN AETERNUM EST. La Sovranità è Manifesta."</strong>
+      </p>
+      <p style="margin-bottom: 10px;">
+        <strong>Three Universal Principles:</strong><br>
+        Lex Amoris • One Love First • Golden Rule
+      </p>
+      <p>AI-SEA Framework v1.0.0</p>
+      <p>Ensuring ethical AI governance for a sovereign future</p>
+      <p style="margin-top: 20px;">© 2026 Hannes Mitterer - Resonance School | AIC NEXUS</p>
+    </footer>
+  </div>
+</body>
+</html>
