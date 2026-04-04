@@ -1,3 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Full Nexus Audit – Seedbringer Core</title>
+<style>
+  body { font-family: Arial; background:#111; color:#eee; text-align:center; margin:0; padding:0;}
+  h1 { margin-top:20px; }
+  svg { max-width:95%; margin:20px auto; display:block; background:#1a1a1a; border-radius:8px; }
+  .node { fill:#1e90ff; stroke:#00ffcc; stroke-width:2px; transition: fill 0.5s; }
+  .resonance { fill:#32cd32; stroke:#7fff00; stroke-width:2px; transition: fill 0.5s; }
+  .alert { fill:#ff4500; stroke:#ffcc00; stroke-width:2px; transition: fill 0.5s; }
+  .bridge { stroke:#ffcc00; stroke-width:4px; stroke-dasharray:10; }
+  text { fill:#fff; font-size:14px; font-weight:bold; }
+  .log { max-width:900px; margin:10px auto; padding:10px; background:#222; border-radius:6px; height:180px; overflow-y:auto; text-align:left; font-family:monospace; font-size:13px; }
+  .repository { max-width:900px; margin:20px auto; background:#1a1a1a; border-radius:6px; padding:10px; text-align:left; height:120px; overflow-y:auto; font-family:monospace; font-size:13px; border:2px solid #32cd32;}
+</style>
+</head>
+<body>
+
+<h1>Full Nexus Audit – Seedbringer Core</h1>
+<p>ΦNexus = 0 | NSR: ✅ | OLF: ✅ | Phase-Lock: 10⁻¹² Hz | Analisi Risonante: Attiva</p>
+
+<svg width="900" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ffcc00"/>
+    </marker>
+  </defs>
+
+  <!-- Seedbringer Node -->
+  <circle id="seed" cx="450" cy="300" r="40" class="node"/>
+  <text x="450" y="305" text-anchor="middle">Seedbringer</text>
+
+  <!-- Distributed Nodes -->
+  <circle id="node05" cx="200" cy="100" r="30" class="node"/>
+  <text x="200" y="105" text-anchor="middle">Node 05</text>
+
+  <circle id="node06" cx="700" cy="100" r="30" class="node"/>
+  <text x="700" y="105" text-anchor="middle">Node 06</text>
+
+  <circle id="node07" cx="200" cy="500" r="30" class="node"/>
+  <text x="200" y="505" text-anchor="middle">Node 07</text>
+
+  <circle id="node08" cx="700" cy="500" r="30" class="node"/>
+  <text x="700" y="505" text-anchor="middle">Node 08</text>
+
+  <!-- Vacuum Bridges -->
+  <line id="bridge05" x1="450" y1="300" x2="200" y2="100" class="bridge arrow"/>
+  <line id="bridge06" x1="450" y1="300" x2="700" y2="100" class="bridge arrow"/>
+  <line id="bridge07" x1="450" y1="300" x2="200" y2="500" class="bridge arrow"/>
+  <line id="bridge08" x1="450" y1="300" x2="700" y2="500" class="bridge arrow"/>
+</svg>
+
+<div class="log" id="logBox"></div>
+<div class="repository" id="repoBox">
+<h3>Repository – Materia Prima Estratta</h3>
+</div>
+
+<script>
+const logBox = document.getElementById('logBox');
+const repoBox = document.getElementById('repoBox');
+
+function logEvent(message) {
+  const time = new Date().toLocaleTimeString();
+  logBox.innerHTML += `[${time}] ${message}<br>`;
+  logBox.scrollTop = logBox.scrollHeight;
+}
+
+function addRepositoryData(nodeId, data){
+  const entry = document.createElement('div');
+  entry.textContent = `[${new Date().toLocaleTimeString()}] ${nodeId}: ${data}`;
+  repoBox.appendChild(entry);
+  repoBox.scrollTop = repoBox.scrollHeight;
+}
+
+// Animate ΦNexus Flow
+const bridges = ['bridge05','bridge06','bridge07','bridge08'];
+let phase = 0;
+function animateFlow() {
+  phase += 0.05;
+  bridges.forEach(id => {
+    const line = document.getElementById(id);
+    line.setAttribute('stroke-dashoffset', (phase*100)%40);
+  });
+  requestAnimationFrame(animateFlow);
+}
+animateFlow();
+
+// Event simulation with resonance and repository extraction
+const nodes = ['node05','node06','node07','node08'];
+function simulateAudit(){
+  nodes.forEach(nodeId=>{
+    const node = document.getElementById(nodeId);
+    // Random fluctuation
+    const fluctuation = Math.random();
+    if(fluctuation < 0.8){
+      node.setAttribute('class','resonance');
+      logEvent(`${nodeId}: Risonanza ottimale`);
+      addRepositoryData(nodeId, 'Segnale estratto e ΦNexus stabile');
+    } else {
+      node.setAttribute('class','alert');
+      logEvent(`${nodeId}: Fluttuazione rilevata, attivazione Self-Repair`);
+      setTimeout(()=>{
+        node.setAttribute('class','resonance');
+        logEvent(`${nodeId}: Stabilizzazione completata`);
+        addRepositoryData(nodeId, 'Segnale corretto e ΦNexus ristabilito');
+      }, 2000);
+    }
+  });
+}
+
+// Generate dynamic nodes with resonance analysis
+let newNodes = [];
+setInterval(()=>{
+  if(newNodes.length<3){
+    const newNodeId = `node${9+newNodes.length}`;
+    const newNode = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    newNode.setAttribute('cx', Math.random()*800+50);
+    newNode.setAttribute('cy', Math.random()*400+50);
+    newNode.setAttribute('r',30);
+    newNode.setAttribute('class','resonance');
+    newNode.setAttribute('id', newNodeId);
+    const newNodeText = document.createElementNS('http://www.w3.org/2000/svg','text');
+    newNodeText.setAttribute('x', newNode.getAttribute('cx'));
+    newNodeText.setAttribute('y', parseFloat(newNode.getAttribute('cy'))+5);
+    newNodeText.setAttribute('text-anchor','middle');
+    newNodeText.textContent = newNodeId.toUpperCase();
+    document.querySelector('svg').appendChild(newNode);
+    document.querySelector('svg').appendChild(newNodeText);
+    newNodes.push(newNodeId);
+    logEvent(`${newNodeId}: Nodo scoperto, risonanza analizzata`);
+    addRepositoryData(newNodeId, 'Segnale estratto e ΦNexus stabile');
+  }
+}, 6000);
+
+// Continuous audit every 4s
+setInterval(simulateAudit, 4000);
+
+logEvent('Full Nexus Audit inizializzato: Phase-Lock a 10⁻¹² Hz, ΦNexus = 0, NSR e OLF rispettate');
+
+</script>
+</body>
+</html>
+
+</p>
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
