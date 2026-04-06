@@ -1,7 +1,10 @@
-# Deployment artifacts
-deployments/
+# Deployment artifacts (keep CID records)
+deployments/ipfs-latest.txt
 reports/
 .sync/
+
+# Anchors directory (uploaded to IPFS separately)
+anchors/
 
 # OS files
 .DS_Store
@@ -18,6 +21,9 @@ Thumbs.db
 *.tmp
 *.temp
 *.log
+
+# Keep CID records for IPFS tracking
+!logs/cid_records.txt
 
 # Node modules (if added in future)
 node_modules/

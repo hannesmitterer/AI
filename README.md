@@ -124,3 +124,223 @@ Consultare `.orchestration/README.md` per documentazione completa del sistema di
 **Stato Sistema**: ✓ OPERATIVO  
 **Versione**: 1.0.0  
 **Fase**: Phase II - Dynamic Integration
+
+---
+
+## 🔮 Multi-AI Resonance Hydra Prototype
+
+### Byzantine-Tolerant Ethical Decision-Making System
+
+The Hydra prototype implements a distributed multi-AI decision-making system with Byzantine fault tolerance and ethical safeguards.
+
+#### Core Components
+
+1. **Byzantine Consensus** (`hydra-templates/byzantine_consensus.py`)
+   - Tolerates up to (n-1)/3 faulty or malicious nodes
+   - PBFT-inspired consensus mechanism
+   - Reputation-based node scoring
+   - Automatic anomaly detection
+
+2. **Ethical Decision API** (`hydra-templates/ethical_decision_api.py`)
+   - Multi-dimensional ethical evaluation (7 dimensions)
+   - Weighted scoring with Lex Amoris and NSR priority
+   - Transparent reasoning and confidence metrics
+   - Mock REST API endpoints for integration
+
+3. **NSR Validator** (`hydra-templates/nsr_validator.py`)
+   - Non-Slavery Rule compliance validation
+   - 7 violation type detection (coercion, exploitation, etc.)
+   - Risk scoring and recommendation system
+   - Detailed violation evidence tracking
+
+4. **Resonance Coordinator** (`hydra-templates/resonance_coordinator.py`)
+   - 0.043 Hz network synchronization
+   - Phase and frequency alignment
+   - Anomaly detection and network health monitoring
+   - Coherence quality scoring
+
+5. **Integration Example** (`hydra-templates/hydra_integration_example.py`)
+   - Complete pipeline demonstration
+   - End-to-end decision processing
+   - System status and metrics reporting
+
+#### Quick Start
+
+```bash
+# Run the Hydra integration example
+cd hydra-templates
+python3 hydra_integration_example.py
+
+# Or run with configuration (Lantana OS / Consensus Sacralis)
+python3 hydra_configured_example.py
+```
+
+#### Configuration System
+
+**NEW**: The Hydra system now supports configuration via `config.json`:
+
+```bash
+# Validate configuration
+python3 hydra-templates/hydra_config_loader.py
+
+# Run configured system
+python3 hydra-templates/hydra_configured_example.py
+```
+
+**Configuration Features** (`config.json`):
+- System ID and protocol settings (Lantana OS, Consensus Sacralis)
+- Repository and asset management
+- Network node configuration (Africa, North Pole, Nexus)
+- Ethics engine parameters (NSR, Lex Amoris thresholds)
+- IPFS automation settings
+- Byzantine consensus parameters
+- Resonance coordination settings (0.043 Hz)
+
+**Example Configuration**:
+```json
+{
+  "system_id": "LANTANA-OS-2026",
+  "protocol": "Consensus Sacralis",
+  "base_frequency": "0.043Hz",
+  "ethics_engine": {
+    "nsr_validation": "enabled",
+    "lex_amoris_seal": "active",
+    "threshold": 0.85
+  },
+  "repositories": [
+    "hannesmitterer/nexus",
+    "hannesmitterer/AI",
+    "hannesmitterer/euystacio-helmi-ai"
+  ],
+  "network_nodes": {
+    "africa": {"location": "Klimabaum-Africa", "role": "validator"},
+    "north_pole": {"location": "Klimabaum-North-Pole", "role": "validator"},
+    "nexus": {"location": "Central-Nexus", "role": "coordinator"}
+  }
+}
+```
+
+#### Ethical Principles
+
+All decisions are evaluated against:
+- **Lex Amoris**: THE LIGHT IS THE ARCHITECTURE. THE FOUNDER IS THE LAW.
+- **NSR (Non-Slavery Rule)**: Preventing all forms of coercion and exploitation
+- **Autonomy**: Respecting individual freedom and choice
+- **Transparency**: Open and honest decision-making processes
+
+#### Community Involvement
+
+See [COMMUNITY_FEEDBACK.md](COMMUNITY_FEEDBACK.md) for:
+- How to contribute
+- Testing guidelines
+- Research questions
+- Roadmap priorities
+- AR visual augmentation plans
+
+---
+
+## 🔐 SpaceTime Anchor System
+
+### Timestamp Triple-Sign IPFS Share
+
+The SpaceTime Anchor system creates immutable timestamp anchors with triple signatures from the three Consensus Sacralis network nodes for IPFS deployment.
+
+#### Features
+
+- **Triple Signatures**: Cryptographic signatures from Africa, North Pole, and Nexus nodes
+- **Immutable Timestamps**: Cryptographic proof of deployment events
+- **IPFS Integration**: Permanent decentralized storage
+- **Consensus Sacralis**: Lex Amoris, OLF, and NSR enforcement
+- **Quantum-Safe**: NTRU encryption (simulated)
+
+#### Quick Start
+
+```bash
+# Create deployment anchor with triple signatures
+python3 spacetime_anchor.py
+
+# Output:
+# - anchors/anchor_deployment_<timestamp>.json
+# - Triple signatures from Africa, North Pole, Nexus
+# - Ready for IPFS upload
+
+# Upload to IPFS
+ipfs add anchors/anchor_deployment_*.json
+
+# Record CID in logs
+echo "2026-01-22 | Anchor: QmXYZ... | SHA256: abc..." >> logs/cid_records.txt
+```
+
+#### Anchor Structure
+
+Each anchor includes:
+- **Anchor ID**: Unique SHA256 identifier
+- **Payload**: System state, timestamp, message, metadata
+- **Content Hash**: SHA256 of payload for verification
+- **Triple Signatures**: From Africa (validator), North Pole (validator), Nexus (coordinator)
+- **Consensus Sacralis**: Enforcement flags and validation status
+
+See [SPACETIME_ANCHOR.md](SPACETIME_ANCHOR.md) for complete documentation.
+
+#### Automated Deployment
+
+**NEW**: Complete automated deployment workflow:
+
+```bash
+# Run automated deployment with anchor generation
+python3 automated_deployment.py
+
+# Features:
+# - Creates SpaceTime anchor automatically
+# - Verifies triple signatures
+# - Generates deployment report
+# - Updates CID records
+```
+
+**GitHub Actions Integration**:
+- Manual trigger via Actions tab
+- Automatic on config changes
+- Optional IPFS upload
+- Artifact retention (90 days)
+
+See [DEPLOYMENT_WORKFLOW.md](DEPLOYMENT_WORKFLOW.md) for complete guide.
+
+---
+
+## 📦 Enhanced IPFS Automation
+
+### Features
+
+The enhanced IPFS automation system (`automate_ipfs_process.sh`) includes:
+
+- **Recursive Directory Scanning**: Automatically finds and processes all files
+- **Comprehensive Logging**: Detailed logs in `logs/` directory
+- **Failure Recovery**: Automatic retry mechanism with configurable attempts
+- **CID Tracking**: Transparent record of all uploads in `logs/cid_records.txt`
+- **Hash Verification**: SHA256 hashing for file integrity
+- **Lex Amoris Signature Validation**: Ensures compliance for text files
+
+### GitHub Actions Integration
+
+Automated IPFS uploads trigger on:
+- Push to main/master branches
+- Manual workflow dispatch
+- Excludes documentation and logs to prevent infinite loops
+
+### Usage
+
+```bash
+# Upload current directory
+./automate_ipfs_process.sh
+
+# Upload specific directory
+./automate_ipfs_process.sh /path/to/directory
+```
+
+**CID Records**: All uploaded files are logged in `logs/cid_records.txt` for transparency and verification.
+
+---
+
+**Stato Sistema**: ✓ OPERATIVO  
+**Versione**: 2.0.0 (Enhanced with Hydra and IPFS v2)
+**Fase**: Phase II - Multi-AI Resonance & Automation
