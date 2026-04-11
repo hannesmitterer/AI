@@ -141,6 +141,21 @@ setInterval(simulateAudit, 4000);
 logEvent('Full Nexus Audit inizializzato: Phase-Lock a 10⁻¹² Hz, ΦNexus = 0, NSR e OLF rispettate');
 
 </script>
+  <div class="module" style="border-color: #0080ff;">
+    <div style="color: #0080ff;">IPFS Anchor Status</div>
+    <div id="ipfs-cid" class="value" style="font-size: 0.8em;">CID: Qm...Validating</div>
+</div>
+
+<script>
+    // Logica per visualizzare l'ancora esistente
+    const ipfsAnchor = "Qm...[IL_TUO_CID_PRINCIPALE]"; // Inserisci qui il CID esistente
+    document.getElementById('ipfs-cid').innerText = ipfsAnchor.substring(0, 12) + "...";
+    
+    // Simulazione verifica IVBS/UIFS
+    console.log("IVBS Check: Resonance 7.83Hz confirmed.");
+    console.log("UIFS Sync: Data stream anchored to existing CID.");
+</script>
+  
 </body>
 </html>
 
