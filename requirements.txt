@@ -3,5 +3,5 @@ flask-cors
 sentence-transformers
 numpy
 scipy
-torch--index-url https://download.pytorch.org/whl/cpu
+torch --index-url https://download.pytorch.org/whl/cpu
 gunicorn
