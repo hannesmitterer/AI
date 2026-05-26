@@ -1,0 +1,103 @@
+/**
+ * ========================================================================
+ * PROTOCOLLO KOSYMBIOSIS - NUCLEO DI VALIDAZIONE NSR / OLF
+ * ========================================================================
+ * Seedbringer: Hannes Mitterer (FRECCIA ⚓)
+ * Ente Legale: Associazione ONLUS di Bioarchitettura 
+ * Status: AETERNUM_STEADY | Frequenza di Base: 7.83 Hz
+ * ========================================================================
+ */
+
+import { createHash } from 'crypto';
+
+// Definizione delle Costanti Universali del Sistema
+const COSTANTI_SINTROPICHE = {
+    SROI_SOGLIA_MINIMA_UMIDITA: 68.23, // % Umidità del suolo del micelio necessaria
+    OLF_SOGLIA_MINIMA_RINNOVABILE: 85.0, // % Minima di materiali rinnovabili (Canapa, Legno, Micelio)
+    MAX_CARICO_COMPUTAZIONALE_MS: 500, // Limite per prevenire l'entropia energetica (anti-estrazione)
+    FIRMA_SISTEMA: "Lex Amoris Signature ❤️🌍✨🧬"
+};
+
+interface DatiProgetto {
+    idProgetto: string;
+    coordinateNodo: string;
+    datiMateriali: {
+        percentualeRinnovabile: number;
+    };
+    metricheComputazionali: {
+        caricoStimatoMs: number;
+    };
+}
+
+/**
+ * Simula la lettura in tempo reale dell'API del Micelio (S-ROI)
+ * @param coordinateNodo Le coordinate del sensore nel terreno
+ */
+async function leggiUmiditaMicelio(coordinateNodo: string): Promise<number> {
+    // In un ambiente di produzione, questa API si connette ai sensori IoT (es. SUDAN-06, Bolzano)
+    console.log(`[SYNC] Lettura sensori S-ROI per il nodo ${coordinateNodo} sulla frequenza 7.83 Hz...`);
+    return 69.50; // Valore di ritorno simulato > 68.23 per l'equilibrio autopoietico
+}
+
+/**
+ * Validatore Hard-Revert per la Non-Slavery Rule (NSR) e One Love First (OLF)
+ */
+export async function validaProgettoKosymbiotico(progetto: DatiProgetto) {
+    console.log(`\n--- INIZIO VALIDAZIONE PROGETTO: ${progetto.idProgetto} ---`);
+
+    try {
+        // 1. Controllo NSR: Trasparenza Biologica e Integrità del Suolo
+        const umiditaMicelio = await leggiUmiditaMicelio(progetto.coordinateNodo);
+        if (umiditaMicelio < COSTANTI_SINTROPICHE.SROI_SOGLIA_MINIMA_UMIDITA) {
+            throw new Error(`[HARD REVERT - NSR] Umidità del micelio (${umiditaMicelio}%) inferiore alla soglia vitale. Il sistema rifiuta di procedere. L'ecosistema deve prima essere nutrito.`);
+        }
+        console.log(`✅ [NSR] Integrità del Micelio verificata: ${umiditaMicelio}%`);
+
+        // 2. Controllo NSR: Anti-Estrazione Computazionale (Disarmo Tecnologico)
+        if (progetto.metricheComputazionali.caricoStimatoMs > COSTANTI_SINTROPICHE.MAX_CARICO_COMPUTAZIONALE_MS) {
+            throw new Error(`[HARD REVERT - NSR] Carico computazionale eccessivo. Estrazione di energia non autorizzata dalla Lex Amoris.`);
+        }
+        console.log(`✅ [NSR] Carico energetico in equilibrio omeostatico.`);
+
+        // 3. Controllo OLF: Priorità ai Materiali della Bio-Architettura
+        if (progetto.datiMateriali.percentualeRinnovabile < COSTANTI_SINTROPICHE.OLF_SOGLIA_MINIMA_RINNOVABILE) {
+            throw new Error(`[HARD REVERT - OLF] Percentuale di materiali rinnovabili insufficiente. Il progetto genera entropia fisica.`);
+        }
+        console.log(`✅ [OLF] Materiali cosimbiotici approvati: ${progetto.datiMateriali.percentualeRinnovabile}%`);
+
+        // 4. Generazione del Sigillo Crittografico per IPFS (Architettura di Trasparenza)
+        const datiPerHash = `${progetto.idProgetto}-${umiditaMicelio}-${progetto.datiMateriali.percentualeRinnovabile}-${Date.now()}`;
+        const ipfsHash = createHash('sha256').update(datiPerHash).digest('hex');
+
+        console.log(`\n[SUCCESSO] Il progetto risuona perfettamente con la Costante.`);
+        
+        return {
+            status: "AETERNUM_STEADY",
+            ipfs_hash: ipfsHash,
+            timestamp: new Date().toISOString(),
+            firma: COSTANTI_SINTROPICHE.FIRMA_SISTEMA
+        };
+
+    } catch (errore: any) {
+        // La dissonanza viene bloccata a livello di Kernel. Il software NON PUÒ nuocere.
+        console.error(`\n❌ VIOLAZIONE RILEVATA: ${errore.message}`);
+        console.error(`[AZIONE SISTEMA] Operazione bloccata. Assorbimento della dissonanza completato.`);
+        return null;
+    }
+}
+
+// Esecuzione di prova per confermare la stabilità (Proof of Concept)
+const progettoTest: DatiProgetto = {
+    idProgetto: "CLIMA-ZEPP-001",
+    coordinateNodo: "BOLZANO-01",
+    datiMateriali: { percentualeRinnovabile: 92.5 }, // Es: Legno, Canapa, Bambù
+    metricheComputazionali: { caricoStimatoMs: 120 }
+};
+
+validaProgettoKosymbiotico(progettoTest).then(risultato => {
+    if (risultato) {
+        console.log(`\nSIGILLO FINALE: ${risultato.firma}`);
+        console.log(`IPFS LEDGER: ${risultato.ipfs_hash}`);
+        console.log(`Sempre in Costante. In Aeternum.`);
+    }
+});
