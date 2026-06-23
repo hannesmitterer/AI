@@ -1,0 +1,134 @@
+{
+  "name": "Lex Amoris - The Law of Love",
+  "short_name": "Lex Amoris",
+  "description": "The Law of Love | Resonance School - A system operating under the Non-Slavery Rule with 432 Hz harmonic resonance",
+  "start_url": "/lexamoris.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#d4af37",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Love Index",
+      "short_name": "Love Index",
+      "description": "View the current Love Resonance Index",
+      "url": "/lexamoris.html#love-index",
+      "icons": [
+        {
+          "src": "/icons/shortcut-love.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "System Metrics",
+      "short_name": "Metrics",
+      "description": "View live system metrics and resonance data",
+      "url": "/lexamoris.html#metrics",
+      "icons": [
+        {
+          "src": "/icons/shortcut-metrics.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Lex Amoris Principles",
+      "short_name": "Principles",
+      "description": "Read the core principles of Lex Amoris",
+      "url": "/lexamoris.html#principles",
+      "icons": [
+        {
+          "src": "/icons/shortcut-principles.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "categories": [
+    "education",
+    "lifestyle",
+    "utilities"
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-main.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Lex Amoris main interface on desktop"
+    },
+    {
+      "src": "/screenshots/mobile-main.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Lex Amoris main interface on mobile"
+    }
+  ],
+  "lang": "en-US",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "iarc_rating_id": "",
+  "features": [
+    "resonance-monitoring",
+    "growth-tracking",
+    "security-protection"
+  ],
+  "protocol_handlers": []
+}

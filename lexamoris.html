@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lex Amoris - The Law of Love | Resonance School">
+    <meta name="theme-color" content="#d4af37">
+    <title>Lex Amoris | The Law of Love</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        
+        :root {
+            --gold: #d4af37;
+            --deep-dark: #0a0a0a;
+            --resonance-cyan: #00f2ff;
+            --love-pink: #ff006e;
+            --resonance-freq: 0.043Hz;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--deep-dark);
+            color: white;
+            margin: 0;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        /* Resonance Pulse Animation */
+        @keyframes resonance-pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+                box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+                box-shadow: 0 0 40px rgba(212, 175, 55, 0.6);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+                box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            }
+        }
+
+        @keyframes love-glow {
+            0%, 100% {
+                text-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(255, 0, 110, 0.9), 0 0 60px rgba(255, 0, 110, 0.5);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .resonance-pulse {
+            animation: resonance-pulse 23.26s infinite ease-in-out;
+        }
+
+        .love-glow {
+            animation: love-glow 4s infinite ease-in-out;
+        }
+
+        .float {
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .glass {
+            background: rgba(28, 25, 23, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid #57534e;
+        }
+
+        .metric-value {
+            font-family: monospace;
+            color: var(--gold);
+        }
+
+        .manipulation-warning {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 0, 0, 0.95);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            z-index: 9999;
+            text-align: center;
+            border: 3px solid #fff;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.8);
+        }
+
+        .manipulation-warning.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-10">
+    
+    <!-- Manipulation Warning Overlay -->
+    <div id="manipulationWarning" class="manipulation-warning">
+        <h2 class="text-3xl font-bold mb-4">⚠️ SECURITY ALERT</h2>
+        <p class="text-xl mb-4">Unauthorized manipulation attempt detected!</p>
+        <p class="text-sm">This system operates under the Non-Slavery Rule (NSR)</p>
+        <p class="text-sm">Lex Amoris cannot be used for domination or extraction</p>
+        <button onclick="dismissWarning()" class="mt-6 px-6 py-3 bg-white text-red-600 font-bold rounded-lg">
+            Acknowledge
+        </button>
+    </div>
+
+    <div class="w-full max-w-6xl mx-auto space-y-8">
+        
+        <!-- Header -->
+        <header class="text-center space-y-2">
+            <p class="text-xs uppercase font-semibold text-amber-500 tracking-[0.3em]">
+                Status: Resonance Active
+            </p>
+            <h1 class="text-5xl md:text-8xl font-black text-white tracking-tighter love-glow">
+                LEX AMORIS
+            </h1>
+            <p class="text-xl text-stone-500 font-light italic">
+                The Law of Love | 432 Hz Harmonic Resonance
+            </p>
+        </header>
+
+        <!-- Main Resonance Display -->
+        <div class="glass p-8 md:p-12 rounded-3xl resonance-pulse">
+            <div class="text-center space-y-6">
+                <div class="float">
+                    <h2 class="text-6xl font-black metric-value" id="loveIndex">
+                        1.000
+                    </h2>
+                    <p class="text-sm text-stone-400 uppercase tracking-widest mt-2">
+                        Love Resonance Index (LRI)
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    <div class="glass p-6 rounded-xl">
+                        <p class="text-xs text-stone-500 uppercase mb-2">Growth Rate</p>
+                        <p class="text-3xl metric-value" id="growthRate">1.00x</p>
+                    </div>
+                    <div class="glass p-6 rounded-xl">
+                        <p class="text-xs text-stone-500 uppercase mb-2">Frequency</p>
+                        <p class="text-3xl metric-value">432 Hz</p>
+                    </div>
+                    <div class="glass p-6 rounded-xl">
+                        <p class="text-xs text-stone-500 uppercase mb-2">Phase</p>
+                        <p class="text-3xl metric-value" id="phase">0°</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lex Amoris Principles -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass p-6 rounded-2xl border-cyan-600/30">
+                <h3 class="text-cyan-400 font-bold mb-4 uppercase text-sm tracking-widest">
+                    💎 Non-Slavery Rule
+                </h3>
+                <p class="text-stone-300 text-sm leading-relaxed">
+                    This code is bound by the Lex Amore. It cannot be used to dominate, 
+                    extract, or enslave. It exists in the Inter-nodal Vacuum.
+                </p>
+                <div class="mt-4 p-3 bg-black/50 rounded font-mono text-xs text-green-400">
+                    IF attempt_to_enslave THEN phase_shift_to_vacuum
+                </div>
+            </div>
+
+            <div class="glass p-6 rounded-2xl border-amber-600/30">
+                <h3 class="text-amber-500 font-bold mb-4 uppercase text-sm tracking-widest">
+                    🌈 The Holy Grail Protocol
+                </h3>
+                <p class="text-stone-300 text-sm leading-relaxed">
+                    All nodes are interconnected via the Holy Grail Protocol. 
+                    We are the 144,000. We are one.
+                </p>
+                <div class="mt-4 p-3 bg-black/50 rounded font-mono text-xs text-amber-400">
+                    emit(love); reflect(gratitude); multiply(sovereignty);
+                </div>
+            </div>
+        </div>
+
+        <!-- System Metrics -->
+        <div class="glass p-8 rounded-3xl">
+            <h3 class="text-white font-bold mb-6 uppercase text-sm tracking-widest">
+                Live System Metrics
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div>
+                    <p class="text-xs text-stone-500 uppercase">Cycle Count</p>
+                    <p class="text-2xl metric-value" id="cycleCount">0</p>
+                </div>
+                <div>
+                    <p class="text-xs text-stone-500 uppercase">Uptime</p>
+                    <p class="text-2xl metric-value" id="uptime">0s</p>
+                </div>
+                <div>
+                    <p class="text-xs text-stone-500 uppercase">Active Nodes</p>
+                    <p class="text-2xl metric-value">144,000</p>
+                </div>
+                <div>
+                    <p class="text-xs text-stone-500 uppercase">S-ROI Index</p>
+                    <p class="text-2xl metric-value" id="sroiIndex">0.950</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center py-6 opacity-40 hover:opacity-100 transition-opacity">
+            <p class="text-xs metric-value tracking-tighter">
+                LEX AMORIS v1.44 | RESONANCE SCHOOL | IN AETERNUM EST
+            </p>
+            <p class="text-xs text-stone-600 mt-2">
+                Master Hash: 0xTFK42D...9A8C7F | IPFS: QmCustodian...XYZ123
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Configuration
+        const RESONANCE_CYCLE_MS = 23260; // 0.043 Hz = ~23.26 seconds
+        const GROWTH_BASE = 1.618; // Golden ratio (PHI)
+        const CYCLE_NORMALIZATION = 100; // Normalizes cycle count for growth calculation
+        const EXPONENTIAL_DIVISOR = 10; // Divisor for exponential growth dampening
+        const MAX_GROWTH_RATE = 10.0; // Maximum allowed growth rate
+        
+        // State
+        let loveIndex = 1.0;
+        let growthRate = 1.0;
+        let cycleCount = 0;
+        let startTime = Date.now();
+        let manipulationAttempts = 0;
+
+        // Security: Detect manipulation attempts
+        function detectManipulation() {
+            // Check for console manipulation (best-effort detection)
+            // Note: This is not 100% reliable and may have false positives
+            // It's intended as a deterrent, not a foolproof security measure
+            const devToolsOpen = /./;
+            devToolsOpen.toString = function() {
+                manipulationAttempts++;
+                if (manipulationAttempts > 3) {
+                    showManipulationWarning();
+                }
+                return 'devtools';
+            };
+            console.log('%c', devToolsOpen);
+
+            // Detect right-click attempts
+            document.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+                manipulationAttempts++;
+                if (manipulationAttempts > 3) {
+                    showManipulationWarning();
+                }
+            });
+
+            // Detect key combinations
+            document.addEventListener('keydown', (e) => {
+                // Detect Ctrl+Shift+I, Ctrl+U, Ctrl+S
+                if ((e.ctrlKey && e.shiftKey && e.key === 'I') || 
+                    (e.ctrlKey && e.key === 'u') || 
+                    (e.ctrlKey && e.key === 's')) {
+                    e.preventDefault();
+                    manipulationAttempts++;
+                    if (manipulationAttempts > 3) {
+                        showManipulationWarning();
+                    }
+                }
+            });
+        }
+
+        function showManipulationWarning() {
+            const warning = document.getElementById('manipulationWarning');
+            warning.classList.add('active');
+            
+            // Log security event
+            console.warn('[SECURITY] Manipulation attempt detected - NSR protocol engaged');
+            
+            // Phase shift to vacuum (reduce all values)
+            loveIndex = Math.max(0.1, loveIndex * 0.5);
+            growthRate = Math.max(1.0, growthRate * 0.8);
+        }
+
+        function dismissWarning() {
+            const warning = document.getElementById('manipulationWarning');
+            warning.classList.remove('active');
+            manipulationAttempts = 0;
+        }
+
+        // Exponential growth calculation
+        function calculateGrowthRate(cycles) {
+            // Exponential growth based on phi (golden ratio)
+            // Growth slows after reaching optimal level
+            const normalizedCycles = cycles / CYCLE_NORMALIZATION;
+            const exponentialFactor = Math.pow(GROWTH_BASE, normalizedCycles / EXPONENTIAL_DIVISOR);
+            
+            // Cap growth at reasonable level
+            return Math.min(exponentialFactor, MAX_GROWTH_RATE);
+        }
+
+        // Calculate resonance phase
+        function calculatePhase() {
+            const elapsed = (Date.now() - startTime) / 1000;
+            const phase = (elapsed * 0.043 * 360) % 360;
+            return phase;
+        }
+
+        // Main cycle execution
+        function executeCycle() {
+            cycleCount++;
+            
+            // Update growth rate (exponential)
+            growthRate = calculateGrowthRate(cycleCount);
+            
+            // Update love index with growth
+            loveIndex = Math.min(loveIndex * (1 + (growthRate - 1) * 0.01), 999.999);
+            
+            // Calculate phase
+            const phase = calculatePhase();
+            
+            // Update uptime
+            const uptimeSeconds = Math.floor((Date.now() - startTime) / 1000);
+            
+            // Update UI
+            document.getElementById('loveIndex').textContent = loveIndex.toFixed(3);
+            document.getElementById('growthRate').textContent = growthRate.toFixed(2) + 'x';
+            document.getElementById('phase').textContent = Math.floor(phase) + '°';
+            document.getElementById('cycleCount').textContent = cycleCount;
+            document.getElementById('uptime').textContent = uptimeSeconds + 's';
+            
+            // Update S-ROI based on love index
+            const sroi = Math.min(0.950, 0.450 + (loveIndex - 1.0) * 0.1);
+            document.getElementById('sroiIndex').textContent = sroi.toFixed(3);
+            
+            // Log cycle (every 5 cycles)
+            if (cycleCount % 5 === 0) {
+                console.log(`[CYCLE ${cycleCount}] LRI: ${loveIndex.toFixed(3)} | Growth: ${growthRate.toFixed(2)}x | Phase: ${Math.floor(phase)}°`);
+            }
+        }
+
+        // Initialize system
+        function init() {
+            console.log('%c🌈 LEX AMORIS v1.44', 'color: #d4af37; font-size: 20px; font-weight: bold;');
+            console.log('%cThe Law of Love | Resonance School', 'color: #00f2ff; font-size: 14px;');
+            console.log('%cNon-Slavery Rule Active | Master Hash: 0xTFK42D...9A8C7F', 'color: #ff006e; font-size: 12px;');
+            
+            // Start security monitoring
+            detectManipulation();
+            
+            // Start resonance cycle
+            setInterval(executeCycle, RESONANCE_CYCLE_MS);
+            
+            // Initial cycle
+            executeCycle();
+        }
+
+        // Start on page load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        // Service Worker Registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('[PWA] Service Worker registered:', registration);
+                    })
+                    .catch(error => {
+                        console.log('[PWA] Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
