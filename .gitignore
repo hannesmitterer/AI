@@ -37,3 +37,11 @@ __pycache__/
 # Build artifacts (if added in future)
 dist/
 build/
+
+# Hardhat artifacts and cache
+artifacts/
+cache/
+typechain-types/
+
+# Environment secrets
+.env
