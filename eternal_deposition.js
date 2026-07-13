@@ -20,6 +20,29 @@ const SACRED_HISTORY_LIMIT = 144;  // Maximum feedback history per node
 const MAX_OPTIMIZATION_METRICS = 1000;  // Maximum optimization metrics to retain
 const STILLNESS_DURATION_CAP_MS = 2000;  // Maximum stillness duration in ms (practical cap for real-time operation)
 
+// Climate Pattern Constants
+const CLIMATE_PATTERN_HISTORY = 288;  // 24 hours of data at 5-minute intervals
+const CLIMATE_DATA_RELIABILITY_THRESHOLD = 0.85;  // Minimum reliability score for climate data
+const CLIMATE_UPDATE_INTERVAL_MS = 300000;  // Update climate data every 5 minutes
+const CLIMATE_INFLUENCE_SCALE_FACTOR = 0.02;  // Maximum climate influence on optimization
+
+/**
+ * ClimatePattern class representing climate data observation
+ */
+class ClimatePattern {
+    constructor(timestamp, temperature, humidity, pressure, reliability = 1.0) {
+        this.timestamp = timestamp;
+        this.temperature = temperature;  // Normalized 0-1
+        this.humidity = humidity;  // Normalized 0-1
+        this.pressure = pressure;  // Normalized 0-1
+        this.reliability = reliability;  // Data reliability score 0-1
+    }
+
+    isReliable() {
+        return this.reliability >= CLIMATE_DATA_RELIABILITY_THRESHOLD;
+    }
+}
+
 /**
  * Node class representing a single entity in the network
  */
@@ -32,6 +55,7 @@ class Node {
         this.optimizationCount = 0;
         this.stillnessCount = 0;
         this.feedbackHistory = [];
+        this.climatePatterns = [];
     }
 
     applyFeedback(feedbackValue) {
@@ -54,12 +78,57 @@ class Node {
         this.energyLevel = Math.min(1.0, this.energyLevel + 0.05);
     }
 
+    addClimatePattern(pattern) {
+        this.climatePatterns.push(pattern);
+        // Keep only recent history
+        if (this.climatePatterns.length > CLIMATE_PATTERN_HISTORY) {
+            this.climatePatterns = this.climatePatterns.slice(-CLIMATE_PATTERN_HISTORY);
+        }
+    }
+
+    getReliableClimateData() {
+        return this.climatePatterns.filter(p => p.isReliable());
+    }
+
+    predictClimateTrend() {
+        const reliableData = this.getReliableClimateData();
+        if (reliableData.length < 3) {
+            return null;
+        }
+
+        // Use recent data for prediction (last 10 observations)
+        const recent = reliableData.slice(-10);
+        const temps = recent.map(p => p.temperature);
+        const n = temps.length;
+
+        // Calculate trend using simple linear regression
+        const xMean = (n - 1) / 2;
+        const yMean = temps.reduce((a, b) => a + b, 0) / n;
+
+        let numerator = 0;
+        let denominator = 0;
+        for (let i = 0; i < n; i++) {
+            numerator += (i - xMean) * (temps[i] - yMean);
+            denominator += (i - xMean) * (i - xMean);
+        }
+
+        if (denominator === 0) {
+            return 0.0;
+        }
+
+        const slope = numerator / denominator;
+        // Normalize slope to -1 to 1 range
+        return Math.max(-1.0, Math.min(1.0, slope * 10));
+    }
+
     toJSON() {
         return {
             nodeId: this.nodeId,
             energyLevel: this.energyLevel,
             optimizationCount: this.optimizationCount,
-            stillnessCount: this.stillnessCount
+            stillnessCount: this.stillnessCount,
+            climateDataPoints: this.climatePatterns.length,
+            reliableClimateDataPoints: this.getReliableClimateData().length
         };
     }
 }
@@ -79,6 +148,8 @@ class EternalDepositionEngine {
         this.eventCallbacks = new Map();
         this.isRunning = false;
         this.cycleInterval = null;
+        this.climateMonitoringEnabled = true;
+        this.lastClimateUpdate = this.startTime;
 
         // Initialize node network
         for (let i = 0; i < initialNodes; i++) {
@@ -89,6 +160,7 @@ class EternalDepositionEngine {
         this.log(`Initialized with ${this.nodes.size} nodes`);
         this.log(`Base frequency: ${UNIVERSAL_RESONANCE_HZ} Hz`);
         this.log(`Cycle period: ${(CYCLE_PERIOD_MS / 1000).toFixed(2)} seconds`);
+        this.log(`Climate pattern monitoring: ${this.climateMonitoringEnabled ? 'ENABLED' : 'DISABLED'}`, 'NSR');
     }
 
     log(message, type = 'INFO') {
@@ -156,7 +228,80 @@ class EternalDepositionEngine {
         const phase = this.calculateResonancePhase();
         const resonanceFactor = Math.sin(phase) * 0.05;
 
-        return feedback + resonanceFactor;
+        // Integrate climate pattern influence (NSR enhancement)
+        const climateFactor = this.calculateClimateInfluence();
+
+        return feedback + resonanceFactor + climateFactor;
+    }
+
+    generateClimatePattern(currentTime = Date.now()) {
+        const phase = this.calculateResonancePhase(currentTime);
+
+        // Simulate climate patterns synchronized with resonance
+        const tempCycle = Math.sin(phase / 10) * 0.3 + 0.5;
+        const humidityCycle = Math.cos(phase / 5) * 0.25 + 0.5;
+        const pressureCycle = Math.sin(phase) * 0.2 + 0.5;
+
+        // Calculate reliability based on data freshness and resonance alignment
+        const reliability = 0.85 + Math.abs(Math.sin(phase)) * 0.15;
+
+        return new ClimatePattern(
+            currentTime,
+            Math.max(0.0, Math.min(1.0, tempCycle)),
+            Math.max(0.0, Math.min(1.0, humidityCycle)),
+            Math.max(0.0, Math.min(1.0, pressureCycle)),
+            reliability
+        );
+    }
+
+    updateClimatePatterns() {
+        if (!this.climateMonitoringEnabled) return;
+
+        const currentTime = Date.now();
+
+        // Update climate data every 5 minutes
+        if (currentTime - this.lastClimateUpdate < CLIMATE_UPDATE_INTERVAL_MS) return;
+
+        // Generate new climate pattern
+        const pattern = this.generateClimatePattern(currentTime);
+
+        // Distribute to all nodes (network-wide intelligence)
+        for (const node of this.nodes.values()) {
+            node.addClimatePattern(pattern);
+        }
+
+        this.lastClimateUpdate = currentTime;
+
+        // Log climate update
+        if (pattern.isReliable()) {
+            this.log(
+                `Pattern updated - Temp: ${pattern.temperature.toFixed(3)}, ` +
+                `Humidity: ${pattern.humidity.toFixed(3)}, ` +
+                `Reliability: ${pattern.reliability.toFixed(3)}`,
+                'CLIMATE'
+            );
+        }
+    }
+
+    calculateClimateInfluence() {
+        if (this.nodes.size === 0) return 0.0;
+
+        // Collect predictions from nodes with sufficient data
+        const predictions = [];
+        for (const node of this.nodes.values()) {
+            const trend = node.predictClimateTrend();
+            if (trend !== null) {
+                predictions.push(trend);
+            }
+        }
+
+        if (predictions.length === 0) return 0.0;
+
+        // Average prediction as climate influence
+        const avgPrediction = predictions.reduce((a, b) => a + b, 0) / predictions.length;
+
+        // Scale to smaller influence factor
+        return avgPrediction * CLIMATE_INFLUENCE_SCALE_FACTOR;
     }
 
     propagateFractalPattern(depth = 3) {
@@ -258,6 +403,9 @@ class EternalDepositionEngine {
         // Calculate resonance phase
         const phase = this.calculateResonancePhase();
 
+        // Update climate patterns (NSR: ensure data is current and reliable)
+        this.updateClimatePatterns();
+
         // Check for stillness condition
         if (this.shouldEnterStillness() && !this.isInStillness) {
             await this.executeStillness();
@@ -285,6 +433,12 @@ class EternalDepositionEngine {
         const avgEnergy = totalEnergy / this.nodes.size;
         const cycleDuration = Date.now() - cycleStart;
 
+        // Calculate climate metrics
+        let climateDataCount = 0;
+        for (const node of this.nodes.values()) {
+            climateDataCount += node.getReliableClimateData().length;
+        }
+
         const metrics = {
             cycle: this.cycleCount,
             timestamp: new Date().toISOString(),
@@ -294,7 +448,9 @@ class EternalDepositionEngine {
             avgEnergy: avgEnergy,
             inStillness: this.isInStillness,
             cycleDuration: cycleDuration,
-            resonanceHz: UNIVERSAL_RESONANCE_HZ
+            resonanceHz: UNIVERSAL_RESONANCE_HZ,
+            climateDataPoints: climateDataCount,
+            climateMonitoring: this.climateMonitoringEnabled
         };
 
         // Emit cycle event
@@ -390,11 +546,15 @@ class EternalDepositionEngine {
         let totalEnergy = 0;
         let totalOptimizations = 0;
         let totalStillness = 0;
+        let totalClimateData = 0;
+        let reliableClimateData = 0;
 
         for (const node of this.nodes.values()) {
             totalEnergy += node.energyLevel;
             totalOptimizations += node.optimizationCount;
             totalStillness += node.stillnessCount;
+            totalClimateData += node.climatePatterns.length;
+            reliableClimateData += node.getReliableClimateData().length;
         }
 
         return {
@@ -407,7 +567,11 @@ class EternalDepositionEngine {
             avgEnergy: totalEnergy / this.nodes.size,
             isInStillness: this.isInStillness,
             totalOptimizations: totalOptimizations,
-            totalStillnessEvents: totalStillness
+            totalStillnessEvents: totalStillness,
+            climateMonitoring: this.climateMonitoringEnabled,
+            climateDataTotal: totalClimateData,
+            climateDataReliable: reliableClimateData,
+            climateReliabilityRatio: reliableClimateData / Math.max(1, totalClimateData)
         };
     }
 
@@ -421,6 +585,7 @@ if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         EternalDepositionEngine,
         Node,
+        ClimatePattern,
         UNIVERSAL_RESONANCE_HZ,
         CYCLE_PERIOD_MS,
         SCHUMANN_RESONANCE_HZ,
@@ -428,7 +593,11 @@ if (typeof module !== 'undefined' && module.exports) {
         PHI,
         SACRED_HISTORY_LIMIT,
         MAX_OPTIMIZATION_METRICS,
-        STILLNESS_DURATION_CAP_MS
+        STILLNESS_DURATION_CAP_MS,
+        CLIMATE_PATTERN_HISTORY,
+        CLIMATE_DATA_RELIABILITY_THRESHOLD,
+        CLIMATE_UPDATE_INTERVAL_MS,
+        CLIMATE_INFLUENCE_SCALE_FACTOR
     };
 }
 
@@ -438,10 +607,15 @@ if (typeof window !== 'undefined') {
     window.EternalDeposition = {
         EternalDepositionEngine,
         Node,
+        ClimatePattern,
         UNIVERSAL_RESONANCE_HZ,
         CYCLE_PERIOD_MS,
         SCHUMANN_RESONANCE_HZ,
         HARMONIC_432_HZ,
-        PHI
+        PHI,
+        CLIMATE_PATTERN_HISTORY,
+        CLIMATE_DATA_RELIABILITY_THRESHOLD,
+        CLIMATE_UPDATE_INTERVAL_MS,
+        CLIMATE_INFLUENCE_SCALE_FACTOR
     };
 }

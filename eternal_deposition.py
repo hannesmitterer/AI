@@ -36,6 +36,26 @@ SACRED_HISTORY_LIMIT = 144  # Maximum feedback history per node
 MAX_OPTIMIZATION_METRICS = 1000  # Maximum optimization metrics to retain
 STILLNESS_DURATION_CAP = 2.0  # Maximum stillness duration in seconds (practical cap for real-time operation)
 
+# Climate Pattern Constants
+CLIMATE_PATTERN_HISTORY = 288  # 24 hours of data at 5-minute intervals
+CLIMATE_DATA_RELIABILITY_THRESHOLD = 0.85  # Minimum reliability score for climate data
+CLIMATE_UPDATE_INTERVAL_SECONDS = 300  # Update climate data every 5 minutes
+CLIMATE_INFLUENCE_SCALE_FACTOR = 0.02  # Maximum climate influence on optimization
+
+
+@dataclass
+class ClimatePattern:
+    """Represents a climate pattern observation."""
+    timestamp: float
+    temperature: float  # Normalized 0-1
+    humidity: float  # Normalized 0-1
+    pressure: float  # Normalized 0-1
+    reliability: float = 1.0  # Data reliability score 0-1
+    
+    def is_reliable(self) -> bool:
+        """Check if climate data meets reliability threshold."""
+        return self.reliability >= CLIMATE_DATA_RELIABILITY_THRESHOLD
+
 
 @dataclass
 class Node:
@@ -47,6 +67,7 @@ class Node:
     optimization_count: int = 0
     stillness_count: int = 0
     feedback_history: List[float] = field(default_factory=list)
+    climate_patterns: List[ClimatePattern] = field(default_factory=list)
     
     def apply_feedback(self, feedback_value: float) -> None:
         """Apply feedback optimization to the node."""
@@ -59,6 +80,52 @@ class Node:
         self.energy_level = max(0.0, min(1.0, 
             self.energy_level + feedback_value * 0.1))
         self.optimization_count += 1
+    
+    def add_climate_pattern(self, pattern: ClimatePattern) -> None:
+        """Add climate pattern observation to node history."""
+        self.climate_patterns.append(pattern)
+        # Keep only recent history
+        if len(self.climate_patterns) > CLIMATE_PATTERN_HISTORY:
+            self.climate_patterns = self.climate_patterns[-CLIMATE_PATTERN_HISTORY:]
+    
+    def get_reliable_climate_data(self) -> List[ClimatePattern]:
+        """Get only reliable climate pattern data."""
+        return [p for p in self.climate_patterns if p.is_reliable()]
+    
+    def predict_climate_trend(self) -> Optional[float]:
+        """
+        Predict climate trend based on local intelligence.
+        
+        Uses simple linear regression on temperature data.
+        Note: Assumes equally-spaced time intervals (uses index positions).
+        For production use with real timestamps, consider using actual time differences.
+        
+        Returns normalized trend value (-1 to 1) or None if insufficient data.
+        """
+        reliable_data = self.get_reliable_climate_data()
+        if len(reliable_data) < 3:
+            return None
+        
+        # Use recent data for prediction (last 10 observations)
+        recent = reliable_data[-10:]
+        
+        # Calculate trend using simple linear regression on temperature
+        temps = [p.temperature for p in recent]
+        n = len(temps)
+        
+        # Calculate slope (trend)
+        x_mean = (n - 1) / 2
+        y_mean = sum(temps) / n
+        
+        numerator = sum((i - x_mean) * (temps[i] - y_mean) for i in range(n))
+        denominator = sum((i - x_mean) ** 2 for i in range(n))
+        
+        if denominator == 0:
+            return 0.0
+        
+        slope = numerator / denominator
+        # Normalize slope to -1 to 1 range
+        return max(-1.0, min(1.0, slope * 10))
     
     def enter_stillness(self) -> None:
         """Enter stillness phase for recalibration."""
@@ -92,6 +159,8 @@ class EternalDepositionEngine:
         self.last_cycle_time: float = self.start_time
         self.is_in_stillness: bool = False
         self.optimization_metrics: List[float] = []
+        self.climate_monitoring_enabled: bool = True
+        self.last_climate_update: float = self.start_time
         
         # Initialize node network
         for i in range(initial_nodes):
@@ -101,6 +170,7 @@ class EternalDepositionEngine:
         print(f"[ETERNAL DEPOSITION] Initialized with {len(self.nodes)} nodes")
         print(f"[RESONANCE] Base frequency: {UNIVERSAL_RESONANCE_HZ} Hz")
         print(f"[RESONANCE] Cycle period: {CYCLE_PERIOD_SECONDS:.2f} seconds")
+        print(f"[NSR] Climate pattern monitoring: {'ENABLED' if self.climate_monitoring_enabled else 'DISABLED'}")
     
     def calculate_resonance_phase(self, current_time: float) -> float:
         """
@@ -154,7 +224,95 @@ class EternalDepositionEngine:
         phase = self.calculate_resonance_phase(current_time)
         resonance_factor = math.sin(phase) * 0.05
         
-        return feedback + resonance_factor
+        # Integrate climate pattern influence (NSR enhancement)
+        climate_factor = self.calculate_climate_influence()
+        
+        return feedback + resonance_factor + climate_factor
+    
+    def generate_climate_pattern(self, current_time: float) -> ClimatePattern:
+        """
+        Generate climate pattern data based on resonance cycles.
+        
+        This simulates climate data acquisition from reliable sources.
+        In production, this would integrate with actual weather APIs.
+        """
+        phase = self.calculate_resonance_phase(current_time)
+        
+        # Simulate climate patterns synchronized with resonance
+        # Temperature: varies with slower cycle (Schumann resonance influence)
+        temp_cycle = math.sin(phase / 10) * 0.3 + 0.5
+        
+        # Humidity: varies with medium cycle
+        humidity_cycle = math.cos(phase / 5) * 0.25 + 0.5
+        
+        # Pressure: varies with fast cycle
+        pressure_cycle = math.sin(phase) * 0.2 + 0.5
+        
+        # Calculate reliability based on data freshness and resonance alignment
+        # Higher reliability when in phase with resonance
+        reliability = 0.85 + abs(math.sin(phase)) * 0.15
+        
+        return ClimatePattern(
+            timestamp=current_time,
+            temperature=max(0.0, min(1.0, temp_cycle)),
+            humidity=max(0.0, min(1.0, humidity_cycle)),
+            pressure=max(0.0, min(1.0, pressure_cycle)),
+            reliability=reliability
+        )
+    
+    def update_climate_patterns(self) -> None:
+        """
+        Update climate patterns across all nodes.
+        
+        Implements NSR principle: ensures data is updated and reliable.
+        """
+        if not self.climate_monitoring_enabled:
+            return
+        
+        current_time = time.time()
+        
+        # Update climate data every 5 minutes
+        if current_time - self.last_climate_update < CLIMATE_UPDATE_INTERVAL_SECONDS:
+            return
+        
+        # Generate new climate pattern
+        pattern = self.generate_climate_pattern(current_time)
+        
+        # Distribute to all nodes (network-wide intelligence)
+        for node in self.nodes.values():
+            node.add_climate_pattern(pattern)
+        
+        self.last_climate_update = current_time
+        
+        # Log climate update
+        if pattern.is_reliable():
+            print(f"[CLIMATE] Pattern updated - Temp: {pattern.temperature:.3f}, "
+                  f"Humidity: {pattern.humidity:.3f}, Reliability: {pattern.reliability:.3f}")
+    
+    def calculate_climate_influence(self) -> float:
+        """
+        Calculate climate pattern influence on system optimization.
+        
+        This integrates local intelligence from climate predictions.
+        """
+        if not self.nodes:
+            return 0.0
+        
+        # Collect predictions from nodes with sufficient data
+        predictions = []
+        for node in self.nodes.values():
+            trend = node.predict_climate_trend()
+            if trend is not None:
+                predictions.append(trend)
+        
+        if not predictions:
+            return 0.0
+        
+        # Average prediction as climate influence
+        avg_prediction = sum(predictions) / len(predictions)
+        
+        # Scale to smaller influence factor
+        return avg_prediction * CLIMATE_INFLUENCE_SCALE_FACTOR
     
     def propagate_fractal_pattern(self, depth: int = 3) -> None:
         """
@@ -262,6 +420,9 @@ class EternalDepositionEngine:
         # Calculate resonance phase
         phase = self.calculate_resonance_phase(current_time)
         
+        # Update climate patterns (NSR: ensure data is current and reliable)
+        self.update_climate_patterns()
+        
         # Check for stillness condition
         if self.should_enter_stillness() and not self.is_in_stillness:
             self.execute_stillness()
@@ -282,6 +443,9 @@ class EternalDepositionEngine:
         avg_energy = sum(n.energy_level for n in self.nodes.values()) / len(self.nodes)
         cycle_duration = time.time() - cycle_start
         
+        # Calculate climate metrics
+        climate_data_count = sum(len(n.get_reliable_climate_data()) for n in self.nodes.values())
+        
         metrics = {
             "cycle": self.cycle_count,
             "timestamp": datetime.now().isoformat(),
@@ -291,7 +455,9 @@ class EternalDepositionEngine:
             "avg_energy": avg_energy,
             "in_stillness": self.is_in_stillness,
             "cycle_duration": cycle_duration,
-            "resonance_hz": UNIVERSAL_RESONANCE_HZ
+            "resonance_hz": UNIVERSAL_RESONANCE_HZ,
+            "climate_data_points": climate_data_count,
+            "climate_monitoring": self.climate_monitoring_enabled
         }
         
         return metrics
@@ -356,6 +522,10 @@ class EternalDepositionEngine:
         current_time = time.time()
         uptime = current_time - self.start_time
         
+        # Calculate climate statistics
+        total_climate_data = sum(len(n.climate_patterns) for n in self.nodes.values())
+        reliable_climate_data = sum(len(n.get_reliable_climate_data()) for n in self.nodes.values())
+        
         return {
             "status": "OPERATIONAL",
             "cycle_count": self.cycle_count,
@@ -366,7 +536,11 @@ class EternalDepositionEngine:
             "avg_energy": sum(n.energy_level for n in self.nodes.values()) / len(self.nodes),
             "is_in_stillness": self.is_in_stillness,
             "total_optimizations": sum(n.optimization_count for n in self.nodes.values()),
-            "total_stillness_events": sum(n.stillness_count for n in self.nodes.values())
+            "total_stillness_events": sum(n.stillness_count for n in self.nodes.values()),
+            "climate_monitoring": self.climate_monitoring_enabled,
+            "climate_data_total": total_climate_data,
+            "climate_data_reliable": reliable_climate_data,
+            "climate_reliability_ratio": reliable_climate_data / max(1, total_climate_data)
         }
 
 
