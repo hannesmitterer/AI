@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lex Amoris - Test Suite</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #d4d4d4;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 { color: #d4af37; }
+        h2 { color: #00f2ff; margin-top: 30px; }
+        .test-section {
+            background: rgba(28, 25, 23, 0.8);
+            border: 1px solid #57534e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .test-case {
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #666;
+        }
+        .test-case.pass {
+            background: rgba(0, 255, 0, 0.1);
+            border-left-color: #0f0;
+        }
+        .test-case.fail {
+            background: rgba(255, 0, 0, 0.1);
+            border-left-color: #f00;
+        }
+        .test-case.warn {
+            background: rgba(255, 255, 0, 0.1);
+            border-left-color: #ff0;
+        }
+        .metric {
+            display: inline-block;
+            padding: 5px 10px;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 4px;
+            margin: 5px;
+        }
+        button {
+            background: #d4af37;
+            color: #0a0a0a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+        button:hover {
+            background: #e5c048;
+        }
+        pre {
+            background: #0a0a0a;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .summary {
+            font-size: 1.2em;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Lex Amoris - Test Suite</h1>
+    <p>Comprehensive testing for lexamoris.html and manifest.json</p>
+    
+    <div class="summary">
+        <strong>Test Summary:</strong>
+        <span id="summary-total">0</span> total |
+        <span id="summary-pass" style="color: #0f0;">0</span> passed |
+        <span id="summary-fail" style="color: #f00;">0</span> failed |
+        <span id="summary-warn" style="color: #ff0;">0</span> warnings
+    </div>
+
+    <button onclick="runAllTests()">🚀 Run All Tests</button>
+    <button onclick="resetTests()">🔄 Reset</button>
+
+    <!-- Test Results Container -->
+    <div id="test-results"></div>
+
+    <script>
+        const testResults = {
+            total: 0,
+            passed: 0,
+            failed: 0,
+            warnings: 0
+        };
+
+        class TestSuite {
+            constructor(name) {
+                this.name = name;
+                this.tests = [];
+            }
+
+            addTest(description, testFn) {
+                this.tests.push({ description, testFn });
+            }
+
+            async run() {
+                const section = document.createElement('div');
+                section.className = 'test-section';
+                section.innerHTML = `<h2>${this.name}</h2>`;
+                
+                for (const test of this.tests) {
+                    const result = await this.runTest(test);
+                    section.appendChild(result);
+                }
+                
+                return section;
+            }
+
+            async runTest(test) {
+                const testCase = document.createElement('div');
+                testCase.className = 'test-case';
+                testResults.total++;
+                
+                try {
+                    const result = await test.testFn();
+                    if (result.status === 'pass') {
+                        testCase.classList.add('pass');
+                        testCase.innerHTML = `✅ ${test.description}`;
+                        testResults.passed++;
+                    } else if (result.status === 'warn') {
+                        testCase.classList.add('warn');
+                        testCase.innerHTML = `⚠️ ${test.description}<br><small>${result.message}</small>`;
+                        testResults.warnings++;
+                    } else {
+                        testCase.classList.add('fail');
+                        testCase.innerHTML = `❌ ${test.description}<br><small>${result.message}</small>`;
+                        testResults.failed++;
+                    }
+                    if (result.data) {
+                        testCase.innerHTML += `<pre>${JSON.stringify(result.data, null, 2)}</pre>`;
+                    }
+                } catch (error) {
+                    testCase.classList.add('fail');
+                    testCase.innerHTML = `❌ ${test.description}<br><small>Error: ${error.message}</small>`;
+                    testResults.failed++;
+                }
+                
+                return testCase;
+            }
+        }
+
+        // ========================================
+        // TEST SUITES
+        // ========================================
+
+        // Resonance Pulse Tests
+        const resonanceTests = new TestSuite('Resonance Pulse Animation Tests');
+        
+        resonanceTests.addTest('Verify resonance-pulse CSS animation exists', async () => {
+            const style = document.styleSheets[0];
+            let found = false;
+            for (let rule of style.cssRules) {
+                if (rule.name === 'resonance-pulse') {
+                    found = true;
+                    break;
+                }
+            }
+            return { 
+                status: found ? 'pass' : 'fail',
+                message: found ? 'Animation found' : 'Animation not found'
+            };
+        });
+
+        resonanceTests.addTest('Verify animation timing (23.26s)', async () => {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'lexamoris.html';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            await new Promise(resolve => iframe.onload = resolve);
+            
+            const iframeDoc = iframe.contentDocument;
+            const computedStyle = iframeDoc.defaultView.getComputedStyle(iframeDoc.body);
+            const period = computedStyle.getPropertyValue('--resonance-period');
+            
+            document.body.removeChild(iframe);
+            
+            return {
+                status: period === '23.26s' ? 'pass' : 'fail',
+                message: `Expected 23.26s, got ${period}`,
+                data: { period }
+            };
+        });
+
+        resonanceTests.addTest('Verify resonance frequency (0.043 Hz)', async () => {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'lexamoris.html';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            await new Promise(resolve => iframe.onload = resolve);
+            
+            const iframeDoc = iframe.contentDocument;
+            const computedStyle = iframeDoc.defaultView.getComputedStyle(iframeDoc.body);
+            const freq = computedStyle.getPropertyValue('--resonance-freq');
+            
+            document.body.removeChild(iframe);
+            
+            return {
+                status: freq === '0.043Hz' ? 'pass' : 'fail',
+                message: `Expected 0.043Hz, got ${freq}`,
+                data: { frequency: freq }
+            };
+        });
+
+        // Exponential Growth Tests
+        const growthTests = new TestSuite('Exponential Growth Simulation Tests');
+
+        growthTests.addTest('Verify ExponentialGrowth class exists', async () => {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'lexamoris.html';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            await new Promise(resolve => iframe.onload = resolve);
+            
+            const hasClass = typeof iframe.contentWindow.ExponentialGrowth !== 'undefined';
+            document.body.removeChild(iframe);
+            
+            return {
+                status: hasClass ? 'pass' : 'fail',
+                message: hasClass ? 'Class found' : 'Class not found'
+            };
+        });
+
+        growthTests.addTest('Test growthRate function precision', async () => {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'lexamoris.html';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            await new Promise(resolve => iframe.onload = resolve);
+            
+            const growth = new iframe.contentWindow.ExponentialGrowth();
+            const phi = 1.618033988749895;
+            
+            // Test multiple iterations
+            for (let i = 0; i < 10; i++) {
+                growth.growthRate();
+            }
+            
+            const expected = Math.pow(phi, 10);
+            const actual = growth.currentValue;
+            const precision = Math.abs(expected - actual) / expected;
+            
+            document.body.removeChild(iframe);
+            
+            return {
+                status: precision < 0.0001 ? 'pass' : 'fail',
+                message: `Precision: ${(precision * 100).toFixed(6)}%`,
+                data: { expected, actual, precision }
+            };
+        });
+
+        growthTests.addTest('Test overflow protection', async () => {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'lexamoris.html';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            await new Promise(resolve => iframe.onload = resolve);
+            
+            const growth = new iframe.contentWindow.ExponentialGrowth();
+            
+            // Force large value
+            growth.currentValue = Number.MAX_SAFE_INTEGER / 10;
+            const result = growth.growthRate(100);
+            
+            const overflowHandled = result < Number.MAX_SAFE_INTEGER;
+            document.body.removeChild(iframe);
+            
+            return {
+                status: overflowHandled ? 'pass' : 'fail',
+                message: overflowHandled ? 'Overflow handled correctly' : 'Overflow not handled',
+                data: { result, safe: overflowHandled }
+            };
+        });
+
+        growthTests.addTest('Test invalid input handling', async () => {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'lexamoris.html';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            await new Promise(resolve => iframe.onload = resolve);
+            
+            const growth = new iframe.contentWindow.ExponentialGrowth();
+            
+            // Test with invalid inputs
+            const invalidInputs = [NaN, -1, 0, 'invalid', null, undefined];
+            let allHandled = true;
+            
+            for (const input of invalidInputs) {
+                const result = growth.growthRate(input);
+                if (!isFinite(result) || result <= 0) {
+                    allHandled = false;
+                    break;
+                }
+            }
+            
+            document.body.removeChild(iframe);
+            
+            return {
+                status: allHandled ? 'pass' : 'fail',
+                message: allHandled ? 'All invalid inputs handled' : 'Some invalid inputs not handled'
+            };
+        });
+
+        // Red Shield Tests
+        const shieldTests = new TestSuite('Red Shield Protection Tests');
+
+        shieldTests.addTest('Verify RedShieldProtection class exists', async () => {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'lexamoris.html';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            await new Promise(resolve => iframe.onload = resolve);
+            
+            const hasClass = typeof iframe.contentWindow.RedShieldProtection !== 'undefined';
+            document.body.removeChild(iframe);
+            
+            return {
+                status: hasClass ? 'pass' : 'fail',
+                message: hasClass ? 'Class found' : 'Class not found'
+            };
+        });
+
+        shieldTests.addTest('Test blur event listener', async () => {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'lexamoris.html';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            await new Promise(resolve => iframe.onload = resolve);
+            
+            const shieldElement = iframe.contentDocument.getElementById('red-shield');
+            const statusElement = iframe.contentDocument.getElementById('shield-status');
+            
+            // Trigger blur event
+            const blurEvent = new iframe.contentWindow.Event('blur', { bubbles: true });
+            shieldElement.dispatchEvent(blurEvent);
+            
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            const triggered = statusElement.textContent.includes('Warnung');
+            document.body.removeChild(iframe);
+            
+            return {
+                status: triggered ? 'pass' : 'fail',
+                message: triggered ? 'Blur event detected' : 'Blur event not detected',
+                data: { statusText: statusElement.textContent }
+            };
+        });
+
+        shieldTests.addTest('Test context menu prevention', async () => {
+            const iframe = document.createElement('iframe');
+            iframe.src = 'lexamoris.html';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            await new Promise(resolve => iframe.onload = resolve);
+            
+            const shieldElement = iframe.contentDocument.getElementById('red-shield');
+            
+            let prevented = false;
+            const contextMenuEvent = new iframe.contentWindow.MouseEvent('contextmenu', {
+                bubbles: true,
+                cancelable: true
+            });
+            
+            shieldElement.addEventListener('contextmenu', (e) => {
+                prevented = e.defaultPrevented;
+            });
+            
+            shieldElement.dispatchEvent(contextMenuEvent);
+            
+            document.body.removeChild(iframe);
+            
+            return {
+                status: prevented ? 'pass' : 'fail',
+                message: prevented ? 'Context menu blocked' : 'Context menu not blocked'
+            };
+        });
+
+        // Manifest.json Tests
+        const manifestTests = new TestSuite('PWA Manifest Tests');
+
+        manifestTests.addTest('Fetch and parse manifest.json', async () => {
+            try {
+                const response = await fetch('manifest.json');
+                const manifest = await response.json();
+                
+                return {
+                    status: response.ok ? 'pass' : 'fail',
+                    message: `Status: ${response.status}`,
+                    data: { status: response.status }
+                };
+            } catch (error) {
+                return {
+                    status: 'fail',
+                    message: error.message
+                };
+            }
+        });
+
+        manifestTests.addTest('Verify standalone display mode', async () => {
+            const response = await fetch('manifest.json');
+            const manifest = await response.json();
+            
+            return {
+                status: manifest.display === 'standalone' ? 'pass' : 'fail',
+                message: `Display mode: ${manifest.display}`,
+                data: { display: manifest.display }
+            };
+        });
+
+        manifestTests.addTest('Verify shortcuts configuration', async () => {
+            const response = await fetch('manifest.json');
+            const manifest = await response.json();
+            
+            const hasShortcuts = Array.isArray(manifest.shortcuts) && manifest.shortcuts.length > 0;
+            const hasWaterStatus = manifest.shortcuts.some(s => s.url.includes('water-status'));
+            
+            return {
+                status: hasShortcuts && hasWaterStatus ? 'pass' : 'fail',
+                message: `Shortcuts found: ${manifest.shortcuts.length}, Water status: ${hasWaterStatus}`,
+                data: { shortcuts: manifest.shortcuts }
+            };
+        });
+
+        manifestTests.addTest('Verify theme and background colors', async () => {
+            const response = await fetch('manifest.json');
+            const manifest = await response.json();
+            
+            const hasTheme = manifest.theme_color === '#d4af37';
+            const hasBg = manifest.background_color === '#0a0a0a';
+            
+            return {
+                status: hasTheme && hasBg ? 'pass' : 'fail',
+                message: `Theme: ${manifest.theme_color}, Background: ${manifest.background_color}`,
+                data: { theme_color: manifest.theme_color, background_color: manifest.background_color }
+            };
+        });
+
+        manifestTests.addTest('Verify icons with maskable support', async () => {
+            const response = await fetch('manifest.json');
+            const manifest = await response.json();
+            
+            const hasMaskable = manifest.icons.some(icon => 
+                icon.purpose && icon.purpose.includes('maskable')
+            );
+            
+            return {
+                status: hasMaskable ? 'pass' : 'fail',
+                message: hasMaskable ? 'Maskable icons found' : 'No maskable icons',
+                data: { icons: manifest.icons }
+            };
+        });
+
+        manifestTests.addTest('Verify start_url and scope', async () => {
+            const response = await fetch('manifest.json');
+            const manifest = await response.json();
+            
+            const validStartUrl = manifest.start_url === '/';
+            const validScope = manifest.scope === '/';
+            
+            return {
+                status: validStartUrl && validScope ? 'pass' : 'fail',
+                message: `start_url: ${manifest.start_url}, scope: ${manifest.scope}`,
+                data: { start_url: manifest.start_url, scope: manifest.scope }
+            };
+        });
+
+        manifestTests.addTest('Verify German language setting', async () => {
+            const response = await fetch('manifest.json');
+            const manifest = await response.json();
+            
+            return {
+                status: manifest.lang === 'de' ? 'pass' : 'fail',
+                message: `Language: ${manifest.lang}`,
+                data: { lang: manifest.lang }
+            };
+        });
+
+        // W3C Compliance Tests
+        const w3cTests = new TestSuite('W3C Compliance & Browser Compatibility');
+
+        w3cTests.addTest('Verify HTML5 doctype in lexamoris.html', async () => {
+            const response = await fetch('lexamoris.html');
+            const html = await response.text();
+            
+            const hasDoctype = html.trim().startsWith('<!DOCTYPE html>');
+            
+            return {
+                status: hasDoctype ? 'pass' : 'fail',
+                message: hasDoctype ? 'HTML5 doctype found' : 'HTML5 doctype missing'
+            };
+        });
+
+        w3cTests.addTest('Verify lang="de" attribute', async () => {
+            const response = await fetch('lexamoris.html');
+            const html = await response.text();
+            
+            const hasLang = html.includes('lang="de"');
+            
+            return {
+                status: hasLang ? 'pass' : 'fail',
+                message: hasLang ? 'German language set' : 'Language attribute missing'
+            };
+        });
+
+        w3cTests.addTest('Verify meta charset UTF-8', async () => {
+            const response = await fetch('lexamoris.html');
+            const html = await response.text();
+            
+            const hasCharset = html.includes('charset="UTF-8"');
+            
+            return {
+                status: hasCharset ? 'pass' : 'fail',
+                message: hasCharset ? 'UTF-8 charset found' : 'UTF-8 charset missing'
+            };
+        });
+
+        w3cTests.addTest('Verify viewport meta tag', async () => {
+            const response = await fetch('lexamoris.html');
+            const html = await response.text();
+            
+            const hasViewport = html.includes('name="viewport"');
+            
+            return {
+                status: hasViewport ? 'pass' : 'fail',
+                message: hasViewport ? 'Viewport meta found' : 'Viewport meta missing'
+            };
+        });
+
+        w3cTests.addTest('Verify manifest link in HTML', async () => {
+            const response = await fetch('lexamoris.html');
+            const html = await response.text();
+            
+            const hasManifest = html.includes('rel="manifest"');
+            
+            return {
+                status: hasManifest ? 'pass' : 'fail',
+                message: hasManifest ? 'Manifest link found' : 'Manifest link missing'
+            };
+        });
+
+        // ========================================
+        // TEST RUNNER
+        // ========================================
+
+        async function runAllTests() {
+            // Reset
+            testResults.total = 0;
+            testResults.passed = 0;
+            testResults.failed = 0;
+            testResults.warnings = 0;
+            
+            const resultsContainer = document.getElementById('test-results');
+            resultsContainer.innerHTML = '<p>Running tests...</p>';
+            
+            // Run all test suites
+            const suites = [
+                resonanceTests,
+                growthTests,
+                shieldTests,
+                manifestTests,
+                w3cTests
+            ];
+            
+            resultsContainer.innerHTML = '';
+            
+            for (const suite of suites) {
+                const section = await suite.run();
+                resultsContainer.appendChild(section);
+            }
+            
+            // Update summary
+            updateSummary();
+            
+            // Scroll to results
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateSummary() {
+            document.getElementById('summary-total').textContent = testResults.total;
+            document.getElementById('summary-pass').textContent = testResults.passed;
+            document.getElementById('summary-fail').textContent = testResults.failed;
+            document.getElementById('summary-warn').textContent = testResults.warnings;
+        }
+
+        function resetTests() {
+            testResults.total = 0;
+            testResults.passed = 0;
+            testResults.failed = 0;
+            testResults.warnings = 0;
+            document.getElementById('test-results').innerHTML = '';
+            updateSummary();
+        }
+
+        // Initialize
+        updateSummary();
+    </script>
+</body>
+</html>

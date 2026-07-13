@@ -1,0 +1,68 @@
+{
+  "name": "Lex Amoris - Resonance Interface",
+  "short_name": "Lex Amoris",
+  "description": "Resonance Interface für Kosymbiosis - Sempre in Costante",
+  "lang": "de",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#d4af37",
+  "background_color": "#0a0a0a",
+  "categories": [
+    "education",
+    "utilities",
+    "lifestyle"
+  ],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%230a0a0a' width='192' height='192'/%3E%3Ctext x='96' y='96' font-size='72' text-anchor='middle' dominant-baseline='middle' fill='%23d4af37' font-family='Arial,sans-serif' font-weight='bold'%3ELA%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect fill='%230a0a0a' width='512' height='512'/%3E%3Ctext x='256' y='256' font-size='192' text-anchor='middle' dominant-baseline='middle' fill='%23d4af37' font-family='Arial,sans-serif' font-weight='bold'%3ELA%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Water Status",
+      "short_name": "Water",
+      "description": "Check water status and resonance levels",
+      "url": "water-status.html",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect fill='%230a0a0a' width='96' height='96'/%3E%3Ctext x='48' y='58' font-size='48' text-anchor='middle' fill='%2300f2ff'%3E💧%3C/text%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Lex Amoris Interface",
+      "short_name": "Lex Amoris",
+      "description": "Main resonance interface",
+      "url": "lexamoris.html",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect fill='%230a0a0a' width='96' height='96'/%3E%3Ctext x='48' y='48' font-size='36' text-anchor='middle' dominant-baseline='middle' fill='%23d4af37' font-family='Arial,sans-serif' font-weight='bold'%3ELA%3C/text%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "iarc_rating_id": "",
+  "screenshots": [],
+  "serviceworker": {
+    "src": "/sw.js",
+    "scope": "/",
+    "use_cache": true
+  }
+}

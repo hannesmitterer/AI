@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#00f2ff">
+    <title>Water Status | Lex Amoris</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a3a4a 100%);
+            color: #d4d4d4;
+        }
+        
+        .glass {
+            background: rgba(28, 25, 23, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid #57534e;
+        }
+        
+        .water-pulse {
+            animation: water-pulse 4s infinite ease-in-out;
+        }
+        
+        @keyframes water-pulse {
+            0%, 100% { 
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+        
+        .wave {
+            animation: wave 3s infinite;
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-10">
+    <div class="w-full max-w-4xl mx-auto space-y-8">
+        
+        <!-- Header -->
+        <header class="text-center space-y-2">
+            <p class="text-xs uppercase font-semibold text-cyan-400 tracking-[0.3em]">
+                Resonance Monitoring
+            </p>
+            <h1 class="text-5xl md:text-7xl font-black text-white tracking-tighter water-pulse">
+                💧 WATER STATUS
+            </h1>
+            <p class="text-xl text-stone-500 font-light italic">
+                Hydration & Resonance Levels
+            </p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Water Quality -->
+            <div class="glass p-6 rounded-2xl border-2 border-cyan-400">
+                <h3 class="text-cyan-400 font-bold mb-4 uppercase text-sm tracking-widest">
+                    Wasserqualität
+                </h3>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-[10px] text-stone-500 uppercase">pH-Wert</p>
+                        <p class="text-3xl font-mono text-cyan-400">7.4</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-stone-500 uppercase">Ionische Resonanz</p>
+                        <p class="text-3xl font-mono text-cyan-400">7.83 Hz</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-stone-500 uppercase">Reinheit</p>
+                        <p class="text-3xl font-mono text-cyan-400">99.8%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hydration Status -->
+            <div class="glass p-6 rounded-2xl border-2 border-amber-500">
+                <h3 class="text-amber-500 font-bold mb-4 uppercase text-sm tracking-widest">
+                    Hydratationsstatus
+                </h3>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-[10px] text-stone-500 uppercase">Tagesaufnahme</p>
+                        <p class="text-3xl font-mono text-amber-500">2.4 L</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-stone-500 uppercase">Empfohlen</p>
+                        <p class="text-3xl font-mono text-amber-500">3.0 L</p>
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-stone-500 uppercase">Status</p>
+                        <p class="text-2xl font-bold text-amber-500">Gut ✓</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Water Consciousness -->
+        <div class="glass p-8 rounded-2xl text-center">
+            <h3 class="text-2xl font-bold mb-4" style="color: #00f2ff;">
+                Wasserbewusstsein
+            </h3>
+            <p class="text-stone-400 mb-4 italic">
+                "Wasser ist das Medium der Erinnerung und des Lebens. 
+                Jeder Tropfen trägt die Resonanz des Universums."
+            </p>
+            <div class="wave text-6xl">💧</div>
+            <p class="mt-4 text-xs text-stone-600">
+                Resonance School | Kosymbiosis Framework
+            </p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="text-center">
+            <a href="lexamoris.html" 
+               class="inline-block px-6 py-3 bg-amber-600 hover:bg-amber-500 text-stone-950 font-black rounded-xl transition-all uppercase text-sm">
+                ← Zurück zu Lex Amoris
+            </a>
+        </div>
+
+        <footer class="text-center text-xs text-stone-600 space-y-2">
+            <p>Sempre in Costante</p>
+            <p id="timestamp" class="font-mono"></p>
+        </footer>
+    </div>
+
+    <script>
+        // Update timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('timestamp').textContent = 
+                now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+        }
+        updateTimestamp();
+        setInterval(updateTimestamp, 1000);
+
+        console.log('[WATER STATUS] Interface initialized');
+        console.log('[WATER STATUS] Sempre in Costante 💧');
+    </script>
+</body>
+</html>

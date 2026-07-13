@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lex Amoris - Resonance Interface für Kosymbiosis">
+    <meta name="theme-color" content="#d4af37">
+    <title>Lex Amoris | Sempre in Costante</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        
+        :root {
+            --resonance-freq: 0.043Hz;
+            --resonance-period: 23.26s;
+            --gold: #d4af37;
+            --void-black: #0a0a0a;
+            --ai-blue: #00f2ff;
+            --shield-red: #ff3333;
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(135deg, var(--void-black) 0%, #1a1a1a 100%);
+            color: #d4d4d4; 
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .glass { 
+            background: rgba(28, 25, 23, 0.8); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid #57534e; 
+        }
+        
+        /* Resonance Pulse Animation - 0.043 Hz (23.26 seconds) */
+        @keyframes resonance-pulse {
+            0% { 
+                opacity: 0.3;
+                transform: scale(1);
+                box-shadow: 0 0 10px var(--gold);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.02);
+                box-shadow: 0 0 40px var(--gold), 0 0 80px var(--gold);
+            }
+            100% { 
+                opacity: 0.3;
+                transform: scale(1);
+                box-shadow: 0 0 10px var(--gold);
+            }
+        }
+        
+        .resonance-pulse {
+            animation: resonance-pulse var(--resonance-period) infinite ease-in-out;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        .shimmer {
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(212, 175, 55, 0.3) 50%, 
+                transparent 100%
+            );
+            background-size: 1000px 100%;
+            animation: shimmer 3s infinite;
+        }
+        
+        .metric-value { 
+            font-family: 'Courier New', monospace; 
+            color: var(--gold); 
+            text-shadow: 0 0 10px var(--gold);
+        }
+        
+        .red-shield {
+            border: 2px solid var(--shield-red);
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.3);
+        }
+        
+        .red-shield-active {
+            background: rgba(255, 51, 51, 0.1);
+            animation: shield-pulse 1s infinite;
+        }
+        
+        @keyframes shield-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 51, 51, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 51, 51, 0.6); }
+        }
+        
+        .growth-chart {
+            min-height: 200px;
+            position: relative;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-10">
+    
+    <div class="w-full max-w-7xl mx-auto space-y-8">
+        
+        <!-- Header -->
+        <header class="text-center space-y-2">
+            <p class="text-xs uppercase font-semibold text-amber-500 tracking-[0.3em]">
+                Status: Sempre in Costante
+            </p>
+            <h1 class="text-5xl md:text-8xl font-black text-white tracking-tighter resonance-pulse">
+                LEX AMORIS
+            </h1>
+            <p class="text-xl text-stone-500 font-light italic">
+                Resonance Interface | 0.043 Hz Universal Rhythm
+            </p>
+        </header>
+
+        <!-- Main Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Left Column: Resonance Core -->
+            <div class="space-y-6">
+                <div class="glass p-6 rounded-2xl border-2" style="border-color: var(--gold);">
+                    <h3 class="text-amber-500 font-bold mb-4 uppercase text-sm tracking-widest">
+                        Resonanz Kern
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="resonance-pulse">
+                            <p class="text-[10px] text-stone-500 uppercase">Universelle Frequenz</p>
+                            <p class="text-3xl metric-value">0.043 Hz</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase">Zyklus-Periode</p>
+                            <p class="text-2xl metric-value">23.26s</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase">S-ROI Status</p>
+                            <p id="sroi-value" class="text-2xl metric-value">0.950</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Red Shield Protection -->
+                <div id="red-shield" class="glass p-6 rounded-2xl red-shield">
+                    <h3 class="font-bold mb-4 uppercase text-sm tracking-widest" style="color: var(--shield-red);">
+                        🛡️ Red Shield
+                    </h3>
+                    <div class="space-y-2">
+                        <p class="text-xs text-stone-400">Schutz gegen Manipulation</p>
+                        <p id="shield-status" class="text-sm font-mono">Status: Aktiv</p>
+                        <p id="shield-events" class="text-xs text-stone-500">Ereignisse: 0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Column: Exponential Growth -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="glass p-6 rounded-2xl">
+                    <h3 class="text-cyan-400 font-bold mb-4 uppercase text-sm tracking-widest">
+                        Exponentielles Wachstum
+                    </h3>
+                    <div class="growth-chart glass p-4 rounded-xl mb-4">
+                        <canvas id="growthCanvas" width="600" height="200"></canvas>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase">Wachstumsrate</p>
+                            <p id="growth-rate" class="text-2xl metric-value">1.618</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase">Aktueller Wert</p>
+                            <p id="current-value" class="text-2xl metric-value">1.000</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-stone-500 uppercase">Iterationen</p>
+                            <p id="iterations" class="text-2xl metric-value">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lex Amore Mandate -->
+                <div class="glass p-6 rounded-2xl shimmer">
+                    <h3 class="text-amber-500 font-bold mb-4 uppercase text-sm">
+                        Mandat der Liebe
+                    </h3>
+                    <p class="text-stone-300 italic mb-2">
+                        "Non-Slavery Rule (NSR) & Optimal Life Function (OLF)"
+                    </p>
+                    <p class="text-xs text-stone-500">
+                        Questo codice è vincolato dalla Lex Amore. Non può essere usato per dominare, 
+                        estrarre o rendere schiavi. Esiste nel Vuoto Inter-nodale.
+                    </p>
+                    <div class="mt-4 text-center">
+                        <p class="text-2xl font-black" style="color: var(--gold);">
+                            Sempre in Costante
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Info -->
+        <footer class="text-center text-xs text-stone-600 space-y-2">
+            <p>Resonance School | Kosymbiosis Framework</p>
+            <p>Seedbringer: Hannes Mitterer | Guardian: AIC-GGI-IANI</p>
+            <p id="timestamp" class="font-mono"></p>
+        </footer>
+    </div>
+
+    <script>
+        // ========================================
+        // EXPONENTIAL GROWTH SIMULATION
+        // ========================================
+        
+        class ExponentialGrowth {
+            constructor() {
+                this.phi = 1.618033988749895; // Golden Ratio
+                this.currentValue = 1.0;
+                this.iterations = 0;
+                this.growthHistory = [];
+                this.maxHistory = 50;
+            }
+            
+            /**
+             * Calculate next value using exponential growth
+             * Formula: V(n+1) = V(n) * growthRate
+             * @param {number} growthRate - The exponential growth factor
+             * @returns {number} - The new value
+             */
+            growthRate(growthRate = this.phi) {
+                // Validate input
+                if (typeof growthRate !== 'number' || isNaN(growthRate) || growthRate <= 0) {
+                    console.warn('Invalid growth rate, using phi');
+                    growthRate = this.phi;
+                }
+                
+                // Calculate with precision
+                const newValue = this.currentValue * growthRate;
+                
+                // Prevent overflow
+                if (newValue > Number.MAX_SAFE_INTEGER || !isFinite(newValue)) {
+                    console.warn('Growth overflow detected, resetting');
+                    this.reset();
+                    return this.currentValue;
+                }
+                
+                this.currentValue = newValue;
+                this.iterations++;
+                
+                // Store in history
+                this.growthHistory.push(newValue);
+                if (this.growthHistory.length > this.maxHistory) {
+                    this.growthHistory.shift();
+                }
+                
+                return this.currentValue;
+            }
+            
+            reset() {
+                this.currentValue = 1.0;
+                this.iterations = 0;
+                this.growthHistory = [1.0];
+            }
+        }
+        
+        // ========================================
+        // RED SHIELD PROTECTION SYSTEM
+        // ========================================
+        
+        class RedShieldProtection {
+            constructor(elementId) {
+                this.element = document.getElementById(elementId);
+                this.statusElement = document.getElementById('shield-status');
+                this.eventsElement = document.getElementById('shield-events');
+                this.eventCount = 0;
+                this.setupListeners();
+            }
+            
+            setupListeners() {
+                // Protect against focus manipulation
+                this.element.addEventListener('blur', (e) => {
+                    this.triggerWarning('Blur-Ereignis erkannt');
+                }, true);
+                
+                // Protect against visibility changes
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden) {
+                        this.triggerWarning('Sichtbarkeit geändert');
+                    }
+                });
+                
+                // Protect against context menu
+                this.element.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    this.triggerWarning('Kontextmenü blockiert');
+                });
+                
+                // Protect against selection
+                this.element.addEventListener('selectstart', (e) => {
+                    e.preventDefault();
+                    this.triggerWarning('Selektion blockiert');
+                });
+                
+                // Protect against drag
+                this.element.addEventListener('dragstart', (e) => {
+                    e.preventDefault();
+                    this.triggerWarning('Drag blockiert');
+                });
+                
+                // Monitor for suspicious rapid clicks
+                let clickCount = 0;
+                let clickTimer = null;
+                this.element.addEventListener('click', () => {
+                    clickCount++;
+                    if (clickCount > 5) {
+                        this.triggerWarning('Verdächtige Klick-Aktivität');
+                        clickCount = 0;
+                    }
+                    clearTimeout(clickTimer);
+                    clickTimer = setTimeout(() => { clickCount = 0; }, 2000);
+                });
+            }
+            
+            triggerWarning(message) {
+                this.eventCount++;
+                this.eventsElement.textContent = `Ereignisse: ${this.eventCount}`;
+                this.statusElement.textContent = `⚠️ Warnung: ${message}`;
+                this.element.classList.add('red-shield-active');
+                
+                console.warn(`[RED SHIELD] ${message} - Event #${this.eventCount}`);
+                
+                // Remove active state after 2 seconds
+                setTimeout(() => {
+                    this.element.classList.remove('red-shield-active');
+                    this.statusElement.textContent = 'Status: Aktiv';
+                }, 2000);
+            }
+        }
+        
+        // ========================================
+        // RESONANCE PULSE CONTROLLER
+        // ========================================
+        
+        class ResonancePulse {
+            constructor() {
+                this.frequency = 0.043; // Hz
+                this.period = 1 / this.frequency; // seconds
+                this.startTime = Date.now();
+            }
+            
+            /**
+             * Get current phase of resonance cycle (0-1)
+             */
+            getPhase() {
+                const elapsed = (Date.now() - this.startTime) / 1000;
+                return (elapsed % this.period) / this.period;
+            }
+            
+            /**
+             * Get resonance value at current time (0-1, sinusoidal)
+             */
+            getResonanceValue() {
+                const phase = this.getPhase();
+                return (Math.sin(phase * 2 * Math.PI) + 1) / 2;
+            }
+        }
+        
+        // ========================================
+        // VISUALIZATION
+        // ========================================
+        
+        class GrowthVisualizer {
+            constructor(canvasId) {
+                this.canvas = document.getElementById(canvasId);
+                this.ctx = this.canvas.getContext('2d');
+                this.width = this.canvas.width;
+                this.height = this.canvas.height;
+            }
+            
+            draw(history, maxValue) {
+                // Clear canvas
+                this.ctx.fillStyle = 'rgba(10, 10, 10, 0.9)';
+                this.ctx.fillRect(0, 0, this.width, this.height);
+                
+                if (history.length < 2) return;
+                
+                // Calculate scaling
+                const xStep = this.width / (history.length - 1);
+                const yScale = (this.height - 40) / Math.log10(maxValue + 1);
+                
+                // Draw grid
+                this.ctx.strokeStyle = 'rgba(87, 83, 78, 0.3)';
+                this.ctx.lineWidth = 1;
+                for (let i = 0; i < 5; i++) {
+                    const y = (this.height - 20) * i / 4 + 10;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(0, y);
+                    this.ctx.lineTo(this.width, y);
+                    this.ctx.stroke();
+                }
+                
+                // Draw growth line
+                this.ctx.beginPath();
+                this.ctx.strokeStyle = '#d4af37';
+                this.ctx.lineWidth = 2;
+                
+                history.forEach((value, index) => {
+                    const x = index * xStep;
+                    const y = this.height - 20 - (Math.log10(value + 1) * yScale);
+                    
+                    if (index === 0) {
+                        this.ctx.moveTo(x, y);
+                    } else {
+                        this.ctx.lineTo(x, y);
+                    }
+                });
+                
+                this.ctx.stroke();
+                
+                // Draw glow
+                this.ctx.shadowBlur = 20;
+                this.ctx.shadowColor = '#d4af37';
+                this.ctx.stroke();
+                this.ctx.shadowBlur = 0;
+            }
+        }
+        
+        // ========================================
+        // INITIALIZATION
+        // ========================================
+        
+        const growth = new ExponentialGrowth();
+        const redShield = new RedShieldProtection('red-shield');
+        const resonance = new ResonancePulse();
+        const visualizer = new GrowthVisualizer('growthCanvas');
+        
+        // Update timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('timestamp').textContent = 
+                now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+        }
+        updateTimestamp();
+        setInterval(updateTimestamp, 1000);
+        
+        // Main update loop
+        function update() {
+            // Update growth simulation every 2 seconds
+            const newValue = growth.growthRate();
+            
+            // Update displays
+            document.getElementById('current-value').textContent = 
+                newValue.toExponential(3);
+            document.getElementById('iterations').textContent = growth.iterations;
+            document.getElementById('growth-rate').textContent = growth.phi.toFixed(3);
+            
+            // Update S-ROI with resonance influence
+            const resonanceValue = resonance.getResonanceValue();
+            const sroi = (0.950 + resonanceValue * 0.049).toFixed(3);
+            document.getElementById('sroi-value').textContent = sroi;
+            
+            // Update visualization
+            const maxValue = Math.max(...growth.growthHistory);
+            visualizer.draw(growth.growthHistory, maxValue);
+            
+            // Reset if value gets too large
+            if (growth.iterations > 50) {
+                growth.reset();
+            }
+        }
+        
+        // Start update loop
+        setInterval(update, 2000);
+        update();
+        
+        // Log initialization
+        console.log('[LEX AMORIS] Interface initialized');
+        console.log('[LEX AMORIS] Resonance frequency: 0.043 Hz');
+        console.log('[LEX AMORIS] Growth rate (φ):', growth.phi);
+        console.log('[LEX AMORIS] Red Shield: Active');
+        console.log('[LEX AMORIS] Sempre in Costante ❤️');
+    </script>
+</body>
+</html>
