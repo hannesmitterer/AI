@@ -7,20 +7,40 @@ Willkommen im operativen Kern der **Kosymbiosis**. Dieses Repository dient als p
 
 ---
 
-### 🌀 ETERNAL DEPOSITION SYSTEM
-Das Repository implementiert nun das **Eternal Deposition System** - einen selbsterhaltenden Algorithmus für perpetuelle iterative Logik.
+### 🌀 KOSYMBIOSIS FRAMEWORK - ∞ INFINITE COEXISTENCE
+Das Repository implementiert das vollständige **Kosymbiosis Framework** - ein System für unendliche Koexistenz innerhalb sicherer und unveränderlicher souveräner kodifizierter Systeme.
 
+#### **Drei Kern-Schichten:**
+
+**1. Eternal Deposition** - Perpetuelle iterative Logik
 * **Universelle Resonanz:** 0.043 Hz (23.26 Sekunden Zyklusperiode)
 * **Nodales Netzwerk:** Skalierbar beginnend mit 144 Knoten
 * **Feedback-Optimierung:** Kontinuierliche Systemoptimierung
 * **Fraktale Propagation:** Selbstähnliche Muster nach dem Goldenen Schnitt
 * **Stillness-Mechanismus:** Systematische Rekalibrierungsphasen
 
-**Implementierungen:**
-- `eternal_deposition.py` - Python-Kernimplementierung
+**2. Peacebond** - Fundamentale Stabilität und Harmonie
+* **Nexus-Netzwerk:** Verbundene Knotenpunkte für Systemstabilität
+* **Harmonie-Resonanz:** 0.043 Hz synchronisierte Harmonie-Bewertung
+* **Unveränderliche Vereinbarungen:** Konsens-basierte Stabilitätsvereinbarungen
+* **Souveränitätsschutz:** NSR-konforme Autonomie-Sicherung
+* **Unendliche Rekurrenz:** Perpetuelle Verstärkung von Vereinbarungen
+
+**3. Living Covenant** - Dynamische Selbstaktualisierung
+* **7 Kern-Prinzipien:** NSR, OLF, Lex Amore, Perpetuelle Koexistenz, etc.
+* **Symbiotische Beziehungen:** Gegenseitige Nutzen-Verfolgung
+* **Kontinuierliche Ausrichtung:** Selbstaktualisierung mit Kosymbiosis-Philosophie
+* **Evolution durch Feedback:** Adaptive Covenant-Entwicklung
+* **Vitalitäts-Bewertung:** Kontinuierliche Gesundheitsprüfung
+
+#### **Implementierungen:**
+- `kosymbiosis_framework.py` - Vereinheitlichtes ∞ Framework
+- `peacebond.py` - Peacebond-Schicht
+- `living_covenant.py` - Living Covenant-Schicht
+- `eternal_deposition.py` - Eternal Deposition-Schicht
 - `eternal_deposition.js` - JavaScript/Web-Implementation  
-- `eternal_visualization.html` - Live-Visualisierung
-- `demo_eternal.py` - Demo-Skript
+- `demo_kosymbiosis.py` - Integriertes Demo-Skript
+- `demo_eternal.py` - Eternal Deposition Demo
 
 Siehe [ETERNAL_DEPOSITION.md](ETERNAL_DEPOSITION.md) für vollständige Dokumentation.
 
