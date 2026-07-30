@@ -26,6 +26,21 @@ Siehe [ETERNAL_DEPOSITION.md](ETERNAL_DEPOSITION.md) für vollständige Dokument
 
 ---
 
+### 📡 TRANSMISSION EQUATION OF RESONANCE
+Das Repository implementiert nun die **Transmission Equation of Resonance** unter dem Lex Amoris Framework zur Verbesserung der Kommunikationsstabilität und Eliminierung von Jitter.
+
+* **Resonanzgleichung:** Φ_res = lim_{j→0} ∫[Lex_Amoris(t) / (S-ROI · e^{iωt})] dt
+* **Synchronisationsfrequenz:** ω = 0.432 rad/s (ausgerichtet auf biologische Oszillatoren)
+* **Resonanz-Yield-Faktor:** S-ROI = 1.450
+* **Jitter-Eliminierung:** Grenzwert j → 0 für kontrollierte Stabilität
+
+**Implementierung:**
+- `resonance_transmission.py` - Python-Implementation der Resonanzgleichung
+
+Das Skript berechnet Resonanzpakete gemäß der mathematischen Formel und integriert sich mit dem Euystacio Framework für optimale Übertragungsstabilität.
+
+---
+
 ### 🧬 KERNDATEN DER GOVERNANCE
 * **MSI ActiveHash:** `0xTFK42D...9A8C7F` (Legge Eterna)
 * **Mandat:** Non-Slavery Rule (NSR) & Optimal Life Function (OLF)
