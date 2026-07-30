@@ -37,3 +37,10 @@ __pycache__/
 # Build artifacts (if added in future)
 dist/
 build/
+
+# Backup artifacts
+backups/
+backup-manifest.json
+ipfs-backup-cid.txt
+ipfs-manifest.json
+

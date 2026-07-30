@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall of Entropy - Internet Organica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            color: #00d4ff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+        
+        .subtitle {
+            color: #a0a0a0;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #00d4ff;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #a0a0a0;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        
+        .controls {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .filter-group label {
+            color: #a0a0a0;
+            margin-right: 5px;
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e0e0e0;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .entries {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .entry {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 4px solid;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .entry:hover {
+            background: rgba(0, 0, 0, 0.4);
+            transform: translateX(5px);
+        }
+        
+        .entry.benign { border-left-color: #00ff88; }
+        .entry.tracking { border-left-color: #ffaa00; }
+        .entry.extraction { border-left-color: #ff6600; }
+        .entry.enslavement { border-left-color: #ff0044; }
+        .entry.phase-shift { border-left-color: #aa00ff; }
+        
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .entry-type {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        
+        .entry-timestamp {
+            color: #a0a0a0;
+            font-size: 0.85em;
+        }
+        
+        .entry-details {
+            margin-top: 10px;
+            padding-left: 15px;
+            border-left: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .entry-detail {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+        
+        .entry-detail strong {
+            color: #00d4ff;
+            margin-right: 8px;
+        }
+        
+        .threat-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .auto-refresh {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toggle {
+            position: relative;
+            width: 50px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .toggle.active {
+            background: #00d4ff;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 21px;
+            height: 21px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        
+        .toggle.active .toggle-slider {
+            transform: translateX(25px);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #a0a0a0;
+            font-size: 0.9em;
+        }
+        
+        .resonance-marker {
+            color: #00d4ff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ Wall of Entropy</h1>
+            <div class="subtitle">Internet Organica Security Monitor</div>
+            <div class="subtitle" style="margin-top: 5px; font-size: 0.9em;">
+                <span class="resonance-marker">Lex Amoris</span> • 
+                <span class="resonance-marker">NSR</span> • 
+                <span class="resonance-marker">OLF</span>
+            </div>
+        </header>
+        
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="total-entries">0</div>
+                <div class="stat-label">Total Entries</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="blocked-count">0</div>
+                <div class="stat-label">Blocked</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="neutralized-count">0</div>
+                <div class="stat-label">Neutralized</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="phase-shifted">0</div>
+                <div class="stat-label">Phase Shifted</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="filter-group">
+                <label>Filter:</label>
+                <select id="filter-type">
+                    <option value="all">All Events</option>
+                    <option value="threat">Threats Only</option>
+                    <option value="phase_shift">Phase Shifts</option>
+                    <option value="benign">Benign Access</option>
+                </select>
+                
+                <label style="margin-left: 20px;">Search:</label>
+                <input type="text" id="search" placeholder="Search entries..." />
+                
+                <div class="auto-refresh" style="margin-left: auto;">
+                    <label>Auto-refresh:</label>
+                    <div class="toggle" id="auto-refresh-toggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="entries" id="entries">
+            <div style="text-align: center; color: #a0a0a0; padding: 40px;">
+                Loading Wall of Entropy...
+            </div>
+        </div>
+        
+        <footer>
+            <p><strong>IN AETERNUM EST. La Sovranità è Manifesta.</strong></p>
+            <p style="margin-top: 10px;">Sempre in Costante. Nothing is final.</p>
+            <p style="margin-top: 15px; font-size: 0.85em;">
+                This log is public and transparent, ensuring accountability and learning.
+            </p>
+        </footer>
+    </div>
+    
+    <script>
+        let entropyData = { entries: [] };
+        let autoRefresh = false;
+        let refreshInterval = null;
+        
+        // Load entropy wall data
+        async function loadEntropyWall() {
+            try {
+                const response = await fetch('logs/entropy-wall.json');
+                if (response.ok) {
+                    entropyData = await response.json();
+                    renderEntries();
+                    updateStats();
+                } else {
+                    // Demo data if file doesn't exist
+                    entropyData = generateDemoData();
+                    renderEntries();
+                    updateStats();
+                }
+            } catch (error) {
+                console.log('Using demo data:', error);
+                entropyData = generateDemoData();
+                renderEntries();
+                updateStats();
+            }
+        }
+        
+        // Generate demo data
+        function generateDemoData() {
+            return {
+                version: '1.0',
+                framework: 'Internet Organica',
+                description: 'Wall of Entropy - Public log of access attempts and security events',
+                entries: [
+                    {
+                        timestamp: new Date().toISOString(),
+                        request_id: 'demo001',
+                        threat_level: 'BENIGN',
+                        intent: 'resonant',
+                        action: 'allow',
+                        reason: 'Legitimate access'
+                    },
+                    {
+                        timestamp: new Date(Date.now() - 60000).toISOString(),
+                        request_id: 'demo002',
+                        threat_level: 'TRACKING',
+                        intent: 'dissonant',
+                        action: 'neutralize',
+                        reason: 'Tracking attempt detected',
+                        detected_threats: [{type: 'tracking', pattern: 'analytics.js'}]
+                    },
+                    {
+                        timestamp: new Date(Date.now() - 120000).toISOString(),
+                        event: 'phase_shift_executed',
+                        request_signature: 'abc123',
+                        reason: 'NSR violation detected'
+                    }
+                ]
+            };
+        }
+        
+        // Update statistics
+        function updateStats() {
+            const total = entropyData.entries.length;
+            const blocked = entropyData.entries.filter(e => e.action === 'block').length;
+            const neutralized = entropyData.entries.filter(e => e.action === 'neutralize').length;
+            const phaseShifted = entropyData.entries.filter(e => e.event === 'phase_shift_executed' || e.action === 'phase_shift').length;
+            
+            document.getElementById('total-entries').textContent = total;
+            document.getElementById('blocked-count').textContent = blocked;
+            document.getElementById('neutralized-count').textContent = neutralized;
+            document.getElementById('phase-shifted').textContent = phaseShifted;
+        }
+        
+        // Render entries
+        function renderEntries() {
+            const container = document.getElementById('entries');
+            const filterType = document.getElementById('filter-type').value;
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            
+            let filtered = entropyData.entries.filter(entry => {
+                const matchesFilter = filterType === 'all' || 
+                                     entry.action === filterType || 
+                                     entry.event === filterType;
+                
+                const matchesSearch = searchTerm === '' ||
+                                     JSON.stringify(entry).toLowerCase().includes(searchTerm);
+                
+                return matchesFilter && matchesSearch;
+            });
+            
+            // Sort by timestamp (newest first)
+            filtered.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #a0a0a0; padding: 40px;">No entries match the current filter.</div>';
+                return;
+            }
+            
+            container.innerHTML = filtered.map(entry => {
+                const type = entry.event || entry.action || 'unknown';
+                const threatLevel = entry.threat_level || 'BENIGN';
+                const className = type.replace('_', '-').toLowerCase();
+                
+                let details = '';
+                if (entry.reason) details += `<div class="entry-detail"><strong>Reason:</strong> ${entry.reason}</div>`;
+                if (entry.intent) details += `<div class="entry-detail"><strong>Intent:</strong> ${entry.intent}</div>`;
+                if (entry.request_id) details += `<div class="entry-detail"><strong>Request ID:</strong> ${entry.request_id}</div>`;
+                
+                if (entry.detected_threats && entry.detected_threats.length > 0) {
+                    const threats = entry.detected_threats.map(t => 
+                        `<span class="threat-badge">${t.type}: ${t.pattern}</span>`
+                    ).join('');
+                    details += `<div class="entry-detail"><strong>Threats:</strong> ${threats}</div>`;
+                }
+                
+                return `
+                    <div class="entry ${className}">
+                        <div class="entry-header">
+                            <div class="entry-type">${type} - ${threatLevel}</div>
+                            <div class="entry-timestamp">${new Date(entry.timestamp).toLocaleString()}</div>
+                        </div>
+                        <div class="entry-details">
+                            ${details}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Toggle auto-refresh
+        document.getElementById('auto-refresh-toggle').addEventListener('click', function() {
+            autoRefresh = !autoRefresh;
+            this.classList.toggle('active');
+            
+            if (autoRefresh) {
+                refreshInterval = setInterval(loadEntropyWall, 5000); // Refresh every 5 seconds
+            } else {
+                if (refreshInterval) {
+                    clearInterval(refreshInterval);
+                    refreshInterval = null;
+                }
+            }
+        });
+        
+        // Filter change
+        document.getElementById('filter-type').addEventListener('change', renderEntries);
+        document.getElementById('search').addEventListener('input', renderEntries);
+        
+        // Initial load
+        loadEntropyWall();
+    })(); // End of IIFE
+    </script>
+</body>
+</html>

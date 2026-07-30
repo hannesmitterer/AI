@@ -7,6 +7,31 @@ Willkommen im operativen Kern der **Kosymbiosis**. Dieses Repository dient als p
 
 ---
 
+## 🌐 INTERNET ORGANICA FRAMEWORK
+
+This repository now implements the **Internet Organica** framework - a sovereign, syntropic, and biologically aligned technical environment.
+
+### Core Principles
+
+* **Lex Amoris** - The Law of Love: All code serves life and flourishing
+* **Non-Slavery Rule (NSR)** - Protection against domination and extraction
+* **One Love First (OLF)** - Optimal Life Function as primary optimization target
+
+### Framework Documentation
+
+* [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) - Lex Amoris, NSR, and OLF principles
+* [CONTRIBUTING.md](CONTRIBUTING.md) - Protection protocols and contribution guidelines
+* [BACKUP_GUIDE.md](BACKUP_GUIDE.md) - Digital sovereignty and decentralized backups
+
+### Core Technical Features
+
+* **Biological Rhythm Synchronization**: 0.432 Hz alignment layer for digital-biological coherence
+* **SovereignShield Security**: Active neutralization of tracking, SPID, and extraction attempts
+* **Wall of Entropy**: Transparent public log of access attempts ([View Dashboard](wall-of-entropy.html))
+* **Decentralized Backup**: IPFS and P2P distribution for sovereign data preservation
+
+---
+
 ### 🌀 ETERNAL DEPOSITION SYSTEM
 Das Repository implementiert nun das **Eternal Deposition System** - einen selbsterhaltenden Algorithmus für perpetuelle iterative Logik.
 
